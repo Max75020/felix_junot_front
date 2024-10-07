@@ -1,9 +1,9 @@
-import logo from './logo.svg';
-import { useEffect, useState } from "react";
-import './App.css';
+/* import logo from './logo.svg';
+import { useEffect, useState } from "react"; */
+//import './App.css';
 
 function App() {
-	const [max, setMax] = useState("");
+/* 	const [max, setMax] = useState("");
 	useEffect(() => {
 		const fetchMax = async () => {
 			try {
@@ -34,7 +34,7 @@ function App() {
 				</a>
 			</header>
 		</div>
-	);
+	); */
 }
 
 export default App;
