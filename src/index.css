@@ -1,13 +1,84 @@
+@font-face {
+	font-family: "CenturyGothic";
+	src: url("./assets/fonts/centurygothic.ttf");
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "MetricMedium";
+	src: url("./assets/fonts/metricmedium.ttf");
+	font-weight: normal;
+	font-style: normal;
+}
+
 body {
 	margin: 0;
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-		sans-serif;
+	font-family: "CenturyGothic", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
 
-code {
-	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-		monospace;
+.carousel-indicators [data-bs-target] {
+	background-color: #000 !important;
+}
+
+h2 {
+	color: #000 !important;
+}
+
+/* Barre latérale */
+.sidebar {
+	position: fixed;
+	top: 0;
+	left: -350px;
+	width: 350px;
+	height: 100%;
+	background-color: #f8f9fa;
+	transition: left 0.3s ease-in-out;
+	z-index: 1050;
+	box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+	text-transform: uppercase;
+	font-family: "CenturyGothic", sans-serif;
+
+}
+
+.sidebar.open {
+	left: 0;
+}
+
+.close-btn-container {
+	display: flex;
+	justify-content: flex-start;
+	padding: 10px 20px;
+}
+
+.close-btn {
+	font-size: 1.2rem;
+	background-color: transparent !important;
+	color: #333 !important;
+	border: none !important;
+	cursor: pointer;
+}
+
+/* Liens dans la barre latérale */
+.sidebar .nav-link {
+	color: #333;
+	font-size: 18px;
+	margin: 5px 0;
+}
+
+.sidebar .nav-link:hover {
+	color: #000;
+}
+
+/* Overlay pour fermer le menu en cliquant à l'extérieur */
+.overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 1049;
 }
