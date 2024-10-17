@@ -3,15 +3,15 @@ import { UserContext } from "./UserContext";
 import produitApi from "../pages/Product/services/Product.api";
 import cartApi from "../pages/Cart/services/Cart.api";
 import { extractIdFromUrl } from "../utils/tools";
+import { showSuccess } from "../services/popupService";
 
-// Création du contexte en haut pour éviter les erreurs d'initialisation
 const CartContext = createContext();
 
-// Provider du contexte
 export const CartProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState([]);
     const [loading, setLoading] = useState(false);
     const { user } = useContext(UserContext);
+    const [totalPanier, setTotalPanier] = useState(0);
 
     const fetchCart = async (cartId) => {
         setLoading(true);
@@ -23,40 +23,36 @@ export const CartProvider = ({ children }) => {
             }
     
             const panierProduits = response.panierProduits || [];
-            console.log("Panier produits:", panierProduits);
     
             const items = await Promise.all(
                 panierProduits.map(async (panierProduit) => {
-                    const produitId = extractIdFromUrl(panierProduit.produit["@id"]); // Utiliser produit["@id"]
+                    const produitId = extractIdFromUrl(panierProduit.produit["@id"]); 
                     
                     const produitDetails = await produitApi.getProduitById(produitId);
-                    console.log("Détails du produit:", produitDetails);
                     
                     return {
                         id: panierProduit.id_panier_produit,
                         produit: produitDetails,
                         quantite: panierProduit.quantite,
-                        prixTotal: panierProduit.prix_total_produit,
+                        prix_total_produit: parseFloat(panierProduit.prix_total_produit),
                     };
                 })
             );
     
             setCartItems(items);
-            console.log("Cart items set:", items);
+            setTotalPanier(parseFloat(response.prix_total_panier)); 
         } catch (error) {
             console.error("Erreur lors de la récupération du panier:", error);
-            console.error("Détails de l'erreur:", error.message);
         } finally {
             setLoading(false);
         }
     };
-    
-    
 
     const addToCart = async (productIri, quantity) => {
         setLoading(true);
         try {
             await cartApi.addProductToCart(productIri, quantity);
+            showSuccess("Oeuvre ajoutée au panier !");
             if (user && user.paniers.length > 0) {
                 const userCartId = extractIdFromUrl(user.paniers[0]["@id"]);
                 await fetchCart(userCartId);
@@ -68,9 +64,17 @@ export const CartProvider = ({ children }) => {
         }
     };
 
-    const removeFromCart = (productId) => {
-        const updatedCartItems = cartItems.filter((item) => item.id !== productId);
-        setCartItems(updatedCartItems);
+    const removeFromCart = async (productId) => {
+        try {
+            await cartApi.removeProductFromCart(productId);
+            showSuccess("Oeuvre retirée du panier !");
+            if (user && user.paniers.length > 0) {
+                const userCartId = extractIdFromUrl(user.paniers[0]["@id"]);
+                await fetchCart(userCartId);
+            }
+        } catch (error) {
+            console.error("Erreur lors de la suppression du produit du panier:", error);
+        }
     };
 
     useEffect(() => {
@@ -85,7 +89,8 @@ export const CartProvider = ({ children }) => {
         loading,
         addToCart,
         removeFromCart,
-        fetchCart, // Ajout de fetchCart au contexte
+        fetchCart,
+        totalPanier,
     };
 
     return (
@@ -95,7 +100,6 @@ export const CartProvider = ({ children }) => {
     );
 };
 
-// Hook personnalisé pour utiliser le contexte du panier
 export const useCart = () => {
     const context = useContext(CartContext);
     if (context === undefined) {

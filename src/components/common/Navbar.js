@@ -17,7 +17,10 @@ function MyNavbar() {
 
     // Utiliser les états et fonctions du contexte utilisateur et panier
     const { user, loading, logout } = useContext(UserContext);
-    const { cartItems, removeFromCart } = useCart(); // Récupérer les éléments du panier via le contexte
+    const { cartItems, removeFromCart, totalPanier } = useCart(); // Récupérer les éléments du panier via le contexte
+
+    // Calculer le total du panier
+
 
     const userInitials = user ? getInitials(user.email).toUpperCase() : "";
 
@@ -65,7 +68,8 @@ function MyNavbar() {
                         )}
                         <CartDropdown
                             cartItems={cartItems} 
-                            handleRemove={removeFromCart} // Utilisation de la fonction du contexte pour supprimer un article
+                            removeFromCart={removeFromCart} // Utilisation de la fonction du contexte pour supprimer un article
+                            totalPanier={totalPanier}
                         />
                     </Nav>
                 </Container>

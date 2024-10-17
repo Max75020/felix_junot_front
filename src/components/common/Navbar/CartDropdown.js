@@ -1,16 +1,10 @@
 import React from "react";
 import { Dropdown } from "react-bootstrap";
-import { BsBag, BsTrash } from "react-icons/bs";
+import { BsBag } from "react-icons/bs";
 import { Button } from "react-bootstrap";
 import { MdClose } from "react-icons/md";
 
-function CartDropdown({ cartItems, handleRemove }) {
-    const total = cartItems
-        .reduce((total, item) => total + item.price * item.quantity, 0)
-        .toFixed(2);
-
-        console.log(cartItems);
-
+function CartDropdown({ cartItems, totalPanier, removeFromCart }) {
     return (
         <Dropdown align="end">
             <Dropdown.Toggle
@@ -45,7 +39,7 @@ function CartDropdown({ cartItems, handleRemove }) {
                     </div>
                     <div>
                         <span className="fw-bold">TOTAL: </span>
-                        <span className="text-primary">{total} €</span>
+                        <span className="text-primary">{parseFloat(totalPanier).toFixed(2)} €</span>
                     </div>
                 </div>
 
@@ -60,11 +54,11 @@ function CartDropdown({ cartItems, handleRemove }) {
                             >
                                 {/* Icône de poubelle */}
                                 <Button
-                                    onClick={() => handleRemove(item.id)}
+                                    onClick={() => removeFromCart(item.id)}
                                     variant="link"
                                     className="p-0 position-absolute"
                                     style={{
-                                        top: "0px",
+                                        bottom: "10px",
                                         right: "10px",
                                     }}
                                 >
@@ -73,11 +67,11 @@ function CartDropdown({ cartItems, handleRemove }) {
 
                                 {/* Image du produit */}
                                 <img
-                                    src={item.backgroundImage}
-                                    alt={item.name}
+                                    src={item.produit.image || "https://placehold.co/80"}
+                                    alt={item.produit.nom}
                                     className="rounded"
                                     style={{
-                                        width: "80px", // Agrandissement de l'image
+                                        width: "80px",
                                         height: "80px",
                                         objectFit: "cover",
                                         marginRight: "15px",
@@ -85,15 +79,15 @@ function CartDropdown({ cartItems, handleRemove }) {
                                 />
 
                                 {/* Détails du produit */}
-                                <div className="flex-grow-1 me-3">
-                                    <div className="d-flex align-items-center justify-content-between">
+                                <div className="flex-grow-1">
+                                    <div className="d-flex justify-content-between">
                                         <div>
                                             <span
                                                 className="fw-bold d-block"
                                                 style={{
                                                     fontSize: "14px",
                                                     textTransform: "uppercase",
-                                                }} // Mise en majuscule comme dans l'image
+                                                }}
                                             >
                                                 {item.produit.nom}
                                             </span>
@@ -101,7 +95,7 @@ function CartDropdown({ cartItems, handleRemove }) {
                                                 className="text-muted"
                                                 style={{ fontSize: "12px" }}
                                             >
-                                                A l'unité : {item.produit.prix_ttc} €
+                                                A l'unité : {item.produit.prix_ttc} € / unité
                                             </span>
                                             <span
                                                 className="text-muted"
@@ -113,7 +107,11 @@ function CartDropdown({ cartItems, handleRemove }) {
                                                 Quantité : {item.quantite}
                                             </span>
                                         </div>
-                                        <div>Total: {item.prixTotal}</div>
+                                        <div className="text-end">
+                                            <span className="fw-bold">
+                                                {parseFloat(item.prix_total_produit).toFixed(2)} €
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -122,7 +120,7 @@ function CartDropdown({ cartItems, handleRemove }) {
                         {/* Bouton Checkout */}
                         <div className="text-center p-2">
                             <button className="btn btn-primary w-100">
-                                Checkout
+                                Payer
                             </button>
                         </div>
                     </>

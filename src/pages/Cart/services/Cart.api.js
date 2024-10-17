@@ -3,7 +3,7 @@ import apiService from "../../../services/apiService";
 
 // Définitions des endpoints pour l'entité Category
 const CART_ENDPOINT = 'paniers';
-
+const CART_LINES_ENDPOINT = 'panier_produits';
 const cartApi = {
 	
   getCartById: async (cartId) => {
@@ -18,11 +18,12 @@ const cartApi = {
     });
   },
 
-  removeProductFromCart: async (productIri) => {
-    return await apiService.post(`${CART_ENDPOINT}/remove-product`, {
-      produit: productIri, // L'API attend "produit" avec l'IRI du produit
-    });
-  },
+  removeProductFromCart: async (cartLineId) => {
+    return await apiService.delete(`${CART_LINES_ENDPOINT}/${cartLineId}`), {
+		id_panier_produit: cartLineId, // L'API attend "produit" avec l'IRI du produit
+    };
+  }
+  
   
 
 

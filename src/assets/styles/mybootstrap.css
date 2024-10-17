@@ -1,0 +1,40 @@
+.carousel-indicators {
+	display: flex;
+	justify-content: right !important;
+	margin-left:5% !important;
+	margin-right:5% !important;
+}
+
+.carousel-indicators button {
+	background-color: white !important;
+	width: 10px !important;
+	height: 10px !important;
+	border-radius: 100%;
+}
+
+.toast-success {
+	background-color: #d4edda !important; /* Vert pâle */
+	border-left: 5px solid #81f59c !important; /* Vert */
+}
+
+.toast-danger {
+	background-color: #f8d7da !important; /* Rouge pâle */
+	border-left: 5px solid #ec7984 !important; /* Rouge */
+}
+
+.toast-info {
+	background-color: #d1ecf1 !important; /* Bleu pâle */
+	border-left: 5px solid #8ae7f6 !important; /* Bleu */
+}
+
+.toast-warning {
+	background-color: #fff3cd !important; /* Jaune pâle */
+	border-left: 5px solid #dcc47a !important; /* Jaune */
+}
+
+.toast-success .toast-body,
+.toast-danger .toast-body,
+.toast-info .toast-body,
+.toast-warning .toast-body {
+	color: #000; /* Couleur du texte par défaut */
+}
