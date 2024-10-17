@@ -5,7 +5,8 @@ function ExampleCarouselImage() {
 		<div>
 			<img
 				className="d-block w-100"
-				src={`https://static.vecteezy.com/ti/photos-gratuite/t2/23010498-le-bois-table-dans-le-plage-dans-ete-temps-avec-ai-genere-gratuit-photo.jpg`}
+				alt="First slide"
+				src={`https://static.vecteezy.com/ti/vecteur-libre/t1/696278-fond-noir-texture-gratuit-vectoriel.jpg`}
 			/>
 		</div>
 	);

@@ -39,19 +39,28 @@ const apiService = {
 	},
 
 	// Requête POST pour créer une nouvelle ressource
-	post: async (endpoint, data) => {
-		const token = getToken();
+	post: async (endpoint, data, requireAuth = true) => {
+		// Si l'authentification est requise, récupère le token
+		const token = requireAuth ? getToken() : null;
+
+		// Prépare les headers avec ou sans token
+		const headers = {
+			'Content-Type': 'application/json',
+		};
+
+		if (token) {
+			headers['Authorization'] = `Bearer ${token}`; // Ajout du token dans le header si présent
+		}
+
+		// Envoie de la requête
 		const response = await fetch(`${BASE_URL}/${endpoint}`, {
 			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				'Authorization': `Bearer ${token}` // Ajout du token dans le header
-			},
+			headers,
 			body: JSON.stringify(data),
 		});
 		return handleResponse(response);
 	},
-
+	
 	// Requête PUT pour mettre à jour une ressource existante
 	put: async (endpoint, data) => {
 		const token = getToken();

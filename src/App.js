@@ -1,19 +1,17 @@
-import { useState } from 'react';
+//import { useState } from 'react';
 
-import AppRouter from './routes/AppRouter';
+import { UserProvider } from "./context/UserContext";
+import AppRouter from "./routes/AppRouter";
+import PopupService from "./services/popupService";
 function App() {
-
-
-	return (
-		<div>
-			<AppRouter />
-		</div>
-		// <div>
-		//  <MyNavbar/>
-		//   
-		// </div>
-
-	);
+    return (
+        <div>
+            <UserProvider>
+                <PopupService />
+                <AppRouter />
+            </UserProvider>
+        </div>
+    );
 }
 
 export default App;

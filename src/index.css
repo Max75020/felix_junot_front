@@ -19,10 +19,6 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.carousel-indicators [data-bs-target] {
-	background-color: #000 !important;
-}
-
 h2 {
 	color: #000 !important;
 }
@@ -81,4 +77,18 @@ h2 {
 	height: 100vh;
 	background-color: rgba(0, 0, 0, 0.5);
 	z-index: 1049;
+}
+
+.carousel-indicators {
+	display: flex;
+	justify-content: right !important;
+	margin-left:5% !important;
+	margin-right:5% !important;
+}
+
+.carousel-indicators button {
+	background-color: white !important;
+	width: 10px !important;
+	height: 10px !important;
+	border-radius: 100%;
 }

@@ -1,0 +1,17 @@
+.burger-toggle {
+	border: none !important;
+	/* Supprimer la bordure */
+	background: none;
+	/* Supprimer le fond par défaut */
+	padding: 0;
+	/* Ajuster l'espacement si nécessaire */
+}
+
+.burger-toggle:focus {
+	box-shadow: none !important;
+	/* Supprimer l'effet focus (si présent) */
+}
+
+#navbar-logo {
+	width: 50px;
+}
