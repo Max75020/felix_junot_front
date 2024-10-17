@@ -1,0 +1,98 @@
+/* Polices */
+@font-face {
+	font-family: 'Century Gothic';
+	src: url('./centurygothic.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'Metric Medium';
+	src: url('./metricmedium.ttf') format('truetype');
+}
+
+/* Appliquer les polices */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: 'Century Gothic', sans-serif;
+	letter-spacing: .2em;
+    text-transform: uppercase;
+}
+
+p,
+span,
+div,
+li,
+a {
+	font-family: 'Metric Medium', sans-serif;
+}
+
+/* Styles par défaut (ordinateurs) */
+h1 {
+	font-size: 32px;
+}
+
+h2 {
+	font-size: 28px;
+}
+
+h3 {
+	font-size: 26px;
+}
+
+h4 {
+	font-size: 24px;
+}
+
+p {
+	font-size: 18px;
+}
+
+/* Pour tablettes (768px - 1024px) */
+@media (max-width: 1024px) {
+	h1 {
+		font-size: 28px;
+	}
+
+	h2 {
+		font-size: 24px;
+	}
+
+	h3 {
+		font-size: 22px;
+	}
+
+	h4 {
+		font-size: 20px;
+	}
+
+	p {
+		font-size: 18px;
+		/* Peut rester pareil si souhaité */
+	}
+}
+
+/* Pour smartphones (moins de 768px) */
+@media (max-width: 768px) {
+	h1 {
+		font-size: 26px;
+	}
+
+	h2 {
+		font-size: 22px;
+	}
+
+	h3 {
+		font-size: 20px;
+	}
+
+	h4 {
+		font-size: 18px;
+	}
+
+	p {
+		font-size: 16px;
+	}
+}

@@ -60,7 +60,7 @@ const apiService = {
 		});
 		return handleResponse(response);
 	},
-	
+
 	// Requête PUT pour mettre à jour une ressource existante
 	put: async (endpoint, data) => {
 		const token = getToken();

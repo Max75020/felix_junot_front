@@ -4,7 +4,7 @@ import React from 'react';
 //import { Button } from 'react-bootstrap';
 import CardSlider from './components/CardSlider';
 import MyCarousel from './components/Carousel/Carousel';
-import { showSuccess } from '../../services/popupService';
+//import { showSuccess } from '../../services/popupService';
 
 function Home() {
 	return (

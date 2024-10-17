@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import categoryApi from "../services/Category.api";
 import { Card, Col, Row, Container } from "react-bootstrap";
+import { extractIdFromUrl } from "../../../utils/tools";
 
 const CategoryList = () => {
   const [categories, setCategories] = useState([]);
@@ -31,7 +32,7 @@ const CategoryList = () => {
 
   // Function to handle product click
   const handleProductClick = (productUrl) => {
-    const productId = productUrl.split("/").pop(); // Extract product ID from "/api/produits/1"
+    const productId = extractIdFromUrl(productUrl); // Utilisation de la fonction générique
     navigate(`/product/${productId}`); // Redirect to the product page
   };
 

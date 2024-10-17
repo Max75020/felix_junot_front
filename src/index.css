@@ -1,16 +1,3 @@
-@font-face {
-	font-family: "CenturyGothic";
-	src: url("./assets/fonts/centurygothic.ttf");
-	font-weight: normal;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: "MetricMedium";
-	src: url("./assets/fonts/metricmedium.ttf");
-	font-weight: normal;
-	font-style: normal;
-}
 
 body {
 	margin: 0;
@@ -27,8 +14,8 @@ h2 {
 .sidebar {
 	position: fixed;
 	top: 0;
-	left: -350px;
-	width: 350px;
+	left: -320px;
+	width: 320px;
 	height: 100%;
 	background-color: #f8f9fa;
 	transition: left 0.3s ease-in-out;
@@ -36,11 +23,26 @@ h2 {
 	box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
 	text-transform: uppercase;
 	font-family: "CenturyGothic", sans-serif;
-
 }
 
 .sidebar.open {
 	left: 0;
+}
+
+.sidebar p,a {
+	color: #333;
+	font-size: 18px;
+	letter-spacing: .2em;
+    text-transform: uppercase;
+	cursor: pointer;
+}
+
+.sidebar p {
+	color: #d63e3e;
+}
+
+.sidebar a {
+	color: #333;
 }
 
 .close-btn-container {
@@ -66,6 +68,11 @@ h2 {
 
 .sidebar .nav-link:hover {
 	color: #000;
+}
+
+.hr-menu {
+	border: 1px solid #afafaf;
+	margin: 10px 0;
 }
 
 /* Overlay pour fermer le menu en cliquant à l'extérieur */

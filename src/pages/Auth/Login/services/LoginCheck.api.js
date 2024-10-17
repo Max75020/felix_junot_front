@@ -6,16 +6,16 @@ import apiService from "../../../../services/apiService";
 const LOGINCHECK_ENDPOINT = 'login_check';
 
 const loginCheckerApi = {
-  login: async (email, password) => {
-    const response = await apiService.post(LOGINCHECK_ENDPOINT, { email, password });
+	login: async (email, password) => {
+		const response = await apiService.post(LOGINCHECK_ENDPOINT, { email, password });
 
-    // Si la réponse contient un token, on sauvegarde le token et l'email dans le localStorage
-    if (response && response.token) {
-      localStorage.setItem('token', response.token); // Stocker le token
-    }
+		// Si la réponse contient un token, on sauvegarde le token et l'email dans le localStorage
+		if (response && response.token) {
+			localStorage.setItem('token', response.token); // Stocker le token
+		}
 
-    return response;
-  },
+		return response;
+	},
 };
 
 export default loginCheckerApi;

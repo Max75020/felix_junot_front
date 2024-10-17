@@ -1,93 +1,84 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Container, Row, Col, Button, Image, ListGroup } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import produitApi from "../services/Product.api";
 import { FiPlus, FiMinus } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa6";
+import { useCart } from "../../../context/CartContext";
+import { UserContext } from "../../../context/UserContext";
+import { extractIdFromUrl } from "../../../utils/tools";
 
 const ProductDetail = () => {
     const [quantity, setQuantity] = useState(1);
-    const [product, setProduct] = useState(null); // État pour stocker les informations du produit
-    const { id } = useParams(); // Récupère l'ID du produit depuis l'URL
+    const [product, setProduct] = useState(null);
+    const { id } = useParams();
+    const { addToCart, fetchCart } = useCart(); // Utilisation du contexte
+    const { user } = useContext(UserContext); // Accéder aux informations de l'utilisateur
+
+    // Récupérer le panier ID à partir de l'IRI du panier
+    const userCartId = user && user.paniers.length > 0 ? extractIdFromUrl(user.paniers[0]["@id"]) : null;
 
     const fetchProduct = async () => {
         try {
-            const response = await produitApi.getProduitById(id); // Appel à l'API pour récupérer le produit par ID
-            setProduct(response); // Stocke la réponse dans l'état 'product'
+            const response = await produitApi.getProduitById(id);
+            setProduct(response);
         } catch (error) {
             console.error("Erreur lors de la récupération du produit:", error);
         }
     };
 
-    useEffect(() => {
-        fetchProduct();
-    }, [id]); // Recharger les données si l'ID du produit change
-
-    const handleIncrease = () => setQuantity(quantity + 1);
-    const handleDecrease = () => {
-        if (quantity > 1) setQuantity(quantity - 1);
+    const handleAddToCart = () => {
+        if (product) {
+            addToCart(product["@id"], quantity); // Ajout au panier via le contexte
+        }
     };
 
-    // Affiche un message de chargement tant que le produit n'est pas chargé
-    if (!product) {
-        return <p>Chargement...</p>;
-    }
+    useEffect(() => {
+        console.log("userCartId:", userCartId);
+        if (userCartId) {
+            fetchCart(userCartId); // Récupération du panier via le contexte
+        }
+        fetchProduct(); // Récupération du produit via l'API
+    }, [id, userCartId]);
 
     return (
         <Container className="mt-5">
             <Row>
-                {/* Section de miniatures d'images à gauche */}
                 <Col md={1}>
                     <ListGroup variant="flush">
-                        {product.images &&
-                            product.images.map((image, index) => (
-                                <ListGroup.Item key={index}>
-                                    <Image src={image} thumbnail />
-                                </ListGroup.Item>
-                            ))}
+                        {product?.images.map((image, index) => (
+                            <ListGroup.Item key={index}>
+                                <Image src={image} thumbnail />
+                            </ListGroup.Item>
+                        ))}
                     </ListGroup>
                 </Col>
 
-                {/* Section de l'image principale */}
                 <Col md={6}>
                     <Image
-                        src={
-                            product.imagePrincipal || "https://placehold.co/500"
-                        }
+                        src={product?.imagePrincipal || "https://placehold.co/500"}
                         fluid
                     />
                 </Col>
 
-                {/* Section des détails de l'œuvre */}
                 <Col md={5}>
-                    <h2 className="text-uppercase">{product.nom}</h2>
-                    <p className="lead">Prix en euros: {product.prix_ttc} €</p>
+                    <h2 className="text-uppercase">{product?.nom}</h2>
+                    <p className="lead">Prix en euros: {product?.prix_ttc} €</p>
 
-                    {/* Section quantité et bouton favoris */}
                     <Row className="align-items-center">
                         <Col xs={4}>
-                            <Button variant="none" onClick={handleDecrease}>
+                            <Button variant="none" onClick={() => setQuantity(quantity - 1)}>
                                 <FiMinus />
                             </Button>
                             <span className="mx-2">{quantity}</span>
-                            <Button variant="none" onClick={handleIncrease}>
+                            <Button variant="none" onClick={() => setQuantity(quantity + 1)}>
                                 <FiPlus />
                             </Button>
                         </Col>
-                        <div>
-                            Valeur totale: {product.prix_ttc * quantity} €
-                        </div>
                     </Row>
 
-                    {/* Section description */}
-                    <p className="mt-4">
-                        {product.description ||
-                            "Aucune description disponible pour ce produit."}
-                    </p>
-
-                    {/* Bouton */}
-                    <div class="flex align-items-center">
-                        <Button variant="dark">
+                    <div className="mt-4">
+                        <Button variant="dark" size="lg" onClick={handleAddToCart}>
                             Ajouter au panier
                         </Button>
                         <Button variant="none" size="lg">
