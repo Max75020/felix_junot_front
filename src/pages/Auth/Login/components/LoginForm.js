@@ -43,7 +43,7 @@ const LoginForm = () => {
           {error && <div className="alert alert-danger">{error}</div>}
 
           <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
+            <Form.Label>Adresse Email</Form.Label>
             <Form.Control
               type="email"
               placeholder="Enter email"
@@ -66,6 +66,8 @@ const LoginForm = () => {
               required
             />
           </Form.Group>
+          {/* mot de passe oublié */}
+            <a href={routes.AUTH.FORGOT_PASSWORD}>Forgot password?</a>
 
           <Button variant="primary" type="submit">
             Submit

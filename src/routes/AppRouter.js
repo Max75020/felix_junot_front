@@ -9,11 +9,20 @@ import ProductDetail from '../pages/Product/components/ProductDetails';
 import { UserProvider } from "../context/UserContext";
 import LoginForm from '../pages/Auth/Login/components/LoginForm';
 import RegisterForm from '../pages/Auth/Register/components/RegisterForm';
+import ForgotPasswordForm from '../pages/Auth/ForgotPassword/components/ForgotPasswordRequestForm';
+import NewPasswordForm from '../pages/Auth/ForgotPassword/components/NewPasswordForm';
 
 export const routes = {
 	AUTH: {
 		LOGIN: '/login',
 		REGISTER: '/register',
+
+		FORGOT_PASSWORD: '/forgot-password',
+		NEW_PASSWORD: '/new-password',
+
+
+
+		
 		UNAUTHORIZED: '/unauthorized',
 	},
 	HOME: {
@@ -44,6 +53,8 @@ function AppRouter() {
 						<Route index element={<Home />} />
 						<Route path={routes.AUTH.LOGIN} element={<LoginForm />} />
 						<Route path={routes.AUTH.REGISTER} element={<RegisterForm />} />
+						<Route path={routes.AUTH.FORGOT_PASSWORD} element={<ForgotPasswordForm />} />
+						<Route path={routes.AUTH.NEW_PASSWORD} element={<NewPasswordForm />} />
 
 						<Route path={routes.CATEGORIES.INDEX} element={<CategoryList />} />
 						<Route path={routes.CATEGORIES.ALL_ELEMENTS} element={<AllElementsOfCategory />} />

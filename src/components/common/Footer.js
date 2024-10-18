@@ -1,40 +1,58 @@
-import React from 'react'
+import React from 'react';
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer class="bg-light text-center text-lg-start">
-      <div class="container p-4">
-        <div class="row">
-          <div class="col-lg-4 col-md-6 mb-4 mb-md-0 text-center">
-            <ul class="list-unstyled">
-              <li class="mb-2"><a href="#!" class="text-dark">FAQ</a></li>
-              <li class="mb-2"><a href="#!" class="text-dark">Mentions Légales</a></li>
+    <footer className="bg-light text-center text-lg-start">
+      <div className="container p-4">
+        <div className="row">
+          {/* Première colonne */}
+          <div className="col-lg-4 col-md-6 mb-4 mb-md-0 text-center">
+            <ul className="list-unstyled">
+              <li className="mb-2">
+                <a href="#!" className="text-dark">FAQ</a>
+              </li>
+              <li className="mb-2">
+                <a href="#!" className="text-dark">Mentions Légales</a>
+              </li>
             </ul>
           </div>
 
-          <div class="col-lg-4 col-md-6 mb-4 mb-md-0 text-center">
-            <ul class="list-unstyled">
-              <li class="mb-2"><a href="#!" class="text-dark">Contactez-moi</a></li>
-              <li class="mb-2"><a href="#!" class="text-dark"><i class="bi bi-instagram" style={{
-                fontSize: '2rem'
-              }}></i></a></li>
+          {/* Deuxième colonne */}
+          <div className="col-lg-4 col-md-6 mb-4 mb-md-0 text-center">
+            <ul className="list-unstyled">
+              <li className="mb-2">
+                <a href="#!" className="text-dark">Contactez-moi</a>
+              </li>
+              <li className="mb-2">
+                <a href="#!" className="text-dark">
+                  <i className="bi bi-instagram" style={{ fontSize: '2rem' }}></i>
+                </a>
+              </li>
             </ul>
           </div>
 
-          <div class="col-lg-4 col-md-6 mb-4 mb-md-0 text-center">
-            <ul class="list-unstyled">
-              <li class="mb-2"><a href="#!" class="text-dark">CGV</a></li>
-              <li class="mb-2"><a href="#!" class="text-dark">Conditions de Livraison</a></li>
+          {/* Troisième colonne */}
+          <div className="col-lg-4 col-md-6 mb-4 mb-md-0 text-center">
+            <ul className="list-unstyled">
+              <li className="mb-2">
+                <a href="#!" className="text-dark">CGV</a>
+              </li>
+              <li className="mb-2">
+                <a href="#!" className="text-dark">Conditions de Livraison</a>
+              </li>
             </ul>
           </div>
         </div>
       </div>
 
-      <div class="text-center p-3">
-        © FÉLIX JUNOT 2024
+      {/* Copyright */}
+      <div className="text-center p-3">
+        © FÉLIX JUNOT {currentYear}
       </div>
     </footer>
-  )
+  );
 }
 
-export default Footer
+export default Footer;
