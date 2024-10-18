@@ -1,39 +1,105 @@
 /* Style général du footer */
 .footer {
-	background-color: #333;
-	color: #fff;
-	padding: 20px 0;
-}
-
-.footer .container {
-	padding: 20px;
+	background-color: #ffffff;
 }
 
 .footer ul {
 	list-style-type: none;
 	padding: 0;
-}
-
-.footer li {
-	margin-bottom: 10px;
+	margin: 0;
 }
 
 .footer a {
-	color: #fff;
+	color: var(--color-title);
 	text-decoration: none;
 }
 
 .footer a:hover {
-	text-decoration: underline;
+	color: var(--color-title-hover);
 }
 
-.footer .icon-instagram {
-	font-size: 2rem;
-}
-
+/* Footer bottom */
 .footer-bottom {
-	background-color: #222;
-	color: #fff;
-	padding: 10px 0;
+	background-color: #000000;
+	color: #ffffff !important;
 	text-align: center;
+	margin: auto;
+}
+
+.footer-bottom p {
+	margin: 0;
+	padding: 0;
+}
+
+.footer-column {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	margin-bottom: 0;
+}
+
+/* Responsive: Vue smartphone (moins de 768px) */
+@media (max-width: 768px) {
+
+	.footer p,
+	.footer a {
+		font-size: 12px;
+		/* Taille de police adaptée pour les smartphones */
+	}
+
+	.logo-instagram {
+		font-size: 22px;
+	}
+
+	.footer-column {
+		gap: 60px;
+		/* Espacement entre les colonnes */
+	}
+}
+
+/* Responsive: Vue tablette (entre 768px et 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+	.footer p,
+	.footer a {
+		font-size: 13px;
+		/* Taille de police adaptée pour les tablettes */
+	}
+
+	.logo-instagram {
+		font-size: 26px;
+	}
+
+	.footer-column {
+		gap: 40px;
+		/* Espacement entre les colonnes */
+	}
+}
+
+/* Responsive: Vue ordinateur (au-delà de 1024px) */
+@media (min-width: 1025px) {
+
+	.footer p,
+	.footer a {
+		font-size: 14px;
+		/* Taille de police adaptée pour les ordinateurs */
+	}
+
+	.footer-column {
+		gap: 70px;
+	}
+
+	/* Style pour l'icône Instagram */
+	.logo-instagram {
+		font-size: 32px;
+	}
+
+	/* Style pour l'icône Instagram */
+	.logo-instagram:hover {
+		font-size: 34px;
+	}
+
+	.footer a:hover {
+		font-size: 15px;
+	}
 }

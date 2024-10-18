@@ -18,7 +18,7 @@ h5,
 h6 {
 	font-family: 'Century Gothic', sans-serif;
 	letter-spacing: .2em;
-    text-transform: uppercase;
+	text-transform: uppercase;
 }
 
 p,
@@ -72,6 +72,10 @@ p {
 		font-size: 18px;
 		/* Peut rester pareil si souhaité */
 	}
+
+	a {
+		font-size: 18px;
+	}
 }
 
 /* Pour smartphones (moins de 768px) */
@@ -93,6 +97,10 @@ p {
 	}
 
 	p {
+		font-size: 16px;
+	}
+
+	a {
 		font-size: 16px;
 	}
 }

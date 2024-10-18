@@ -8,14 +8,14 @@ const getToken = () => {
 // Fonction pour traiter la réponse API
 const handleResponse = async (response) => {
 	if (!response.ok) {
-			const errorData = await response.json().catch(() => ({}));
-			throw new Error(errorData.message || 'An error occurred');
+		const errorData = await response.json().catch(() => ({}));
+		throw new Error(errorData.message || 'An error occurred');
 	}
 	// Si la réponse ne contient pas de corps, renvoyer un indicateur de succès simple
 	try {
-			return await response.json();
+		return await response.json();
 	} catch (e) {
-			return true; // Pas de contenu JSON, renvoyer simplement `true`
+		return true; // Pas de contenu JSON, renvoyer simplement `true`
 	}
 };
 
@@ -86,7 +86,7 @@ const apiService = {
 		const response = await fetch(`${BASE_URL}/${endpoint}`, {
 			method: 'PATCH',
 			headers: {
-				'Content-Type': 'application/json',
+				'Content-Type': 'application/merge-patch+json',
 				'Authorization': `Bearer ${token}` // Ajout du token dans le header
 			},
 			body: JSON.stringify(data),
@@ -98,14 +98,14 @@ const apiService = {
 	delete: async (endpoint) => {
 		const token = getToken();
 		const response = await fetch(`${BASE_URL}/${endpoint}`, {
-				method: 'DELETE',
-				headers: {
-						'Content-Type': 'application/json',
-						'Authorization': `Bearer ${token}` // Ajout du token dans le header
-				},
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': `Bearer ${token}` // Ajout du token dans le header
+			},
 		});
 		return handleResponse(response);
-},
+	},
 
 	// Requête FIND pour récupérer plusieurs éléments
 	find: async (endpoint, params = {}) => {

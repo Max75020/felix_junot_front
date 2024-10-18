@@ -1,3 +1,9 @@
+:root {
+	--color-title: #333356;
+	--color-title-hover: #747474;
+}
+
+
 body {
 	margin: 0;
 	font-family: "CenturyGothic", sans-serif;
@@ -52,12 +58,12 @@ a {
 /* Liens dans la barre latérale */
 
 .sidebar-menu-first {
-	color: #0b0b2b !important;
+	color: var(--color-title) !important;
 	font-size: 16px !important;
 }
 
 .sidebar-menu-first:hover {
-	color: #747474 !important;
+	color: var(--color-title-hover) !important;
 	font-size: 18px !important;
 }
 
