@@ -1,4 +1,3 @@
-
 body {
 	margin: 0;
 	font-family: "CenturyGothic", sans-serif;
@@ -29,20 +28,11 @@ h2 {
 	left: 0;
 }
 
-.sidebar p,a {
-	color: #333;
-	font-size: 18px;
+.sidebar p,
+a {
 	letter-spacing: .2em;
-    text-transform: uppercase;
+	text-transform: uppercase;
 	cursor: pointer;
-}
-
-.sidebar p {
-	color: #d63e3e;
-}
-
-.sidebar a {
-	color: #333;
 }
 
 .close-btn-container {
@@ -60,14 +50,25 @@ h2 {
 }
 
 /* Liens dans la barre latérale */
-.sidebar .nav-link {
-	color: #333;
-	font-size: 18px;
-	margin: 5px 0;
+
+.sidebar-menu-first {
+	color: #0b0b2b !important;
+	font-size: 16px !important;
 }
 
-.sidebar .nav-link:hover {
-	color: #000;
+.sidebar-menu-first:hover {
+	color: #747474 !important;
+	font-size: 18px !important;
+}
+
+.sidebar-menu-secondary {
+	color: #939393 !important;
+	font-size: 15px !important;
+}
+
+.sidebar-menu-secondary:hover {
+	color: #333 !important;
+	font-size: 17px !important;
 }
 
 .hr-menu {
@@ -85,5 +86,3 @@ h2 {
 	background-color: rgba(0, 0, 0, 0.5);
 	z-index: 1049;
 }
-
-

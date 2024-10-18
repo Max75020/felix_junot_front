@@ -15,7 +15,7 @@ function Sidebar({ isOpen, toggleSidebar, categoriesOpen, toggleCategories, cate
 
                 <Nav className="flex-column p-3">
                     <div className="d-flex align-items-center py-2">
-                        <Nav.Link href="/" className="text-dark p-0 m-0">
+                        <Nav.Link href="/" className="p-0 m-0 sidebar-menu-first">
                             Accueil
                         </Nav.Link>
                     </div>
@@ -26,7 +26,7 @@ function Sidebar({ isOpen, toggleSidebar, categoriesOpen, toggleCategories, cate
                         className="d-flex justify-content-between align-items-center py-2"
                         onClick={toggleCategories}
                     >
-                        <p className="mb-0">CATEGORIES</p>
+                        <p className="mb-0 sidebar-menu-first">CATEGORIES</p>
                         <span className={`icon-rotate ${categoriesOpen ? "open" : ""}`}>
                             {categoriesOpen ? <FiMinus /> : <FiPlus />}
                         </span>
@@ -37,8 +37,7 @@ function Sidebar({ isOpen, toggleSidebar, categoriesOpen, toggleCategories, cate
                             <Nav.Link
                                 key={category.id_categorie}
                                 href={`/categories/${category.id_categorie}/all`}
-                                className="py-1"
-                                style={{ color: "#333", margin: "0" }}
+                                className="py-1 m-0 sidebar-menu-secondary"
                             >
                                 {category.nom}
                             </Nav.Link>
