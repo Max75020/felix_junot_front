@@ -93,8 +93,6 @@ const CardSliderWithArrows = () => {
                                                 onClick={() =>
                                                     handleProductClick(produit["@id"])
                                                 }
-																								// hover pour pointer le curseur
-																								className="cursor-pointer"
                                                 style={{ width: "18rem" }}
                                             >
                                                 <Card.Img

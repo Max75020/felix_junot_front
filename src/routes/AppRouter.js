@@ -11,6 +11,11 @@ import LoginForm from '../pages/Auth/Login/components/LoginForm';
 import RegisterForm from '../pages/Auth/Register/components/RegisterForm';
 import ForgotPasswordForm from '../pages/Auth/ForgotPassword/components/ForgotPasswordRequestForm';
 import NewPasswordForm from '../pages/Auth/ForgotPassword/components/NewPasswordForm';
+import Faq from '../pages/Legal/Faq';
+import Cgv from '../pages/Legal/Cgv';
+import DeliveryConditions from '../pages/Legal/DeliveryConditions';
+import LegalNotices from '../pages/Legal/LegalNotices';
+import ContactForm from '../pages/Contact/ContactForm';
 
 export const routes = {
 	AUTH: {
@@ -42,6 +47,15 @@ export const routes = {
 	CHECKOUT: {
 		INDEX: '/checkout',
 	},
+	LEGAL: {
+		FAQ: '/faq',
+		LEGAL: '/legal-notices',
+		DELIVERY_CONDITIONS: '/delivery-conditions',
+		CGV: '/cgv',
+	},
+	CONTACT: {
+		INDEX: '/contact',
+	}
 };
 
 function AppRouter() {
@@ -59,6 +73,11 @@ function AppRouter() {
 						<Route path={routes.CATEGORIES.INDEX} element={<CategoryList />} />
 						<Route path={routes.CATEGORIES.ALL_ELEMENTS} element={<AllElementsOfCategory />} />
 						<Route path={routes.PRODUCT.DETAIL} element={<ProductDetail />} />
+						<Route path={routes.LEGAL.FAQ} element={<Faq />} />
+						<Route path={routes.LEGAL.CGV} element={<Cgv />} />
+						<Route path={routes.LEGAL.DELIVERY_CONDITIONS} element={<DeliveryConditions />} />
+						<Route path={routes.LEGAL.LEGAL} element={<LegalNotices />} />
+						<Route path={routes.CONTACT.INDEX} element={<ContactForm />} />
 
 						<Route
 							index
