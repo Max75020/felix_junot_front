@@ -1,6 +1,8 @@
 :root {
 	--color-title: #333356;
 	--color-title-hover: #747474;
+	--font-family-title: 'Century Gothic', sans-serif;
+	--font-family-text: 'Metric Medium', sans-serif;
 }
 
 

@@ -1,0 +1,84 @@
+.carousel-item img {
+	height: 100vh;
+	/* Limite la hauteur à la taille de l'écran */
+	object-fit: cover;
+	/* Recadre l'image pour qu'elle remplisse le conteneur sans distorsion */
+	width: 100%;
+}
+
+.carousel-item .carousel-caption {
+	position: absolute;
+	bottom: -1%;
+	/* Ajuste la distance à partir du bas de l'écran */
+	left: 1%;
+	/* Ajuste la distance à partir du bord gauche */
+	right: auto;
+	/* Enlève la contrainte du côté droit pour permettre de coller à gauche */
+	text-align: left;
+	/* Aligne le texte à gauche */
+}
+
+.carousel-indicators {
+    width: 100px; /* Réduire la largeur pour qu'ils ne couvrent pas tout */
+    bottom: 30px; /* Ajuster la hauteur pour qu'ils soient plus bas */
+    left: 90% !important; /* Centrer les indicateurs */
+    transform: translateX(-50%);
+    z-index: 1; /* S'assurer qu'ils ne se superposent pas aux autres éléments */
+}
+
+
+.carousel-item .carousel-caption a {
+	display: inline-block !important;
+	/* Rend l'élément <a> semblable à un bloc pour gérer correctement les dimensions */
+	padding: 10px 20px;
+	/* Définit le padding interne */
+	background-color: #ffffff;
+	/* Couleur de fond du bouton */
+	color: var(--color-title);
+	/* Couleur du texte */
+	font-family: var(--font-family-title);
+	text-decoration: none;
+	/* Supprime le soulignement */
+	border-radius: 5px;
+	/* Arrondir les bords */
+	font-size: 12px;
+}
+
+.carousel-item .carousel-caption a:hover {
+	background-color: #000000;
+	/* Changement de couleur au survol */
+	color: #ffffff !important;
+	/* Couleur du texte au survol */
+}
+
+
+.carousel-control-next,
+.carousel-control-prev {
+	position: absolute;
+	top: 50% !important;
+	/* Place la flèche au milieu de l'écran verticalement */
+	transform: translateY(-50%);
+	/* Centre verticalement */
+	z-index: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	/* Limite la largeur de la zone cliquable */
+	height: 65%;
+	/* Limite la hauteur de la zone cliquable */
+	padding: 0;
+	color: #fff;
+	text-align: center;
+	background: rgba(0, 0, 0, 0.2);
+	/* Ajoute un arrière-plan semi-transparent si nécessaire */
+	border: 0;
+	opacity: .5;
+	transition: opacity .15s ease;
+}
+
+.carousel-control-next:hover,
+.carousel-control-prev:hover {
+	opacity: 1;
+	/* Augmente l'opacité au survol */
+}

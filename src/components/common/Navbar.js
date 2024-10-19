@@ -9,15 +9,20 @@ import CartDropdown from "./Navbar/CartDropdown";
 import { BsPerson } from "react-icons/bs"; // Importer l'icône utilisateur
 import "../../assets/styles/components/Navbar.css";
 import Sidebar from "./Navbar/Sidebar";
+import { useLocation } from "react-router-dom";
 
 function MyNavbar() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [categories, setCategories] = useState([]);
 	const [categoriesOpen, setCategoriesOpen] = useState(false);
+	const location = useLocation(); // Utiliser useLocation pour connaître l'URL actuelle
 
 	// Utiliser les états et fonctions du contexte utilisateur et panier
 	const { user, loading, logout } = useContext(UserContext);
 	const { cartItems, removeFromCart, totalPanier } = useCart(); // Récupérer les éléments du panier via le contexte
+
+	// Définir si on est sur la page d'accueil ("/")
+	const isHomePage = location.pathname === '/';
 
 	// Calculer le total du panier
 
@@ -40,14 +45,18 @@ function MyNavbar() {
 		fetchCategories();
 	}, []);
 
+	// Ajouter la classe navbar-home uniquement si on est sur la page d'accueil
+	const navbarClasses = isHomePage ? "navbar navbar-home" : "navbar bg-light";
+	const burgerIconClasses = isHomePage ? "burger-toggle burger-home" : "burger-toggle";
+
 	return (
 		<>
-			<Navbar className="bg-light" expand={false}>
+			<Navbar className={navbarClasses} expand={false}>
 				<Container className="d-flex justify-content-between align-items-center">
 					<Navbar.Toggle
 						aria-controls="basic-navbar-nav"
 						onClick={toggleSidebar}
-						className="burger-toggle"
+						className={burgerIconClasses}
 					/>
 					<Navbar.Brand className="mx-auto" href="/">
 						<img src={logo} alt="Logo" id="navbar-logo" />
