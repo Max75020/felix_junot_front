@@ -1,0 +1,40 @@
+.legal-notices-container {
+	line-height: 1.6;
+}
+
+.legal-notices-container h2 {
+	margin: 35px 0px;
+}
+
+.legal-notices-container p {
+	margin-bottom: 10px;
+	text-align: justify;
+}
+
+.legal-notices-container li {
+	margin-bottom: 5px;
+	text-align: justify;
+}
+
+.legal-notices-container a {
+	color: var(--color-link) !important;
+	text-decoration: none;
+	cursor: pointer;
+	/* 	Annuler le uppercase */
+	text-transform: none;
+	/* 	Annuler le letter-spacing */
+	letter-spacing: normal;
+}
+
+.legal-notices-container a:hover {
+	color: var(--color-link-hover) !important;
+}
+
+.legal-notices-container ul {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.legal-notices-container ul li {
+	margin-bottom: 5px;
+}

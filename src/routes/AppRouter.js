@@ -13,7 +13,7 @@ import ForgotPasswordForm from '../pages/Auth/ForgotPassword/components/ForgotPa
 import NewPasswordForm from '../pages/Auth/ForgotPassword/components/NewPasswordForm';
 import Faq from '../pages/Legal/Faq';
 import Cgv from '../pages/Legal/Cgv';
-import DeliveryConditions from '../pages/Legal/DeliveryConditions';
+import PrivacyPolicy from '../pages/Legal/PrivacyPolicy';
 import LegalNotices from '../pages/Legal/LegalNotices';
 import ContactForm from '../pages/Contact/ContactForm';
 
@@ -50,7 +50,7 @@ export const routes = {
 	LEGAL: {
 		FAQ: '/faq',
 		LEGAL: '/legal-notices',
-		DELIVERY_CONDITIONS: '/delivery-conditions',
+		PRIVACYPOLICY: '/privacy-policy',
 		CGV: '/cgv',
 	},
 	CONTACT: {
@@ -75,7 +75,7 @@ function AppRouter() {
 						<Route path={routes.PRODUCT.DETAIL} element={<ProductDetail />} />
 						<Route path={routes.LEGAL.FAQ} element={<Faq />} />
 						<Route path={routes.LEGAL.CGV} element={<Cgv />} />
-						<Route path={routes.LEGAL.DELIVERY_CONDITIONS} element={<DeliveryConditions />} />
+						<Route path={routes.LEGAL.PRIVACYPOLICY} element={<PrivacyPolicy />} />
 						<Route path={routes.LEGAL.LEGAL} element={<LegalNotices />} />
 						<Route path={routes.CONTACT.INDEX} element={<ContactForm />} />
 

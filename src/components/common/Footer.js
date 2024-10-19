@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import '../../assets/styles/Footer/footer.css';
+import '../../assets/styles/Footer/Footer.css';
 import { FaInstagram } from "react-icons/fa";
 import { Container } from 'react-bootstrap';
 
@@ -52,8 +52,8 @@ const Footer = () => {
 								<Link to="/cgv">CGV</Link>
 							</li>
 							<li>
-								{/* Lien vers la page des Conditions de Livraison */}
-								<Link to="/delivery-conditions">Conditions de Livraison</Link>
+								{/* Lien vers la page des Charte de Confidentialité */}
+								<Link to="/privacy-policy">Charte de Confidentialité</Link>
 							</li>
 						</ul>
 					</div>
