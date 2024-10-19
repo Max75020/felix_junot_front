@@ -1,0 +1,106 @@
+/* Styles du formulaire de contact */
+.contact-form-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 20px;
+}
+
+.contact-header {
+	text-align: center;
+	margin: 30px 0px;
+}
+
+/* Vue pour smartphones - 1 colonne */
+.contact-form {
+	width: 100%;
+	max-width: 600px;
+	display: flex;
+	flex-direction: column;
+}
+
+.contact-form label {
+	margin-top: 10px;
+	font-weight: bold;
+}
+
+.contact-form input,
+.contact-form textarea {
+	padding: 10px;
+	margin-bottom: 15px;
+	border: 1px solid #ccc;
+	border-radius: 20px;
+	width: 100%;
+}
+
+.contact-form button {
+	padding: 15px;
+	background-color: #000;
+	color: #fff;
+	border: none;
+	border-radius: 20px;
+	cursor: pointer;
+}
+
+.contact-form button:hover {
+	background-color: #444;
+}
+
+/* Vue pour tablettes et ordinateurs - 2 colonnes */
+@media (min-width: 600px) {
+	.contact-form-container {
+		width: 90%;
+		margin: auto;
+	}
+
+	.contact-form {
+		max-width: 800px;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 20px;
+	}
+
+	.contact-form .prenom-container,
+	.contact-form .nom-container,
+	.contact-form .email-container,
+	.contact-form .sujet-container {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.contact-form .prenom-container,
+	.contact-form .nom-container {
+		grid-column: 1;
+	}
+
+	.contact-form .email-container,
+	.contact-form .sujet-container {
+		grid-column: 2;
+	}
+
+	.contact-form .message-container {
+		grid-column: 1 / -1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+}
+
+.button-container {
+	grid-column: 1 / -1;
+	display: flex;
+	justify-content: center;
+}
+
+.contact-form input,
+.contact-form textarea {
+	margin-top: 10px;
+	/* Décale en hauteur */
+	padding-left: 10px;
+	/* Légèrement à droite */
+}
+
+.contact-form label {
+	padding-left: 10px;
+	/* Légèrement à droite */
+}
