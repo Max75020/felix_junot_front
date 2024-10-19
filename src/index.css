@@ -94,3 +94,29 @@ a {
 	background-color: rgba(0, 0, 0, 0.5);
 	z-index: 1049;
 }
+
+/* classe utiles non disponible sur boostrap */
+
+.min-vh-25 {
+	min-height: 25vh;
+}
+
+.min-vh-50 {
+	min-height: 50vh;
+}
+
+.min-vh-75 {
+	min-height: 75vh;
+}
+
+.max-vh-25 {
+	max-height: 25vh;
+}
+
+.max-vh-50 {
+	max-height: 50vh;
+}
+
+.max-vh-75 {
+	max-height: 75vh;
+}
