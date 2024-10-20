@@ -42,6 +42,9 @@ function Sidebar({ isOpen, toggleSidebar, categoriesOpen, toggleCategories, cate
                                 {category.nom}
                             </Nav.Link>
                         ))}
+						<Nav.Link href="/categories" className="py-1 m-0 sidebar-menu-secondary">
+							Toutes les catégories
+						</Nav.Link>
                     </div>
 
                     <hr className="hr-menu" />
