@@ -38,7 +38,7 @@ const CategoryList = () => {
 
 	return (
 		<Container>
-			<h1>Catégories et Produits</h1>
+			<h1>Catégories</h1>
 			{categories.map((category) => (
 				<div key={category.id_categorie} className="mb-5">
 					<h2

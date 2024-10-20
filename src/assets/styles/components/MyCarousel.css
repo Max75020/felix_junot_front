@@ -19,11 +19,29 @@
 }
 
 .carousel-indicators {
-    width: 100px; /* Réduire la largeur pour qu'ils ne couvrent pas tout */
-    bottom: 30px; /* Ajuster la hauteur pour qu'ils soient plus bas */
-    left: 90% !important; /* Centrer les indicateurs */
-    transform: translateX(-50%);
-    z-index: 1; /* S'assurer qu'ils ne se superposent pas aux autres éléments */
+	width: 100px;
+	/* Réduire la largeur pour qu'ils ne couvrent pas tout */
+	bottom: 30px;
+	/* Ajuster la hauteur pour qu'ils soient plus bas */
+	left: 90% !important;
+	/* Centrer les indicateurs */
+	transform: translateX(-50%);
+	z-index: 1;
+	/* S'assurer qu'ils ne se superposent pas aux autres éléments */
+}
+
+@media screen and (max-width: 1024px) {
+	.carousel-indicators {
+		display: none !important;
+		/* Masquer les indicateurs sur les petits écrans */
+	}
+	.carousel-item .carousel-caption {
+		position: absolute;
+		bottom: -1%;
+		left: 0;
+		right: 0;
+		text-align: center;
+	}
 }
 
 

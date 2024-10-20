@@ -3,6 +3,7 @@ import { Card, Button, Row, Col, Container, Carousel } from "react-bootstrap";
 import categoryApi from "../../Category/services/Category.api";
 import { NavLink, useNavigate } from "react-router-dom";
 import { extractIdFromUrl } from "../../../utils/tools";
+
 const CardSliderWithArrows = () => {
 	const [category, setCategory] = useState(null);
 	const [isMobile, setIsMobile] = useState(false);
@@ -31,13 +32,20 @@ const CardSliderWithArrows = () => {
 
 	const handleProductClick = (productUrl) => {
 		const productId = extractIdFromUrl(productUrl); // Utilisation de la fonction générique
-		navigate(`/product/${productId}`); // Redirect to the product page
+		navigate(`/product/${productId}`); // Redirection vers la page produit
+	};
+
+	const handleSeeAllClick = () => {
+		if (category && category.id_categorie) {
+			// Rediriger vers la page "TOUT VOIR" de la catégorie
+			navigate(`/categories/${category.id_categorie}/all`);
+		}
 	};
 
 	useEffect(() => {
 		fetchCategory();
 		handleResize(); // Initial check
-		window.addEventListener("resize", handleResize); // Listen for window resize
+		window.addEventListener("resize", handleResize); // Écouter le redimensionnement de la fenêtre
 		return () => window.removeEventListener("resize", handleResize);
 	}, []);
 
@@ -53,10 +61,7 @@ const CardSliderWithArrows = () => {
 								.slice(0, 3)
 								.map((produit, index) => (
 									<Carousel.Item key={index}>
-										<Card
-											className="mx-auto"
-											style={{ width: "18rem" }}
-										>
+										<Card>
 											<NavLink
 												to={`/categories/${category.id_categorie}/all`}
 											>
@@ -90,6 +95,7 @@ const CardSliderWithArrows = () => {
 											className="d-flex justify-content-center mb-4 gap-5"
 										>
 											<Card
+												className="cursor-pointer card-hover"
 												onClick={() =>
 													handleProductClick(produit["@id"])
 												}
@@ -112,7 +118,7 @@ const CardSliderWithArrows = () => {
 							)}
 						</Row>
 					)}
-					<Button variant="dark" className="mt-4 mb-4">
+					<Button variant="dark" className="mt-4 mb-4" onClick={handleSeeAllClick}>
 						TOUT VOIR
 					</Button>
 				</>

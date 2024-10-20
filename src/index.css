@@ -122,3 +122,11 @@ a {
 .max-vh-75 {
 	max-height: 75vh;
 }
+
+.cursor-pointer {
+	cursor: pointer;
+}
+
+.card-hover:hover {
+	border: 1px solid var(--color-link);
+}
