@@ -10,7 +10,7 @@ function CartDropdown({ cartItems, totalPanier, removeFromCart }) {
             <Dropdown.Toggle
                 variant="none"
                 id="dropdown-cart"
-                className="px-2"
+                className="px-2 hover"
                 bsPrefix="custom-dropdown-toggle"
                 style={{
                     backgroundColor: "transparent",

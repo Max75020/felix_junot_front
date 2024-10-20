@@ -47,6 +47,7 @@ function MyNavbar() {
 
 	// Ajouter la classe navbar-home uniquement si on est sur la page d'accueil
 	const navbarClasses = isHomePage ? "navbar navbar-home" : "navbar bg-light";
+	const profilIconClasses = isHomePage ? "px-2 hover" : "px-2 hover text-dark";
 	const burgerIconClasses = isHomePage ? "burger-toggle burger-home" : "burger-toggle";
 
 	return (
@@ -59,7 +60,7 @@ function MyNavbar() {
 						className={burgerIconClasses}
 					/>
 					<Navbar.Brand className="mx-auto" href="/">
-						<img src={logo} alt="Logo" id="navbar-logo" />
+						<img src={logo} alt="Logo" id="navbar-logo" className="text-light" />
 					</Navbar.Brand>
 					<Nav className="d-flex flex-row align-items-center">
 						{!loading && (
@@ -70,7 +71,7 @@ function MyNavbar() {
 									handleLogout={logout}
 								/>
 							) : (
-								<Nav.Link href="/login" className="px-2">
+								<Nav.Link href="/login" className={profilIconClasses}>
 									<BsPerson size={24} />
 								</Nav.Link>
 							)
