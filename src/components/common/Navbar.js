@@ -1,6 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
-import logo from "../../img/logo/logo.svg";
+import logo from "../../img/logo/logonoir.svg";
+import logonoir from "../../img/logo/logonoir.svg";
+import logoblanc from "../../img/logo/logoblanc.svg";
 import { UserContext } from "../../context/UserContext";
 import { useCart } from "../../context/CartContext"; // Importer le contexte du panier
 import categoryApi from "../../pages/Category/services/Category.api";
@@ -49,6 +51,7 @@ function MyNavbar() {
 	const navbarClasses = isHomePage ? "navbar navbar-home" : "navbar bg-light";
 	const profilIconClasses = isHomePage ? "px-2 hover" : "px-2 hover text-dark";
 	const burgerIconClasses = isHomePage ? "burger-toggle burger-home" : "burger-toggle";
+	const logoClasses = isHomePage ? logoblanc : logonoir;
 
 	return (
 		<>
@@ -60,7 +63,7 @@ function MyNavbar() {
 						className={burgerIconClasses}
 					/>
 					<Navbar.Brand className="mx-auto" href="/">
-						<img src={logo} alt="Logo" id="navbar-logo" className="text-light" />
+						<img src={logoClasses} alt="Logo" id="navbar-logo" className="text-light" />
 					</Navbar.Brand>
 					<Nav className="d-flex flex-row align-items-center">
 						{!loading && (
