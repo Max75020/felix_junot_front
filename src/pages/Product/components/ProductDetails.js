@@ -7,6 +7,8 @@ import { FaHeart } from "react-icons/fa6";
 import { useCart } from "../../../context/CartContext";
 import { UserContext } from "../../../context/UserContext";
 import { extractIdFromUrl } from "../../../utils/tools";
+/* Importer le css */
+import "../../../assets/styles/Products/ProductDetail.css";
 
 const ProductDetail = () => {
 	const [quantity, setQuantity] = useState(1);
@@ -164,6 +166,7 @@ const ProductDetail = () => {
 									variant="danger"
 									size="lg"
 									onClick={handleRemoveFromCart}
+									className="d-flex align-items-center remove-from-cart-btn"
 								>
 									Supprimer du panier
 								</Button>
@@ -172,7 +175,7 @@ const ProductDetail = () => {
 									variant="dark"
 									size="lg"
 									onClick={handleAddToCart}
-									className="d-flex align-items-center"
+									className="d-flex align-items-center add-to-cart-btn"
 								>
 									Ajouter au panier
 								</Button>

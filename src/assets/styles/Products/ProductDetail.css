@@ -1,0 +1,20 @@
+.add-to-cart-btn {
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #000;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.remove-from-cart-btn {
+    background-color: #ff4d4d;
+    color: #fff;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.remove-from-cart-btn:hover {
+    background-color: #ff1a1a;
+    transform: scale(1.05);
+}
