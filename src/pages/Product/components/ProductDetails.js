@@ -11,9 +11,11 @@ import { extractIdFromUrl } from "../../../utils/tools";
 const ProductDetail = () => {
 	const [quantity, setQuantity] = useState(1);
 	const [product, setProduct] = useState(null);
+	const [isInCart, setIsInCart] = useState(false); // Nouvel état pour vérifier si le produit est dans le panier
 	const { id } = useParams();
 	const {
 		addToCart,
+		removeFromCart, // On récupère la méthode depuis le contexte
 		fetchCart,
 		incrementQuantity,
 		decrementQuantity,
@@ -32,11 +34,13 @@ const ProductDetail = () => {
 			const response = await produitApi.getProduitById(id);
 			setProduct(response);
 
-			// Définir la quantité initiale à partir du panier si le produit existe déjà
+			// Vérification si le produit est dans le panier
 			const existingCartItem = cartItems.find(
 				(item) => item.produit["@id"] === response["@id"]
 			);
+
 			if (existingCartItem) {
+				setIsInCart(true);
 				setQuantity(existingCartItem.quantite);
 			}
 		} catch (error) {
@@ -47,6 +51,20 @@ const ProductDetail = () => {
 	const handleAddToCart = () => {
 		if (product) {
 			addToCart(product["@id"], quantity); // Ajout au panier via le contexte
+			setIsInCart(true); // Marque le produit comme ajouté au panier
+		}
+	};
+
+	const handleRemoveFromCart = () => {
+		if (product) {
+			const cartItem = cartItems.find(
+				(item) => item.produit["@id"] === product["@id"]
+			);
+			if (cartItem) {
+				removeFromCart(cartItem.id); // Utilisation de la méthode du contexte
+				setIsInCart(false); // Marquer comme retiré du panier
+				setQuantity(1); // Réinitialiser la quantité
+			}
 		}
 	};
 
@@ -65,7 +83,6 @@ const ProductDetail = () => {
 	};
 
 	useEffect(() => {
-		console.log("userCartId:", userCartId);
 		if (userCartId) {
 			fetchCart(userCartId); // Récupération du panier via le contexte
 		}
@@ -100,8 +117,7 @@ const ProductDetail = () => {
 					<div className="product-details p-3">
 						<h2 className="text-uppercase">{product?.nom}</h2>
 						<p className="text-muted">
-							{product?.description ||
-								"Description non disponible."}
+							{product?.description || "Description non disponible."}
 						</p>
 						<div className="d-flex justify-content-between align-items-center">
 							<p className="lead mb-0">Prix :</p>
@@ -110,45 +126,57 @@ const ProductDetail = () => {
 							</p>
 						</div>
 
-						{/* Contrôle de la quantité */}
-						<Row className="align-items-center my-3">
-							<Col
-								xs={4}
-								className="d-flex justify-content-start align-items-center"
-							>
-								<Button
-									variant="none"
-									onClick={handleDecrementQuantity}
-									className="p-1"
-								>
-									<FiMinus />
-								</Button>
-								<span className="mx-3 fs-5">{quantity}</span>
-								<Button
-									variant="none"
-									onClick={handleIncrementQuantity}
-									className="p-1"
-								>
-									<FiPlus />
-								</Button>
-
-							</Col>
-							{/* afficher le stock  */}
+						{/* Contrôle de la quantité uniquement si le produit est dans le panier */}
+						{isInCart ? (
+							<Row className="align-items-center my-3">
+								<Col xs={4} className="d-flex justify-content-start align-items-center">
+									<Button
+										variant="none"
+										onClick={handleDecrementQuantity}
+										className="p-1"
+									>
+										<FiMinus />
+									</Button>
+									<span className="mx-3 fs-5">{quantity}</span>
+									<Button
+										variant="none"
+										onClick={handleIncrementQuantity}
+										className="p-1"
+									>
+										<FiPlus />
+									</Button>
+								</Col>
+								{/* Afficher le stock */}
+								<p className="text-muted fs-6">
+									{product?.stock} en stock
+								</p>
+							</Row>
+						) : (
 							<p className="text-muted fs-6">
 								{product?.stock} en stock
 							</p>
-						</Row>
+						)}
 
 						{/* Boutons d'action */}
 						<div className="d-flex justify-content-end gap-5 mt-4">
-							<Button
-								variant="dark"
-								size="lg"
-								onClick={handleAddToCart}
-								className="d-flex align-items-center"
-							>
-								Ajouter au panier
-							</Button>
+							{isInCart ? (
+								<Button
+									variant="danger"
+									size="lg"
+									onClick={handleRemoveFromCart}
+								>
+									Supprimer du panier
+								</Button>
+							) : (
+								<Button
+									variant="dark"
+									size="lg"
+									onClick={handleAddToCart}
+									className="d-flex align-items-center"
+								>
+									Ajouter au panier
+								</Button>
+							)}
 							<Button
 								variant="none"
 								size="lg"
