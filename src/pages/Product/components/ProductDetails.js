@@ -112,7 +112,7 @@ const ProductDetail = () => {
 				</ListGroup>
 			</Col>
 
-			<Col md={6}>
+			<Col md={6} className="d-flex justify-content-center">
 				<Image
 					src={
 						product?.imagePrincipal ||
@@ -144,18 +144,41 @@ const ProductDetail = () => {
 					<p className="text-muted text-left">
 						{product?.description || "Description non disponible."}
 					</p>
-					<div className="d-flex justify-content-center align-items-center gap-3 mb-3">
-						<p className="mb-0">Prix :</p>
-						<p className="color-title mb-0 fw-bolder">
-							{product?.prix_ttc} €
-						</p>
+					<div className="d-flex align-items-center justify-content-between flex-wrap flex-column flex-lg-row">
+						<div className="d-flex align-items-center gap-3">
+							<p className="mb-0">Prix :</p>
+							<p className="color-title mb-0 fw-bolder">
+								{product?.prix_ttc} €
+							</p>
+						</div>
+						{/* Boutons d'action */}
+						<div className="d-flex justify-content-center align-items-center flex-wrap mt-3 mt-md-0">
+							{isInCart ? (
+								<Button
+									variant="danger"
+									size="lg"
+									onClick={handleRemoveFromCart}
+									className="d-flex align-items-center remove-from-cart-btn"
+								>
+									Supprimer du panier
+								</Button>
+							) : (
+								<Button
+									variant="dark"
+									size="lg"
+									onClick={handleAddToCart}
+									className="d-flex align-items-center add-to-cart-btn"
+								>
+									Ajouter au panier
+								</Button>
+							)}
+						</div>
 					</div>
 
 					{/* Contrôle de la quantité uniquement si le produit est dans le panier */}
 					{isInCart ? (
-						<Row className="align-items-center">
-							<div className="d-flex justify-content-between align-items-center my-3">
-								<div className="d-flex align-items-center">
+							<div className="d-flex justify-content-between align-items-center my-3 flex-column flex-md-row mt-3 mb-3">
+								<div className="d-flex align-items-center mb-3 mb-md-0">
 									<Button
 										variant="none"
 										onClick={handleDecrementQuantity}
@@ -175,32 +198,7 @@ const ProductDetail = () => {
 								</div>
 								<p className="text-muted fs-6 mb-0">{product?.stock} en stock</p>
 							</div>
-
-						</Row>
 					) : null}
-
-					{/* Boutons d'action */}
-					<div className="d-flex justify-content-center align-items-center align-content-center flex-wrap mt-4">
-						{isInCart ? (
-							<Button
-								variant="danger"
-								size="lg"
-								onClick={handleRemoveFromCart}
-								className="d-flex align-items-center remove-from-cart-btn"
-							>
-								Supprimer du panier
-							</Button>
-						) : (
-							<Button
-								variant="dark"
-								size="lg"
-								onClick={handleAddToCart}
-								className="d-flex align-items-center add-to-cart-btn"
-							>
-								Ajouter au panier
-							</Button>
-						)}
-					</div>
 				</div>
 			</Col>
 		</Row>
