@@ -6,6 +6,31 @@
 	--font-family-title: 'Century Gothic', sans-serif;
 	--font-family-text: 'Metric Medium', sans-serif;
 }
+/* Pour pouvoir se servir des couleurs directement en classe */
+.color-title {
+	color: var(--color-title) !important;
+}
+
+.color-title-hover {
+	color: var(--color-title-hover) !important;
+}
+
+.color-link {
+	color: var(--color-link) !important;
+}
+
+.color-link-hover {
+	color: var(--color-link-hover) !important;
+}
+
+.font-family-title {
+	font-family: var(--font-family-title) !important;
+}
+
+.font-family-text {
+	font-family: var(--font-family-text) !important;
+}
+
 
 
 body {

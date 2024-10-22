@@ -19,13 +19,15 @@ const ProductDetail = () => {
 	const { id } = useParams();
 	const {
 		addToCart,
-		removeFromCart, // On récupère la méthode depuis le contexte
+		removeFromCart,
 		fetchCart,
 		incrementQuantity,
 		decrementQuantity,
 		cartItems,
-	} = useCart(); // Utilisation du contexte
-	const { user } = useContext(UserContext); // Accéder aux informations de l'utilisateur
+	} = useCart();
+	const { user } = useContext(UserContext);
+
+	const isUserConnected = !!user; // Vérifier si l'utilisateur est connecté
 
 	// Récupérer le panier ID à partir de l'IRI du panier
 	const userCartId =
@@ -97,47 +99,63 @@ const ProductDetail = () => {
 		fetchProduct(); // Récupération du produit via l'API
 	}, [id, userCartId]);
 
-	return (
-		<Container className="mt-5">
-			<Row>
-				<Col md={1}>
-					<ListGroup variant="flush">
-						{product?.images.map((image, index) => (
-							<ListGroup.Item key={index}>
-								<Image src={image} thumbnail />
-							</ListGroup.Item>
-						))}
-					</ListGroup>
-				</Col>
+	// Rendu de la vue pour les utilisateurs connectés (restauration de l'ancienne structure)
+	const renderConnectedView = () => (
+		<Row>
+			<Col md={1}>
+				<ListGroup variant="flush">
+					{product?.images.map((image, index) => (
+						<ListGroup.Item key={index}>
+							<Image src={image} thumbnail />
+						</ListGroup.Item>
+					))}
+				</ListGroup>
+			</Col>
 
-				<Col md={6}>
-					<Image
-						src={
-							product?.imagePrincipal ||
-							"https://placehold.co/500"
-						}
-						fluid
-					/>
-				</Col>
+			<Col md={6}>
+				<Image
+					src={
+						product?.imagePrincipal ||
+						"https://placehold.co/500"
+					}
+					fluid
+				/>
+			</Col>
 
-				<Col md={5}>
-					{/* Détails du produit */}
-					<div className="product-details p-3">
-						<h2 className="text-uppercase">{product?.nom}</h2>
-						<p className="text-muted">
-							{product?.description || "Description non disponible."}
+			<Col md={5}>
+				{/* Détails du produit */}
+				<div className="product-details p-3">
+					<div className="d-flex justify-content-center align-items-center mb-3">
+						<h2 className="product-title position-relative m-0">
+							{product?.nom}
+						</h2>
+						<Button
+							variant="none"
+							size="lg"
+							className="d-flex align-items-center justify-content-center p-2 bg-t border-0"
+							style={{
+								width: "50px",
+								height: "50px",
+							}}
+						>
+							<FaHeart />
+						</Button>
+					</div>
+					<p className="text-muted text-left">
+						{product?.description || "Description non disponible."}
+					</p>
+					<div className="d-flex justify-content-center align-items-center gap-3 mb-3">
+						<p className="mb-0">Prix :</p>
+						<p className="color-title mb-0 fw-bolder">
+							{product?.prix_ttc} €
 						</p>
-						<div className="d-flex justify-content-between align-items-center">
-							<p className="lead mb-0">Prix :</p>
-							<p className="lead text-primary mb-0">
-								{product?.prix_ttc} €
-							</p>
-						</div>
+					</div>
 
-						{/* Contrôle de la quantité uniquement si le produit est dans le panier */}
-						{isInCart ? (
-							<Row className="align-items-center my-3">
-								<Col xs={4} className="d-flex justify-content-start align-items-center">
+					{/* Contrôle de la quantité uniquement si le produit est dans le panier */}
+					{isInCart ? (
+						<Row className="align-items-center">
+							<div className="d-flex justify-content-between align-items-center my-3">
+								<div className="d-flex align-items-center">
 									<Button
 										variant="none"
 										onClick={handleDecrementQuantity}
@@ -154,57 +172,66 @@ const ProductDetail = () => {
 									>
 										<FiPlus />
 									</Button>
-								</Col>
-								{/* Afficher le stock */}
-								<p className="text-muted fs-6">
-									{product?.stock} en stock
-								</p>
-							</Row>
-						) : (
-							<p className="text-muted fs-6">
-								{product?.stock} en stock
-							</p>
-						)}
+								</div>
+								<p className="text-muted fs-6 mb-0">{product?.stock} en stock</p>
+							</div>
 
-						{/* Boutons d'action */}
-						<div className="d-flex justify-content-end gap-5 mt-4">
-							{isInCart ? (
-								<Button
-									variant="danger"
-									size="lg"
-									onClick={handleRemoveFromCart}
-									className="d-flex align-items-center remove-from-cart-btn"
-								>
-									Supprimer du panier
-								</Button>
-							) : (
-								<Button
-									variant="dark"
-									size="lg"
-									onClick={handleAddToCart}
-									className="d-flex align-items-center add-to-cart-btn"
-								>
-									Ajouter au panier
-								</Button>
-							)}
+						</Row>
+					) : null}
+
+					{/* Boutons d'action */}
+					<div className="d-flex justify-content-center align-items-center align-content-center flex-wrap mt-4">
+						{isInCart ? (
 							<Button
-								variant="none"
+								variant="danger"
 								size="lg"
-								className="d-flex align-items-center justify-content-center p-2"
-								style={{
-									width: "50px",
-									height: "50px",
-									borderRadius: "50%",
-									border: "2px solid black",
-									backgroundColor: "transparent",
-								}}
+								onClick={handleRemoveFromCart}
+								className="d-flex align-items-center remove-from-cart-btn"
 							>
-								<FaHeart />
+								Supprimer du panier
 							</Button>
-						</div>
+						) : (
+							<Button
+								variant="dark"
+								size="lg"
+								onClick={handleAddToCart}
+								className="d-flex align-items-center add-to-cart-btn"
+							>
+								Ajouter au panier
+							</Button>
+						)}
 					</div>
-				</Col>
-			</Row>
+				</div>
+			</Col>
+		</Row>
+	);
+
+	// Rendu de la vue pour les utilisateurs non connectés
+	const renderDisconnectedView = () => (
+		<div className="disconnected-view text-center">
+			<h2 className="text-uppercase">{product?.nom}</h2>
+			<div className="product-images">
+				<Image
+					src={product?.imagePrincipal || "https://placehold.co/500"}
+					fluid
+					className="mb-3"
+				/>
+				{product?.images.map((image, index) => (
+					<Image
+						key={index}
+						src={image || "https://placehold.co/100"}
+						thumbnail
+						className="mx-1"
+					/>
+				))}
+			</div>
+		</div>
+	);
+
+	return (
+		<Container className="mt-5">
+			{/* Affichage conditionnel basé sur l'état de connexion */}
+			{isUserConnected ? renderConnectedView() : renderDisconnectedView()}
 		</Container>
 	);
 };
