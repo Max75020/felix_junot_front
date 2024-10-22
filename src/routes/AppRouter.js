@@ -16,6 +16,7 @@ import Cgv from '../pages/Legal/Cgv';
 import PrivacyPolicy from '../pages/Legal/PrivacyPolicy';
 import LegalNotices from '../pages/Legal/LegalNotices';
 import ContactForm from '../pages/Contact/ContactForm';
+import ProfilePage from '../pages/Profile/ProfilePage';
 
 export const routes = {
 	AUTH: {
@@ -55,6 +56,9 @@ export const routes = {
 	},
 	CONTACT: {
 		INDEX: '/contact',
+	},
+	PROFIL: {
+		INDEX: '/profil',
 	}
 };
 
@@ -78,6 +82,7 @@ function AppRouter() {
 						<Route path={routes.LEGAL.PRIVACYPOLICY} element={<PrivacyPolicy />} />
 						<Route path={routes.LEGAL.LEGAL} element={<LegalNotices />} />
 						<Route path={routes.CONTACT.INDEX} element={<ContactForm />} />
+						<Route path={routes.PROFIL.INDEX} element={<ProfilePage />} />
 
 						<Route
 							index

@@ -37,7 +37,7 @@ function UserDropdown({ user, userInitials, handleLogout }) {
                     right: "0px",
                 }}
             >
-                <Dropdown.Item href="/profile">Profile</Dropdown.Item>
+                <Dropdown.Item href="/profil">Profil</Dropdown.Item>
                 <Dropdown.Item onClick={handleLogout}>Déconnexion</Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>

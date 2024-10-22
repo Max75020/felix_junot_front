@@ -1,0 +1,43 @@
+.account-nav .account-card {
+	border: 1px solid #000;
+	border-radius: 10px;
+	padding: 15px;
+	font-size: 1.2rem;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.account-nav .account-card:hover {
+	background-color: #f7f7f7;
+}
+
+.profile-avatar img {
+	width: 100px;
+	height: 100px;
+	object-fit: cover;
+}
+
+.profile-page-container {
+    max-width: 800px;
+}
+
+.profile-card {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.profile-avatar img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.account-nav-btn {
+    width: 100%;
+    font-size: 1.2rem;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 10px 0;
+}
