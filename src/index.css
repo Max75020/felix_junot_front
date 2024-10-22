@@ -1,11 +1,29 @@
+#root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+html,
+body {
+	min-height: 100%;
+	margin: 0;
+}
+
 :root {
 	--color-title: #333356;
 	--color-title-hover: #747474;
-	--color-link: #8c8cf2;;
+	--color-link: #8c8cf2;
+	;
 	--color-link-hover: #8f8e8e;
 	--font-family-title: 'Century Gothic', sans-serif;
 	--font-family-text: 'Metric Medium', sans-serif;
 }
+
 /* Pour pouvoir se servir des couleurs directement en classe */
 .color-title {
 	color: var(--color-title) !important;

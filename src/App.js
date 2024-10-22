@@ -6,14 +6,12 @@ import AppRouter from "./routes/AppRouter";
 import PopupService from "./services/popupService";
 function App() {
 	return (
-		<div>
-			<UserProvider>
-				<CartProvider>
+		<UserProvider>
+			<CartProvider>
 				<PopupService />
 				<AppRouter />
-				</CartProvider>
-			</UserProvider>
-		</div>
+			</CartProvider>
+		</UserProvider>
 	);
 }
 

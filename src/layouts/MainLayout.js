@@ -6,9 +6,9 @@ import Footer from '../components/common/Footer';
 
 function MainLayout() {
 	return (
-		<div>
+		<div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
 			<MyNavbar />
-			<main>
+			<main style={{ flex: 1 }}>
 				<Outlet />
 			</main>
 			<Footer />
