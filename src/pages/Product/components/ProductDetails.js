@@ -7,6 +7,8 @@ import { FaHeart } from "react-icons/fa6";
 import { useCart } from "../../../context/CartContext";
 import { UserContext } from "../../../context/UserContext";
 import { extractIdFromUrl } from "../../../utils/tools";
+import { showWarning } from "../../../services/popupService";
+
 /* Importer le css */
 import "../../../assets/styles/Products/ProductDetail.css";
 
@@ -36,8 +38,8 @@ const ProductDetail = () => {
 			const response = await produitApi.getProduitById(id);
 			setProduct(response);
 
-			// Vérification si le produit est dans le panier
-			const existingCartItem = cartItems.find(
+			// Vérification si le produit est dans le panier de l'utilisateur
+			const existingCartItem = user?.paniers[0]?.panierProduits.find(
 				(item) => item.produit["@id"] === response["@id"]
 			);
 
@@ -72,8 +74,12 @@ const ProductDetail = () => {
 
 	const handleIncrementQuantity = () => {
 		if (product && product["@id"]) {
-			setQuantity((prevQuantity) => prevQuantity + 1); // Augmenter la quantité localement
-			incrementQuantity(product["@id"]);
+			if (quantity < product.stock) {
+				setQuantity((prevQuantity) => prevQuantity + 1);
+				incrementQuantity(product["@id"]);
+			} else {
+				showWarning("Stock maximum atteint pour ce produit.");
+			}
 		}
 	};
 
@@ -135,7 +141,7 @@ const ProductDetail = () => {
 									<Button
 										variant="none"
 										onClick={handleDecrementQuantity}
-										className="p-1"
+										className="p-1 border-0"
 									>
 										<FiMinus />
 									</Button>
@@ -143,7 +149,8 @@ const ProductDetail = () => {
 									<Button
 										variant="none"
 										onClick={handleIncrementQuantity}
-										className="p-1"
+										className="p-1 border-0"
+										disabled={quantity >= product?.stock}
 									>
 										<FiPlus />
 									</Button>

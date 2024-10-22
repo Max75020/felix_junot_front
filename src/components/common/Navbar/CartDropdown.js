@@ -10,15 +10,11 @@ function CartDropdown({ cartItems, totalPanier, removeFromCart }) {
             <Dropdown.Toggle
                 variant="none"
                 id="dropdown-cart"
-                className="px-2 hover"
+                className="px-2 hover b-0 bg-t"
                 bsPrefix="custom-dropdown-toggle"
-                style={{
-                    backgroundColor: "transparent",
-                    border: "none",
-                }}
             >
                 <BsBag size={24} />
-                <span className="badge bg-primary ms-2">
+                <span className="badge bg-primary ms-2 d-xs-none">
                     {cartItems.length}
                 </span>
             </Dropdown.Toggle>

@@ -123,6 +123,44 @@ a {
 	max-height: 75vh;
 }
 
+.min-vw-25 {
+	min-width: 25vw;
+}
+
+.min-vw-50 {
+	min-width: 50vw;
+}
+
+.min-vw-75 {
+	min-width: 75vw;
+}
+
+.max-vw-25 {
+	max-width: 25vw;
+}
+
+.max-vw-50 {
+	max-width: 50vw;
+}
+
+.max-vw-75 {
+	max-width: 75vw;
+}
+
+.max-w-90 {
+	max-width: 90% !important;
+}
+
+@media screen and (max-width: 572px) {
+	.d-xs-none {
+		display: none !important;
+	}
+}
+
+.bg-t {
+	background-color: transparent !important;
+}
+
 .cursor-pointer {
 	cursor: pointer;
 }

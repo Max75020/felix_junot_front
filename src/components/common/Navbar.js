@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
-import logo from "../../img/logo/logonoir.svg";
 import logonoir from "../../img/logo/logonoir.svg";
 import logoblanc from "../../img/logo/logoblanc.svg";
 import { UserContext } from "../../context/UserContext";
@@ -56,7 +55,7 @@ function MyNavbar() {
 	return (
 		<>
 			<Navbar className={navbarClasses} expand={false}>
-				<Container className="d-flex justify-content-between align-items-center">
+				<div className="d-flex justify-content-between align-items-center max-w-90 mx-auto w-100">
 					<Navbar.Toggle
 						aria-controls="basic-navbar-nav"
 						onClick={toggleSidebar}
@@ -85,7 +84,7 @@ function MyNavbar() {
 							totalPanier={totalPanier}
 						/>
 					</Nav>
-				</Container>
+				</div>
 			</Navbar>
 			<Sidebar
 				isOpen={isOpen}

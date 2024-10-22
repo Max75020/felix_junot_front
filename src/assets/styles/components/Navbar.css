@@ -75,3 +75,17 @@
 .navbar-home .custom-dropdown-toggle,.navbar-home .nav-link {
 	color: white;
 }
+
+@media screen and (max-width: 572px) {
+	.navbar svg{
+		width: 20px !important;
+		height: 20px !important;
+	}
+	
+}
+
+.navbar svg{
+	width: 28px;
+	height: 28px;
+}
+
