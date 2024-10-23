@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import { UserContext } from "../../context/UserContext";
 import "../../assets/styles/Profile/Profile.css";
@@ -14,6 +14,15 @@ const ProfilePage = () => {
 	const [prenom, setPrenom] = useState(user?.prenom || "");
 	const [nom, setNom] = useState(user?.nom || "");
 	const [telephone, setTelephone] = useState(user?.telephone || "");
+
+	// Mettre à jour les champs d'édition lorsque les données utilisateur changent
+	useEffect(() => {
+		if (user) {
+			setPrenom(user.prenom || "");
+			setNom(user.nom || "");
+			setTelephone(user.telephone || "");
+		}
+	}, [user]);
 
 	const handleSave = (e) => {
 		e.preventDefault();
