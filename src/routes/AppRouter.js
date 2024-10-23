@@ -17,6 +17,7 @@ import PrivacyPolicy from '../pages/Legal/PrivacyPolicy';
 import LegalNotices from '../pages/Legal/LegalNotices';
 import ContactForm from '../pages/Contact/ContactForm';
 import ProfilePage from '../pages/Profile/ProfilePage';
+import FavoritesPage from '../pages/Favorites/FavoritesPage';
 
 export const routes = {
 	AUTH: {
@@ -59,7 +60,10 @@ export const routes = {
 	},
 	PROFIL: {
 		INDEX: '/profil',
-	}
+	},
+	FAVORITES: {
+		INDEX: '/favorites',
+	},
 };
 
 function AppRouter() {
@@ -83,6 +87,7 @@ function AppRouter() {
 						<Route path={routes.LEGAL.LEGAL} element={<LegalNotices />} />
 						<Route path={routes.CONTACT.INDEX} element={<ContactForm />} />
 						<Route path={routes.PROFIL.INDEX} element={<ProfilePage />} />
+						<Route path={routes.FAVORITES.INDEX} element={<FavoritesPage />} />
 
 						<Route
 							index

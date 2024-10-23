@@ -3,11 +3,12 @@ import { Container, Row, Col, Button, Image, ListGroup } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import produitApi from "../services/Product.api";
 import { FiPlus, FiMinus } from "react-icons/fi";
-import { FaHeart } from "react-icons/fa6";
+import { FaHeart, FaRegHeart } from "react-icons/fa6";
 import { useCart } from "../../../context/CartContext";
 import { UserContext } from "../../../context/UserContext";
 import { extractIdFromUrl } from "../../../utils/tools";
 import { showWarning } from "../../../services/popupService";
+import favorisApi from "../../Favorites/services/Favorites.api";
 
 /* Importer le css */
 import "../../../assets/styles/Products/ProductDetail.css";
@@ -16,6 +17,8 @@ const ProductDetail = () => {
 	const [quantity, setQuantity] = useState(1);
 	const [product, setProduct] = useState(null);
 	const [isInCart, setIsInCart] = useState(false); // Nouvel état pour vérifier si le produit est dans le panier
+	const [isFavorite, setIsFavorite] = useState(false); // Nouvel état pour vérifier si le produit est dans les favoris
+	const [favoriteId, setFavoriteId] = useState(null); // Nouvel état pour stocker l'ID du favori
 	const { id } = useParams();
 	const {
 		addToCart,
@@ -25,7 +28,7 @@ const ProductDetail = () => {
 		decrementQuantity,
 		cartItems,
 	} = useCart();
-	const { user } = useContext(UserContext);
+	const { user, setUser } = useContext(UserContext);
 
 	const isUserConnected = !!user; // Vérifier si l'utilisateur est connecté
 
@@ -92,6 +95,87 @@ const ProductDetail = () => {
 		}
 	};
 
+	const handleAddToFavorites = async () => {
+		if (!product) return;
+		try {
+			// Appel du service API pour ajouter un favori
+			const response = await favorisApi.addFavori(user["@id"], product["@id"]);
+
+			// Vérifier que la réponse contient un ID valide
+			if (!response.id_favoris) {
+				console.error("Erreur : L'ID du favori ajouté est manquant dans la réponse.");
+				return;
+			}
+
+			// Mettre à jour l'état local du composant
+			setFavoriteId(response.id_favoris);
+			setIsFavorite(true);
+
+			// Mettre à jour l'utilisateur dans le contexte pour inclure ce nouveau favori
+			setUser((prevUser) => ({
+				...prevUser,
+				favoris: [
+					...prevUser.favoris,
+					{
+						id_favoris: response.id_favoris,
+						produit: {
+							"@id": response.produit["@id"]
+						}
+					}
+				]
+			}));
+		} catch (error) {
+			console.error("Erreur lors de l'ajout aux favoris:", error);
+		}
+	};
+
+
+
+	const handleRemoveFromFavorites = async () => {
+		if (!favoriteId) return;
+		try {
+			// Appel du service API pour supprimer le favori en utilisant son ID
+			await favorisApi.deleteFavori(favoriteId);
+
+			// Mettez à jour l'état local une fois la suppression réussie
+			setFavoriteId(null);
+			setIsFavorite(false);
+
+			// Mettez à jour la liste des favoris dans le contexte utilisateur
+			setUser((prevUser) => ({
+				...prevUser,
+				favoris: prevUser.favoris.filter((fav) => fav.id_favoris !== favoriteId) // Supprimez le favori supprimé de la liste
+			}));
+		} catch (error) {
+			console.error("Erreur lors de la suppression du favori:", error);
+		}
+	};
+
+
+	const checkIfProductIsFavorite = () => {
+		// Vérifiez si l'utilisateur et le produit existent
+		if (user && product && user.favoris) {
+
+			// Recherchez si l'ID du produit correspond à l'un des favoris
+			const favorite = user.favoris.find(
+				(fav) => fav.produit && fav.produit["@id"] === product["@id"]
+			);
+			// Si un favori correspondant est trouvé, mettez à jour l'état
+			if (favorite) {
+				setIsFavorite(true);
+				setFavoriteId(favorite.id_favoris); // Stockez l'ID du favori pour faciliter la suppression
+			} else {
+				setIsFavorite(false);
+			}
+		}
+	};
+
+	useEffect(() => {
+		if (user && product) {
+			checkIfProductIsFavorite();
+		}
+	}, [user, product]);
+
 	useEffect(() => {
 		if (userCartId) {
 			fetchCart(userCartId); // Récupération du panier via le contexte
@@ -137,8 +221,9 @@ const ProductDetail = () => {
 								width: "50px",
 								height: "50px",
 							}}
+							onClick={isFavorite ? handleRemoveFromFavorites : handleAddToFavorites}
 						>
-							<FaHeart />
+							{isFavorite ? <FaHeart /> : <FaRegHeart />}
 						</Button>
 					</div>
 					<p className="text-muted text-left">
@@ -177,27 +262,27 @@ const ProductDetail = () => {
 
 					{/* Contrôle de la quantité uniquement si le produit est dans le panier */}
 					{isInCart ? (
-							<div className="d-flex justify-content-between align-items-center my-3 flex-column flex-md-row mt-3 mb-3">
-								<div className="d-flex align-items-center mb-3 mb-md-0">
-									<Button
-										variant="none"
-										onClick={handleDecrementQuantity}
-										className="p-1 border-0"
-									>
-										<FiMinus />
-									</Button>
-									<span className="mx-3 fs-5">{quantity}</span>
-									<Button
-										variant="none"
-										onClick={handleIncrementQuantity}
-										className="p-1 border-0"
-										disabled={quantity >= product?.stock}
-									>
-										<FiPlus />
-									</Button>
-								</div>
-								<p className="text-muted fs-6 mb-0">{product?.stock} en stock</p>
+						<div className="d-flex justify-content-between align-items-center my-3 flex-column flex-md-row mt-3 mb-3">
+							<div className="d-flex align-items-center mb-3 mb-md-0">
+								<Button
+									variant="none"
+									onClick={handleDecrementQuantity}
+									className="p-1 border-0"
+								>
+									<FiMinus />
+								</Button>
+								<span className="mx-3 fs-5">{quantity}</span>
+								<Button
+									variant="none"
+									onClick={handleIncrementQuantity}
+									className="p-1 border-0"
+									disabled={quantity >= product?.stock}
+								>
+									<FiPlus />
+								</Button>
 							</div>
+							<p className="text-muted fs-6 mb-0">{product?.stock} en stock</p>
+						</div>
 					) : null}
 				</div>
 			</Col>

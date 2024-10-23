@@ -9,13 +9,20 @@ export const UserProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(true);
 
-	// Fonction pour vérifier si l'utilisateur est connecté
 	const checkUserLoggedIn = async () => {
 		const token = localStorage.getItem('token');
 		if (token) {
 			try {
-				const response = await apiService.get('utilisateurs/me'); // Récupérer les infos de l'utilisateur connecté
-				setUser(response); // Mettre à jour l'utilisateur dans le contexte
+				const response = await apiService.get('utilisateurs/me');
+				// Ajouter l'IRI basé sur l'ID utilisateur
+				const iri = `/api/utilisateurs/${response.id_utilisateur}`;
+
+				// Inclure la liste des favoris dans l'utilisateur
+				setUser({
+					...response,
+					'@id': iri, // Ajout de l'IRI correcte
+					favoris: response.favoris || [], // Assurer que les favoris soient une liste
+				});
 			} catch (error) {
 				console.error('Erreur lors de la récupération de l\'utilisateur', error);
 				setUser(null);
@@ -57,7 +64,13 @@ export const UserProvider = ({ children }) => {
 
 		try {
 			const response = await apiService.patch(`utilisateurs/${user.id_utilisateur}`, updatedData);
-			setUser(response); // Mettre à jour l'utilisateur avec les nouvelles données
+			// Ajouter l'IRI basé sur l'ID utilisateur mis à jour
+			const iri = `/api/utilisateurs/${response.id_utilisateur}`;
+			setUser({
+				...response,
+				'@id': iri, // Mise à jour de l'IRI correct
+				favoris: response.favoris || [], // Assurer que les favoris soient une liste
+			});
 		} catch (error) {
 			console.error("Erreur lors de la mise à jour de l'utilisateur", error);
 		}
@@ -68,7 +81,7 @@ export const UserProvider = ({ children }) => {
 	}, []);
 
 	return (
-		<UserContext.Provider value={{ user, loading, login, logout, updateUser }}>
+		<UserContext.Provider value={{ user, setUser, loading, login, logout, updateUser }}>
 			{children}
 		</UserContext.Provider>
 	);
