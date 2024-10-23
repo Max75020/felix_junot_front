@@ -9,8 +9,28 @@ import UserAvatar from "../../components/UserAvatar/UserAvatar"; // Import du co
 import AccountNavButton from "./components/AccountNavButton"; // Import du composant AccountNavButton
 
 const ProfilePage = () => {
-	const { user, loading } = useContext(UserContext);
+	const { user, loading, updateUser } = useContext(UserContext);
 	const [isEditing, setIsEditing] = useState(false);
+	const [prenom, setPrenom] = useState(user?.prenom || "");
+	const [nom, setNom] = useState(user?.nom || "");
+	const [telephone, setTelephone] = useState(user?.telephone || "");
+
+	const handleSave = (e) => {
+		e.preventDefault();
+
+		// Préparer les données à mettre à jour
+		const updatedData = {
+			prenom,
+			nom,
+			telephone,
+		};
+
+		// Appeler la fonction updateUser avec les nouvelles données
+		updateUser(updatedData);
+
+		// Optionnel : désactiver le mode d'édition après la mise à jour
+		setIsEditing(false);
+	};
 
 	if (loading) {
 		return <div>Chargement...</div>;
@@ -35,19 +55,20 @@ const ProfilePage = () => {
 					<h3>{`${user.prenom} ${user.nom}`}</h3>
 					<p className="text-muted">{user.email}</p>
 					<p className="text-muted mb-1">{user.telephone}</p>
-					<Button variant="primary" onClick={handleEditToggle} className="my-3">
+					<Button onClick={handleEditToggle} className="my-3 btn-dark">
 						{isEditing ? "Annuler" : "Modifier"}
 					</Button>
 
 					{/* Formulaire d'édition */}
 					{isEditing && (
-						<Form className="text-left">
+						<Form className="text-left" onSubmit={handleSave}>
 							<Form.Group className="mb-3">
 								<Form.Label>Prénom :</Form.Label>
 								<Form.Control
 									type="text"
 									placeholder="Prénom"
-									defaultValue={user.prenom}
+									value={prenom}
+									onChange={(e) => setPrenom(e.target.value)}
 								/>
 							</Form.Group>
 							<Form.Group className="mb-3">
@@ -55,7 +76,8 @@ const ProfilePage = () => {
 								<Form.Control
 									type="text"
 									placeholder="Nom"
-									defaultValue={user.nom}
+									value={nom}
+									onChange={(e) => setNom(e.target.value)}
 								/>
 							</Form.Group>
 							<Form.Group className="mb-3">
@@ -63,10 +85,11 @@ const ProfilePage = () => {
 								<Form.Control
 									type="tel"
 									placeholder="Numéro de Téléphone"
-									defaultValue={user.telephone}
+									value={telephone}
+									onChange={(e) => setTelephone(e.target.value)}
 								/>
 							</Form.Group>
-							<Button variant="success" className="w-100">
+							<Button variant="success" type="submit" className="w-100">
 								Sauvegarder
 							</Button>
 						</Form>

@@ -48,8 +48,27 @@ export const UserProvider = ({ children }) => {
 		checkUserLoggedIn();
 	}, []);
 
+	// Nouvelle fonction pour mettre à jour l'utilisateur
+	const updateUser = async (updatedData) => {
+		if (!user || !user.id_utilisateur) {
+			console.error("ID utilisateur manquant.");
+			return;
+		}
+
+		try {
+			const response = await apiService.patch(`utilisateurs/${user.id_utilisateur}`, updatedData);
+			setUser(response); // Mettre à jour l'utilisateur avec les nouvelles données
+		} catch (error) {
+			console.error("Erreur lors de la mise à jour de l'utilisateur", error);
+		}
+	};
+
+	useEffect(() => {
+		checkUserLoggedIn();
+	}, []);
+
 	return (
-		<UserContext.Provider value={{ user, loading, login, logout }}>
+		<UserContext.Provider value={{ user, loading, login, logout, updateUser }}>
 			{children}
 		</UserContext.Provider>
 	);

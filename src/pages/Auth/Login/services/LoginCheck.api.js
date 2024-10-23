@@ -2,7 +2,7 @@ import apiService from "../../../../services/apiService";
 
 
 
-// Définitions des endpoints pour l'entité Category
+// Définitions des endpoints pour la connexion
 const LOGINCHECK_ENDPOINT = 'login_check';
 
 const loginCheckerApi = {
