@@ -5,6 +5,8 @@ import "../../assets/styles/Profile/Profile.css";
 import { FaHeart } from "react-icons/fa6"; // Import pour l'icône Favoris
 import { FaBox } from "react-icons/fa"; // Import pour l'icône Commandes
 import { HiLocationMarker } from "react-icons/hi"; // Import pour l'icône Adresses
+import UserAvatar from "../../components/UserAvatar/UserAvatar"; // Import du composant UserAvatar
+import AccountNavButton from "./components/AccountNavButton"; // Import du composant AccountNavButton
 
 const ProfilePage = () => {
 	const { user, loading } = useContext(UserContext);
@@ -13,6 +15,9 @@ const ProfilePage = () => {
 	if (loading) {
 		return <div>Chargement...</div>;
 	}
+
+	// Calculer les initiales de l'utilisateur
+	const userInitials = `${user.prenom.charAt(0)}`;
 
 	const handleEditToggle = () => {
 		setIsEditing(!isEditing);
@@ -23,16 +28,13 @@ const ProfilePage = () => {
 			<Row className="justify-content-center">
 				{/* Carte de profil utilisateur */}
 				<Col md={6} className="text-center profile-card">
-					<div className="profile-avatar mb-3">
-						<img
-							src={user.avatar || "https://via.placeholder.com/100"}
-							alt="User Avatar"
-							className="rounded-circle"
-						/>
+					<div className="profile-avatar mb-3 d-flex justify-content-center">
+						{/* Utilisation du composant UserAvatar pour afficher les initiales */}
+						<UserAvatar initials={userInitials} />
 					</div>
 					<h3>{`${user.prenom} ${user.nom}`}</h3>
-					<p className="text-muted mb-1">{user.phone}</p>
 					<p className="text-muted">{user.email}</p>
+					<p className="text-muted mb-1">{user.telephone}</p>
 					<Button variant="primary" onClick={handleEditToggle} className="my-3">
 						{isEditing ? "Annuler" : "Modifier"}
 					</Button>
@@ -73,22 +75,10 @@ const ProfilePage = () => {
 			</Row>
 
 			{/* Boutons de navigation */}
-			<Row className="justify-content-center mt-5">
-				<Col xs={4} md={3} className="text-center">
-					<Button variant="outline-dark" className="account-nav-btn">
-						<FaHeart size={24} /> Favoris
-					</Button>
-				</Col>
-				<Col xs={4} md={3} className="text-center">
-					<Button variant="outline-dark" className="account-nav-btn">
-						<FaBox size={24} /> Commandes
-					</Button>
-				</Col>
-				<Col xs={4} md={3} className="text-center">
-					<Button variant="outline-dark" className="account-nav-btn">
-						<HiLocationMarker size={24} /> Adresses
-					</Button>
-				</Col>
+			<Row className="justify-content-center mt-5 flex-column flex-md-row align-content-center">
+				<AccountNavButton icon={FaHeart} text="Favoris" size={24} />
+				<AccountNavButton icon={FaBox} text="Commandes" size={24} />
+				<AccountNavButton icon={HiLocationMarker} text="Adresses" size={24} />
 			</Row>
 		</Container>
 	);
