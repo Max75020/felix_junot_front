@@ -18,6 +18,7 @@ import LegalNotices from '../pages/Legal/LegalNotices';
 import ContactForm from '../pages/Contact/ContactForm';
 import ProfilePage from '../pages/Profile/ProfilePage';
 import FavoritesPage from '../pages/Favorites/FavoritesPage';
+import AdressesPage from '../pages/Adresses/AdressesPage';
 
 export const routes = {
 	AUTH: {
@@ -64,6 +65,9 @@ export const routes = {
 	FAVORITES: {
 		INDEX: '/favorites',
 	},
+	ADRESSES: {
+		INDEX: '/adresses',
+	},
 };
 
 function AppRouter() {
@@ -88,6 +92,7 @@ function AppRouter() {
 						<Route path={routes.CONTACT.INDEX} element={<ContactForm />} />
 						<Route path={routes.PROFIL.INDEX} element={<ProfilePage />} />
 						<Route path={routes.FAVORITES.INDEX} element={<FavoritesPage />} />
+						<Route path={routes.ADRESSES.INDEX} element={<AdressesPage />} />
 
 						<Route
 							index

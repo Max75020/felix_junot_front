@@ -110,7 +110,7 @@ const ProfilePage = () => {
 			<Row className="justify-content-center mt-5 flex-column flex-md-row align-content-center">
 				<AccountNavButton icon={FaHeart} text="Favoris" size={24} link="/favorites" />
 				<AccountNavButton icon={FaBox} text="Commandes" size={24} />
-				<AccountNavButton icon={HiLocationMarker} text="Adresses" size={24} />
+				<AccountNavButton icon={HiLocationMarker} text="Adresses" size={24} link="/adresses" />
 			</Row>
 		</Container>
 	);

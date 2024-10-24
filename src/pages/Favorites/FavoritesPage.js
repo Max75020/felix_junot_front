@@ -23,7 +23,7 @@ const FavoritesPage = () => {
 									alt={favori.nom}
 								/>
 								<Card.Body className="text-center">
-									<Card.Title>{favori.nom}</Card.Title>
+									<Card.Title>{favori.produit.nom}</Card.Title>
 								</Card.Body>
 							</Card>
 						</Col>
