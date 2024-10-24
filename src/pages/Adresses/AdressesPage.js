@@ -1,174 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import { Button, Card, Container, Row, Col } from 'react-bootstrap';
+import AdresseApi from './services/Adresses.api';
 
 const AdressesPage = () => {
-	// Liste des adresses avec les données fournies
-	const adresses = [
-		{
-			id_adresse: 1,
-			nom: "Adresse de Facturation",
-			details: {
-				type: "Facturation",
-				prenom: "Maxime",
-				nom: "DUPLAISSY",
-				rue: "1 Rue du boss(eur)",
-				batiment: "Bâtiment 1",
-				appartement: "Appartement 1",
-				codePostal: "75020",
-				ville: "Paris",
-				pays: "France",
-				telephone: "+33123456789",
-			},
-		},
-		{
-			id_adresse: 2,
-			nom: "Adresse de Livraison",
-			details: {
-				type: "Livraison",
-				prenom: "Maxime",
-				nom: "DUPLAISSY",
-				rue: "1 Rue du boss(eur)",
-				batiment: "Bâtiment 1",
-				appartement: "Appartement 1",
-				codePostal: "75020",
-				ville: "Paris",
-				pays: "France",
-				telephone: "+33123456789",
-			},
-		},
-		{
-			id_adresse: 3,
-			nom: "Adresse de Facturation",
-			details: {
-				type: "Facturation",
-				prenom: "Maxime",
-				nom: "DUPLAISSY",
-				rue: "1 Rue du boss(eur)",
-				batiment: "Bâtiment 1",
-				appartement: "Appartement 1",
-				codePostal: "75020",
-				ville: "Paris",
-				pays: "France",
-				telephone: "+33123456789",
-			},
-		},
-		{
-			id_adresse: 4,
-			nom: "Adresse de Livraison",
-			details: {
-				type: "Livraison",
-				prenom: "Maxime",
-				nom: "DUPLAISSY",
-				rue: "1 Rue du boss(eur)",
-				batiment: "Bâtiment 1",
-				appartement: "Appartement 1",
-				codePostal: "75020",
-				ville: "Paris",
-				pays: "France",
-				telephone: "+33123456789",
-			},
-		},
-		{
-			id_adresse: 5,
-			nom: "Adresse de Facturation",
-			details: {
-				type: "Facturation",
-				prenom: "Maxime",
-				nom: "DUPLAISSY",
-				rue: "1 Rue du boss(eur)",
-				batiment: "Bâtiment 1",
-				appartement: "Appartement 1",
-				codePostal: "75020",
-				ville: "Paris",
-				pays: "France",
-				telephone: "+33123456789",
-			},
-		},
-		{
-			id_adresse: 6,
-			nom: "Adresse de Livraison",
-			details: {
-				type: "Livraison",
-				prenom: "Maxime",
-				nom: "DUPLAISSY",
-				rue: "1 Rue du boss(eur)",
-				batiment: "Bâtiment 1",
-				appartement: "Appartement 1",
-				codePostal: "75020",
-				ville: "Paris",
-				pays: "France",
-				telephone: "+33123456789",
-			},
-		},
-		{
-			id_adresse: 5,
-			nom: "Adresse de Facturation",
-			details: {
-				type: "Facturation",
-				prenom: "Maxime",
-				nom: "DUPLAISSY",
-				rue: "1 Rue du boss(eur)",
-				batiment: "Bâtiment 1",
-				appartement: "Appartement 1",
-				codePostal: "75020",
-				ville: "Paris",
-				pays: "France",
-				telephone: "+33123456789",
-			},
-		},
-		{
-			id_adresse: 6,
-			nom: "Adresse de Livraison",
-			details: {
-				type: "Livraison",
-				prenom: "Maxime",
-				nom: "DUPLAISSY",
-				rue: "1 Rue du boss(eur)",
-				batiment: "Bâtiment 1",
-				appartement: "Appartement 1",
-				codePostal: "75020",
-				ville: "Paris",
-				pays: "France",
-				telephone: "+33123456789",
-			},
-		},
-		{
-			id_adresse: 5,
-			nom: "Adresse de Facturation",
-			details: {
-				type: "Facturation",
-				prenom: "Maxime",
-				nom: "DUPLAISSY",
-				rue: "1 Rue du boss(eur)",
-				batiment: "Bâtiment 1",
-				appartement: "Appartement 1",
-				codePostal: "75020",
-				ville: "Paris",
-				pays: "France",
-				telephone: "+33123456789",
-			},
-		},
-		{
-			id_adresse: 6,
-			nom: "Adresse de Livraison",
-			details: {
-				type: "Livraison",
-				prenom: "Maxime",
-				nom: "DUPLAISSY",
-				rue: "1 Rue du boss(eur)",
-				batiment: "Bâtiment 1",
-				appartement: "Appartement 1",
-				codePostal: "75020",
-				ville: "Paris",
-				pays: "France",
-				telephone: "+33123456789",
-			},
-		},
-	];
+	const [adresses, setAdresses] = useState([]);
+	const [loading, setLoading] = useState(true);
 
-	// Filtrage des adresses par type
-	const adressesFacturation = adresses.filter(adresse => adresse.details.type === "Facturation");
-	const adressesLivraison = adresses.filter(adresse => adresse.details.type === "Livraison");
+	useEffect(() => {
+		const fetchAdresses = async () => {
+			try {
+				setLoading(true);
+				const response = await AdresseApi.getAllAdresses();
+				
+				setAdresses(response["hydra:member"]);
+			} catch (error) {
+				console.error('Erreur lors de la récupération des adresses:', error);
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		fetchAdresses();
+	}, []);
+
+	const handleDelete = async (id) => {
+		try {
+			await AdresseApi.deleteAdresse(id);
+			setAdresses(adresses.filter(adresse => adresse.id_adresse !== id));
+		} catch (error) {
+			console.error('Erreur lors de la suppression de l\'adresse:', error);
+		}
+	};
+
+	const adressesFacturation = adresses.filter(adresse => adresse.type === "Facturation");
+	const adressesLivraison = adresses.filter(adresse => adresse.type === "Livraison");
 
 	const renderAdresses = (adresses) => (
 		<Row className='col-12 mx-auto d-flex align-items-center flex-column flex-md-row justify-content-center'>
@@ -178,27 +43,37 @@ const AdressesPage = () => {
 						<Card.Header><h6>{adresse.nom}</h6></Card.Header>
 						<Card.Body>
 							<Card.Text>
-								{adresse.details.prenom} {adresse.details.nom} <br />
-								{adresse.details.rue} <br />
-								{adresse.details.batiment} <br />
-								{adresse.details.appartement} <br />
-								{adresse.details.codePostal} <br />
-								{adresse.details.ville} <br />
-								{adresse.details.pays} <br />
-								{adresse.details.telephone} <br />
+								{adresse.prenom} {adresse.nom} <br />
+								{adresse.rue} <br />
+								{adresse.batiment} <br />
+								{adresse.appartement} <br />
+								{adresse.code_postal} <br />
+								{adresse.ville} <br />
+								{adresse.pays} <br />
+								{adresse.telephone} <br />
 							</Card.Text>
-							<Button variant="dark" className="m-1">
-								Modifier
-							</Button>
-							<Button variant="dark" className="m-1">
-								Supprimer
-							</Button>
+							<div className="d-flex flex-column justify-content-center">
+								<Button variant="dark" className="m-1">
+									Modifier
+								</Button>
+								<Button variant="dark" className="m-1" onClick={() => handleDelete(adresse.id_adresse)}>
+									Supprimer
+								</Button>
+							</div>
 						</Card.Body>
 					</Card>
 				</Col>
 			))}
 		</Row>
 	);
+
+	if (loading) {
+		return (
+			<Container className="my-5">
+				<h1 className="text-center">Chargement des adresses...</h1>
+			</Container>
+		);
+	}
 
 	return (
 		<Container className="my-5">

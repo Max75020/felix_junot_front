@@ -22,6 +22,7 @@ export const UserProvider = ({ children }) => {
 					...response,
 					'@id': iri, // Ajout de l'IRI correcte
 					favoris: response.favoris || [], // Assurer que les favoris soient une liste
+					adresses: response.adresses || [], // Assurer que les adresses soient une liste
 				});
 			} catch (error) {
 				console.error('Erreur lors de la récupération de l\'utilisateur', error);
@@ -70,6 +71,7 @@ export const UserProvider = ({ children }) => {
 				...response,
 				'@id': iri, // Mise à jour de l'IRI correct
 				favoris: response.favoris || [], // Assurer que les favoris soient une liste
+				adresses: response.adresses || [], // Assurer que les adresses soient une liste
 			});
 		} catch (error) {
 			console.error("Erreur lors de la mise à jour de l'utilisateur", error);
