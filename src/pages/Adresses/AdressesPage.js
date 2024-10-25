@@ -54,10 +54,12 @@ const AdressesPage = () => {
 								{adresse.telephone} <br />
 							</Card.Text>
 							<div className="d-flex flex-column justify-content-center">
-								<Button variant="dark" className="m-1">
-									Modifier
-								</Button>
-								<Button variant="dark" className="m-1" onClick={() => handleDelete(adresse.id_adresse)}>
+								<Link to={`/adresses/edit/${adresse.id_adresse}`} className="text-decoration-none">
+									<Button variant="dark" className="m-1 w-100">
+										Modifier
+									</Button>
+								</Link>
+								<Button variant="dark" className="m-1 w-100" onClick={() => handleDelete(adresse.id_adresse)}>
 									Supprimer
 								</Button>
 							</div>

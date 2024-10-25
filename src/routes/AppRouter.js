@@ -20,6 +20,7 @@ import ProfilePage from '../pages/Profile/ProfilePage';
 import FavoritesPage from '../pages/Favorites/FavoritesPage';
 import AdressesPage from '../pages/Adresses/AdressesPage';
 import AddAdressePage from '../pages/Adresses/AddAdressePage';
+import EditAdressePage from '../pages/Adresses/EditAdressePage';
 
 export const routes = {
 	AUTH: {
@@ -69,6 +70,7 @@ export const routes = {
 	ADRESSES: {
 		INDEX: '/adresses',
 		ADD: '/adresses/add',
+		EDIT: '/adresses/edit/:id',
 	},
 };
 
@@ -96,6 +98,7 @@ function AppRouter() {
 						<Route path={routes.FAVORITES.INDEX} element={<FavoritesPage />} />
 						<Route path={routes.ADRESSES.INDEX} element={<AdressesPage />} />
 						<Route path={routes.ADRESSES.ADD} element={<AddAdressePage />} />
+						<Route path={routes.ADRESSES.EDIT} element={<EditAdressePage />} />
 
 						<Route
 							index

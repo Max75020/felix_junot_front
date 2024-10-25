@@ -4,6 +4,14 @@
     flex-direction: column;
 }
 
+input,select,textarea {
+	border-radius: 20px !important;
+}
+
+input:hover,select:hover,textarea:hover {
+border: 1px solid #8c8cf2 !important;
+}
+
 main {
     flex: 1;
 }
