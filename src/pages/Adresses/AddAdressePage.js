@@ -1,64 +1,207 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom'; // Importer useNavigate pour gérer la redirection
+import AdresseApi from '../../pages/Adresses/services/Adresses.api'; // Mettez à jour le chemin selon votre structure de projet
+import { showSuccess, showError } from '../../services/popupService'; // Importer les fonctions de notification
 
 const AddAdressePage = () => {
+	// Gestion des états du formulaire
+	const [adresseData, setAdresseData] = useState({
+		nom_adresse: '',
+		type: 'Livraison',
+		prenom: '',
+		nom: '',
+		rue: '',
+		batiment: '',
+		appartement: '',
+		code_postal: '',
+		ville: '',
+		pays: '',
+		telephone: '',
+		similaire: false,
+	});
+
+	const navigate = useNavigate(); // Hook pour gérer la navigation
+
+	// Fonction de gestion des changements dans le formulaire
+	const handleChange = (e) => {
+		const { name, value, type, checked } = e.target;
+		setAdresseData((prevData) => ({
+			...prevData,
+			[name]: type === 'checkbox' ? checked : value,
+		}));
+	};
+
+	// Fonction de gestion de la soumission du formulaire
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		try {
+			const response = await AdresseApi.createAdresse(adresseData);
+			showSuccess('Adresse créée avec succès !'); // Afficher une notification de succès
+			navigate('/adresses'); // Redirection vers la page des adresses après succès
+		} catch (error) {
+			showError("Erreur lors de la création de l'adresse. Veuillez réessayer."); // Afficher une notification d'erreur
+			console.error("Erreur lors de la création de l'adresse :", error);
+		}
+	};
+
 	return (
 		<Container className="my-5">
 			<h1 className="text-center mb-4">Ajouter une adresse</h1>
-			<Form>
+			<Form onSubmit={handleSubmit}>
 				<Row>
 					<Col xs={12} md={6} className="mb-3">
+						<Form.Group controlId="nomAdresse">
+							<Form.Label>Nom de l'adresse <span className="text-danger">*</span> :</Form.Label>
+							<Form.Control
+								type="text"
+								name="nom_adresse"
+								placeholder="Nom de l'adresse"
+								value={adresseData.nom_adresse}
+								onChange={handleChange}
+								required
+							/>
+						</Form.Group>
+					</Col>
+					<Col xs={12} md={6} className="mb-3">
+						<Form.Group controlId="typeAdresse">
+							<Form.Label>Type d'Adresse <span className="text-danger">*</span> :</Form.Label>
+							<Form.Select
+								name="type"
+								value={adresseData.type}
+								onChange={handleChange}
+								required
+							>
+								<option value="">Sélectionner le type d'adresse</option>
+								<option value="Facturation">Facturation</option>
+								<option value="Livraison">Livraison</option>
+							</Form.Select>
+						</Form.Group>
+					</Col>
+					<Col xs={12} md={6} className="mb-3">
 						<Form.Group controlId="prenom">
-							<Form.Label>Prénom :</Form.Label>
-							<Form.Control type="text" placeholder="Prénom" />
+							<Form.Label>Prénom <span className="text-danger">*</span> :</Form.Label>
+							<Form.Control
+								type="text"
+								name="prenom"
+								placeholder="Prénom"
+								value={adresseData.prenom}
+								onChange={handleChange}
+								required
+							/>
 						</Form.Group>
 					</Col>
 					<Col xs={12} md={6} className="mb-3">
 						<Form.Group controlId="nom">
-							<Form.Label>Nom :</Form.Label>
-							<Form.Control type="text" placeholder="Nom" />
+							<Form.Label>Nom <span className="text-danger">*</span> :</Form.Label>
+							<Form.Control
+								type="text"
+								name="nom"
+								placeholder="Nom"
+								value={adresseData.nom}
+								onChange={handleChange}
+								required
+							/>
 						</Form.Group>
 					</Col>
 					<Col xs={12} md={6} className="mb-3">
 						<Form.Group controlId="rue">
-							<Form.Label>Rue/Avenue/Bd :</Form.Label>
-							<Form.Control type="text" placeholder="Rue/Avenue/Bd" />
+							<Form.Label>Rue/Avenue/Bd <span className="text-danger">*</span> :</Form.Label>
+							<Form.Control
+								type="text"
+								name="rue"
+								placeholder="Rue/Avenue/Bd"
+								value={adresseData.rue}
+								onChange={handleChange}
+								required
+							/>
 						</Form.Group>
 					</Col>
 					<Col xs={12} md={6} className="mb-3">
 						<Form.Group controlId="batiment">
 							<Form.Label>Bâtiment :</Form.Label>
-							<Form.Control type="text" placeholder="Bâtiment" />
+							<Form.Control
+								type="text"
+								name="batiment"
+								placeholder="Bâtiment"
+								value={adresseData.batiment}
+								onChange={handleChange}
+							/>
 						</Form.Group>
 					</Col>
 					<Col xs={12} md={6} className="mb-3">
 						<Form.Group controlId="appartement">
 							<Form.Label>Appartement :</Form.Label>
-							<Form.Control type="text" placeholder="Appartement" />
+							<Form.Control
+								type="text"
+								name="appartement"
+								placeholder="Appartement"
+								value={adresseData.appartement}
+								onChange={handleChange}
+							/>
 						</Form.Group>
 					</Col>
 					<Col xs={12} md={6} className="mb-3">
 						<Form.Group controlId="codePostal">
-							<Form.Label>Code Postal :</Form.Label>
-							<Form.Control type="text" placeholder="Code Postal" />
+							<Form.Label>Code Postal <span className="text-danger">*</span> :</Form.Label>
+							<Form.Control
+								type="text"
+								name="code_postal"
+								placeholder="Code Postal"
+								value={adresseData.code_postal}
+								onChange={handleChange}
+								required
+							/>
 						</Form.Group>
 					</Col>
 					<Col xs={12} md={6} className="mb-3">
 						<Form.Group controlId="ville">
-							<Form.Label>Ville :</Form.Label>
-							<Form.Control type="text" placeholder="Ville" />
+							<Form.Label>Ville <span className="text-danger">*</span> :</Form.Label>
+							<Form.Control
+								type="text"
+								name="ville"
+								placeholder="Ville"
+								value={adresseData.ville}
+								onChange={handleChange}
+								required
+							/>
 						</Form.Group>
 					</Col>
 					<Col xs={12} md={6} className="mb-3">
 						<Form.Group controlId="pays">
-							<Form.Label>Pays :</Form.Label>
-							<Form.Control type="text" placeholder="Pays" />
+							<Form.Label>Pays <span className="text-danger">*</span> :</Form.Label>
+							<Form.Control
+								type="text"
+								name="pays"
+								placeholder="Pays"
+								value={adresseData.pays}
+								onChange={handleChange}
+								required
+							/>
 						</Form.Group>
 					</Col>
 					<Col xs={12} className="mb-3">
 						<Form.Group controlId="telephone">
-							<Form.Label>Tel :</Form.Label>
-							<Form.Control type="text" placeholder="Numéro de téléphone" />
+							<Form.Label>Tel <span className="text-danger">*</span> :</Form.Label>
+							<Form.Control
+								type="text"
+								name="telephone"
+								placeholder="Numéro de téléphone"
+								value={adresseData.telephone}
+								onChange={handleChange}
+								required
+							/>
+						</Form.Group>
+					</Col>
+					<Col xs={12} className="mb-3">
+						<Form.Group controlId="similaire">
+							<Form.Check
+								type="checkbox"
+								label="Créer l'autre adresse automatiquement"
+								name="similaire"
+								checked={adresseData.similaire}
+								onChange={handleChange}
+							/>
 						</Form.Group>
 					</Col>
 				</Row>

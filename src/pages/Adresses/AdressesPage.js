@@ -41,7 +41,7 @@ const AdressesPage = () => {
 			{adresses.map((adresse) => (
 				<Col key={adresse.id_adresse} xs={8} sm={7} md={5} lg={4} xl={3} className="mb-4">
 					<Card className="text-center border-dark">
-						<Card.Header><h6>{adresse.nom}</h6></Card.Header>
+						<Card.Header><h6>{adresse.nom_adresse}</h6></Card.Header>
 						<Card.Body>
 							<Card.Text>
 								{adresse.prenom} {adresse.nom} <br />
