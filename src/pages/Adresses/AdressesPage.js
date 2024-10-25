@@ -1,6 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import { Button, Card, Container, Row, Col } from 'react-bootstrap';
 import AdresseApi from './services/Adresses.api';
+import { Link } from "react-router-dom";
 
 const AdressesPage = () => {
 	const [adresses, setAdresses] = useState([]);
@@ -86,7 +87,9 @@ const AdressesPage = () => {
 			{renderAdresses(adressesLivraison)}
 
 			<div className="text-center mt-4">
+			<Link to="/adresses/add" className="text-decoration-none">
 				<Button variant="dark">Ajouter une nouvelle adresse</Button>
+			</Link>
 			</div>
 		</Container>
 	);

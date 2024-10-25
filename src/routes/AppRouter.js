@@ -19,6 +19,7 @@ import ContactForm from '../pages/Contact/ContactForm';
 import ProfilePage from '../pages/Profile/ProfilePage';
 import FavoritesPage from '../pages/Favorites/FavoritesPage';
 import AdressesPage from '../pages/Adresses/AdressesPage';
+import AddAdressePage from '../pages/Adresses/AddAdressePage';
 
 export const routes = {
 	AUTH: {
@@ -67,6 +68,7 @@ export const routes = {
 	},
 	ADRESSES: {
 		INDEX: '/adresses',
+		ADD: '/adresses/add',
 	},
 };
 
@@ -93,6 +95,7 @@ function AppRouter() {
 						<Route path={routes.PROFIL.INDEX} element={<ProfilePage />} />
 						<Route path={routes.FAVORITES.INDEX} element={<FavoritesPage />} />
 						<Route path={routes.ADRESSES.INDEX} element={<AdressesPage />} />
+						<Route path={routes.ADRESSES.ADD} element={<AddAdressePage />} />
 
 						<Route
 							index
