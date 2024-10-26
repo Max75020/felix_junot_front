@@ -28,17 +28,17 @@ const ForgotPasswordForm = () => {
                     {successMessage && <div className="alert alert-success">{successMessage}</div>}
                     
                     <Form.Group className="mb-3" controlId="email">
-                        <Form.Label>Email address</Form.Label>
+                        <Form.Label>Adresse Email</Form.Label>
                         <Form.Control
                             type="email"
-                            placeholder="Enter email"
+                            placeholder="exemple@gmail.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
                         />
                     </Form.Group>
 
-                    <Button variant="primary" type="submit">
+                    <Button className='d-flex mx-auto btn-dark' variant="primary" type="submit">
                         Envoyer la demande de réinitialisation
                     </Button>
                 </Form>

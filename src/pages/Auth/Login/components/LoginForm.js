@@ -51,9 +51,6 @@ const LoginForm = () => {
 							onChange={(e) => setEmail(e.target.value)}
 							required
 						/>
-						<Form.Text className="text-muted">
-							We'll never share your email with anyone else.
-						</Form.Text>
 					</Form.Group>
 
 					<Form.Group className="mb-3" controlId="formBasicPassword">
@@ -65,13 +62,19 @@ const LoginForm = () => {
 							onChange={(e) => setPassword(e.target.value)}
 							required
 						/>
+						{/* mot de passe oublié */}
+						<Form.Text className="text-muted ms-3">
+							<a className='color-link-hover text-dark text-decoration-none' href={routes.AUTH.FORGOT_PASSWORD}>Mot de passe oublié</a>
+						</Form.Text>
 					</Form.Group>
-					{/* mot de passe oublié */}
-					<a href={routes.AUTH.FORGOT_PASSWORD}>Forgot password?</a>
 
-					<Button variant="primary" type="submit">
-						Submit
+					<Button className='d-flex mx-auto btn-dark col-12 text-align-center justify-content-center' type="submit">
+						Se connecter
 					</Button>
+					<Form.Text className="text-muted d-flex flex-column align-items-center">
+						<p className='m-0'>Vous n'avez pas de compte ?</p>
+							<a className='color-link-hover text-dark text-decoration-none' href={routes.AUTH.REGISTER}>Créer son compte</a>
+						</Form.Text>
 				</Form>
 			</div>
 		</Container>

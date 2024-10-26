@@ -37,7 +37,7 @@ body {
 	color: var(--color-title) !important;
 }
 
-.color-title-hover {
+.color-title-hover:hover {
 	color: var(--color-title-hover) !important;
 }
 
@@ -45,7 +45,7 @@ body {
 	color: var(--color-link) !important;
 }
 
-.color-link-hover {
+.color-link-hover:hover {
 	color: var(--color-link-hover) !important;
 }
 
@@ -89,8 +89,7 @@ h2 {
 	left: 0;
 }
 
-.sidebar p,
-a {
+.sidebar p, .sidebar a {
 	letter-spacing: .2em;
 	text-transform: uppercase;
 	cursor: pointer;

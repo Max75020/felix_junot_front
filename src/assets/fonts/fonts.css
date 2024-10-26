@@ -57,7 +57,11 @@ h4 {
 }
 
 p {
-	font-size: 18px;
+	font-size: 16px;
+}
+
+a {
+	font-size: 16px;
 }
 
 /* Pour tablettes (768px - 1024px) */
@@ -79,12 +83,12 @@ p {
 	}
 
 	p {
-		font-size: 18px;
+		font-size: 15px;
 		/* Peut rester pareil si souhaité */
 	}
 
 	a {
-		font-size: 18px;
+		font-size: 15px;
 	}
 }
 
@@ -107,10 +111,10 @@ p {
 	}
 
 	p {
-		font-size: 16px;
+		font-size: 14px;
 	}
 
 	a {
-		font-size: 16px;
+		font-size: 14px;
 	}
 }

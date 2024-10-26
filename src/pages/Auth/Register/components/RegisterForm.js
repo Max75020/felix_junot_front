@@ -52,10 +52,10 @@ const RegisterForm = () => {
 
 					{/* Prénom */}
 					<Form.Group className="mb-3" controlId="prenom">
-						<Form.Label>First Name</Form.Label>
+						<Form.Label>Prénom</Form.Label>
 						<Form.Control
 							type="text"
-							placeholder="Enter first name"
+							placeholder="Prénom"
 							value={prenom}
 							onChange={(e) => setprenom(e.target.value)}
 							required
@@ -64,10 +64,10 @@ const RegisterForm = () => {
 
 					{/* Nom */}
 					<Form.Group className="mb-3" controlId="nom">
-						<Form.Label>Last Name</Form.Label>
+						<Form.Label>Nom</Form.Label>
 						<Form.Control
 							type="text"
-							placeholder="Enter last name"
+							placeholder="Nom"
 							value={nom}
 							onChange={(e) => setnom(e.target.value)}
 							required
@@ -76,10 +76,10 @@ const RegisterForm = () => {
 
 					{/* Email */}
 					<Form.Group className="mb-3" controlId="email">
-						<Form.Label>Email address</Form.Label>
+						<Form.Label>Adresse Email</Form.Label>
 						<Form.Control
 							type="email"
-							placeholder="Enter email"
+							placeholder="exemple@gmail.com"
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 							required
@@ -88,10 +88,10 @@ const RegisterForm = () => {
 
 					{/* Mot de passe */}
 					<Form.Group className="mb-3" controlId="password">
-						<Form.Label>Password</Form.Label>
+						<Form.Label>Mot de passe</Form.Label>
 						<Form.Control
 							type="password"
-							placeholder="Enter password"
+							placeholder="Mot de passe"
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 							required
@@ -99,18 +99,18 @@ const RegisterForm = () => {
 					</Form.Group>
 
 					<Form.Group className="mb-3" controlId="confirmPassword">
-						<Form.Label>Confirm Password</Form.Label>
+						<Form.Label>Confirmer le Mot de passe</Form.Label>
 						<Form.Control
 							type="password"
-							placeholder="Confirm Password"
+							placeholder="Confirmer le Mot de passe"
 							value={confirmPassword}
 							onChange={(e) => setConfirmPassword(e.target.value)}
 							required
 						/>
 					</Form.Group>
 
-					<Button variant="primary" type="submit">
-						Register
+					<Button className='btn-dark d-flex mx-auto' type="submit">
+						S'inscrire
 					</Button>
 				</Form>
 			</div>
