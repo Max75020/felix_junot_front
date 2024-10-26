@@ -2,7 +2,6 @@ import React, { createContext, useState, useEffect } from 'react';
 import apiService from '../services/apiService';
 import loginCheckerApi from '../pages/Auth/Login/services/LoginCheck.api';
 
-
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
@@ -43,14 +42,24 @@ export const UserProvider = ({ children }) => {
 			}
 		} catch (error) {
 			console.error('Erreur de connexion', error);
+
+			// Lever l'erreur à nouveau pour qu'elle soit capturée dans le composant appelant
+			throw error;
 		}
 	};
 
 	const logout = () => {
+		// Rediriger immédiatement vers la page d'accueil
+		window.location.href = '/';
+
+		// Supprimer les tokens après la redirection
 		localStorage.removeItem('token');
 		localStorage.removeItem('refreshToken');
+
+		// Déconnecter l'utilisateur après la redirection
 		setUser(null);
 	};
+
 
 	useEffect(() => {
 		checkUserLoggedIn();
