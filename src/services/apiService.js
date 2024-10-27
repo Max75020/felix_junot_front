@@ -1,8 +1,95 @@
 const BASE_URL = 'http://localhost:8741/api';
 
-// Récupérer le token (par exemple, stocké dans localStorage)
+// Récupérer le token d'accès
 const getToken = () => {
 	return localStorage.getItem('token');
+};
+
+// Récupérer le refresh token
+const getRefreshToken = () => {
+	return localStorage.getItem('refresh_token');
+};
+
+// Sauvegarder le nouveau token
+const setToken = (token) => {
+	localStorage.setItem('token', token);
+};
+
+// Supprimer les tokens (lorsque l'utilisateur doit se reconnecter)
+export const clearTokens = () => {
+	localStorage.removeItem('token');
+	localStorage.removeItem('refresh_token');
+};
+
+// Rediriger vers la page de connexion (par exemple)
+const redirectToLogin = () => {
+	clearTokens();
+	window.location.href = '/login'; // Remplacer par la route appropriée
+};
+
+// Rafraîchir le token d'accès en utilisant le refresh token
+const refreshAccessToken = async () => {
+	const refreshToken = getRefreshToken();
+	if (!refreshToken) {
+		throw new Error('Refresh token not available');
+	}
+
+	try {
+		const response = await fetch(`${BASE_URL}/token/refresh`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ refresh_token: refreshToken }),
+		});
+
+		if (response.ok) {
+			const data = await response.json();
+			setToken(data.token);
+			return data.token;
+		} else {
+			throw new Error('Unable to refresh token');
+		}
+	} catch (error) {
+		console.error("Erreur lors de la régénération du token", error);
+		throw error; // Laisser l'appelant décider quoi faire
+	}
+};
+
+// Fonction générique pour gérer la logique de requête avec auto-refresh
+const makeRequest = async (method, endpoint, data = null, requireAuth = true) => {
+	let token = requireAuth ? getToken() : null;
+
+	const headers = {
+		'Content-Type': 'application/json',
+	};
+	if (token) {
+		headers['Authorization'] = `Bearer ${token}`;
+	}
+
+	let response = await fetch(`${BASE_URL}/${endpoint}`, {
+		method,
+		headers,
+		body: data ? JSON.stringify(data) : null,
+	});
+
+	if (response.status === 401 && requireAuth) {
+		// Si le token est expiré, essaye de le rafraîchir
+		try {
+			token = await refreshAccessToken();
+			headers['Authorization'] = `Bearer ${token}`;
+			response = await fetch(`${BASE_URL}/${endpoint}`, {
+				method,
+				headers,
+				body: data ? JSON.stringify(data) : null,
+			});
+		} catch (error) {
+			redirectToLogin(); // Déconnecter l'utilisateur en cas d'échec du refresh
+			return; // Arrêter l'exécution après la redirection
+		}
+	}
+
+	return handleResponse(response);
 };
 
 // Fonction pour traiter la réponse API
@@ -11,7 +98,6 @@ const handleResponse = async (response) => {
 		const errorData = await response.json().catch(() => ({}));
 		throw new Error(errorData.message || 'An error occurred');
 	}
-	// Si la réponse ne contient pas de corps, renvoyer un indicateur de succès simple
 	try {
 		return await response.json();
 	} catch (e) {
@@ -19,133 +105,34 @@ const handleResponse = async (response) => {
 	}
 };
 
+// Les méthodes du `apiService` utilisent désormais la fonction `makeRequest`
 const apiService = {
-	// Requête GET pour récupérer une ressource par ID
-	get: async (endpoint) => {
-		const token = getToken();
-		const response = await fetch(`${BASE_URL}/${endpoint}`, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-				'Authorization': `Bearer ${token}` // Ajout du token dans le header
-			},
-		});
-		return handleResponse(response);
-	},
-
-	getNoToken: async (endpoint) => {
-		const response = await fetch(`${BASE_URL}/${endpoint}`, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		});
-		return handleResponse(response);
-	},
-
-	// Requête POST pour créer une nouvelle ressource
-	post: async (endpoint, data, requireAuth = true) => {
-		// Si l'authentification est requise, récupère le token
-		const token = requireAuth ? getToken() : null;
-
-		// Prépare les headers avec ou sans token
-		const headers = {
-			'Content-Type': 'application/json',
-		};
-
-		if (token) {
-			headers['Authorization'] = `Bearer ${token}`; // Ajout du token dans le header si présent
-		}
-
-		// Envoie de la requête
-		const response = await fetch(`${BASE_URL}/${endpoint}`, {
-			method: 'POST',
-			headers,
-			body: JSON.stringify(data),
-		});
-		return handleResponse(response);
-	},
-
-	// Requête PUT pour mettre à jour une ressource existante
-	put: async (endpoint, data) => {
-		const token = getToken();
-		const response = await fetch(`${BASE_URL}/${endpoint}`, {
-			method: 'PUT',
-			headers: {
-				'Content-Type': 'application/json',
-				'Authorization': `Bearer ${token}` // Ajout du token dans le header
-			},
-			body: JSON.stringify(data),
-		});
-		return handleResponse(response);
-	},
-
-	// Requête PATCH pour mettre à jour une ressource existante
-	patch: async (endpoint, data) => {
-		const token = getToken();
-		const response = await fetch(`${BASE_URL}/${endpoint}`, {
-			method: 'PATCH',
-			headers: {
-				'Content-Type': 'application/merge-patch+json',
-				'Authorization': `Bearer ${token}` // Ajout du token dans le header
-			},
-			body: JSON.stringify(data),
-		});
-		return handleResponse(response);
-	},
-
-	// Requête DELETE pour supprimer une ressource par ID
-	delete: async (endpoint) => {
-		const token = getToken();
-		const response = await fetch(`${BASE_URL}/${endpoint}`, {
-			method: 'DELETE',
-			headers: {
-				'Content-Type': 'application/json',
-				'Authorization': `Bearer ${token}` // Ajout du token dans le header
-			},
-		});
-		return handleResponse(response);
-	},
-
-	// Requête FIND pour récupérer plusieurs éléments
+	get: async (endpoint) => makeRequest('GET', endpoint),
+	getNoToken: async (endpoint) => makeRequest('GET', endpoint, null, false),
+	post: async (endpoint, data, requireAuth = true) => makeRequest('POST', endpoint, data, requireAuth),
+	put: async (endpoint, data) => makeRequest('PUT', endpoint, data),
+	patch: async (endpoint, data) => makeRequest('PATCH', endpoint, data),
+	delete: async (endpoint) => makeRequest('DELETE', endpoint),
 	find: async (endpoint, params = {}) => {
-		const token = getToken();
 		const query = new URLSearchParams(params).toString();
-		const response = await fetch(`${BASE_URL}/${endpoint}?${query}`, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-				'Authorization': `Bearer ${token}` // Ajout du token dans le header
-			},
-		});
-		return handleResponse(response);
+		return makeRequest('GET', `${endpoint}?${query}`);
 	},
-
-	// Requête FIND pour récupérer plusieurs éléments sans token
 	findNoToken: async (endpoint, params = {}) => {
 		const query = new URLSearchParams(params).toString();
-		const response = await fetch(`${BASE_URL}/${endpoint}?${query}`, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		});
-		return handleResponse(response);
+		return makeRequest('GET', `${endpoint}?${query}`, null, false);
 	},
-
-	// Requête custom pour gérer différents types de méthodes et headers
 	customRequest: async (method, endpoint, data = null, additionalHeaders = {}) => {
 		const token = getToken();
 		const headers = {
 			'Content-Type': 'application/json',
-			'Authorization': `Bearer ${token}`, // Ajout du token dans le header
-			...additionalHeaders, // Ajouter des headers supplémentaires si fournis
+			'Authorization': `Bearer ${token}`,
+			...additionalHeaders,
 		};
 
 		const response = await fetch(`${BASE_URL}/${endpoint}`, {
 			method,
 			headers,
-			body: data ? JSON.stringify(data) : null, // Inclure les données seulement si fournies
+			body: data ? JSON.stringify(data) : null,
 		});
 
 		return handleResponse(response);

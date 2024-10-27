@@ -12,6 +12,7 @@ const loginCheckerApi = {
 		// Si la réponse contient un token, on sauvegarde le token et l'email dans le localStorage
 		if (response && response.token) {
 			localStorage.setItem('token', response.token); // Stocker le token
+			localStorage.setItem('refresh_token', response.refresh_token); // Stocker le refresh token
 		}
 
 		return response;

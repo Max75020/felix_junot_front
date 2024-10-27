@@ -12,7 +12,6 @@ const CardSliderWithArrows = () => {
 	const fetchCategory = async () => {
 		try {
 			const response = await categoryApi.getCategoryByIdNoToken(1);
-			console.log("Structure de la réponse:", response);
 			if (response) {
 				setCategory(response);
 			} else {
