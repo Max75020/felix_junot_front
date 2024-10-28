@@ -67,6 +67,10 @@ const makeRequest = async (method, endpoint, data = null, requireAuth = true) =>
 		headers['Authorization'] = `Bearer ${token}`;
 	}
 
+	if (method === 'PATCH') {
+		headers['Content-Type'] = 'application/merge-patch+json';
+	}
+
 	let response = await fetch(`${BASE_URL}/${endpoint}`, {
 		method,
 		headers,
