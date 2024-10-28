@@ -21,6 +21,7 @@ import FavoritesPage from '../pages/Favorites/FavoritesPage';
 import AdressesPage from '../pages/Adresses/AdressesPage';
 import AddAdressePage from '../pages/Adresses/AddAdressePage';
 import EditAdressePage from '../pages/Adresses/EditAdressePage';
+import PanierSummary from '../pages/Commands/PanierSummary';
 
 export const routes = {
 	AUTH: {
@@ -30,9 +31,6 @@ export const routes = {
 		FORGOT_PASSWORD: '/forgot-password',
 		NEW_PASSWORD: '/new-password',
 
-
-
-		
 		UNAUTHORIZED: '/unauthorized',
 	},
 	HOME: {
@@ -72,6 +70,9 @@ export const routes = {
 		ADD: '/adresses/add',
 		EDIT: '/adresses/edit/:id',
 	},
+	COMMANDS: {
+		PANIER_SUMMARY: '/panier-summary',
+	},
 };
 
 function AppRouter() {
@@ -99,6 +100,7 @@ function AppRouter() {
 						<Route path={routes.ADRESSES.INDEX} element={<AdressesPage />} />
 						<Route path={routes.ADRESSES.ADD} element={<AddAdressePage />} />
 						<Route path={routes.ADRESSES.EDIT} element={<EditAdressePage />} />
+						<Route path={routes.COMMANDS.PANIER_SUMMARY} element={<PanierSummary />} />
 
 						<Route
 							index
