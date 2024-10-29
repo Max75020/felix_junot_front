@@ -22,6 +22,8 @@ import AdressesPage from '../pages/Adresses/AdressesPage';
 import AddAdressePage from '../pages/Adresses/AddAdressePage';
 import EditAdressePage from '../pages/Adresses/EditAdressePage';
 import PanierSummary from '../pages/Commands/PanierSummary';
+import AddressChoice from '../pages/Commands/AddressChoice';
+import CarrierChoice from '../pages/Commands/CarrierChoice';
 
 export const routes = {
 	AUTH: {
@@ -72,6 +74,8 @@ export const routes = {
 	},
 	COMMANDS: {
 		PANIER_SUMMARY: '/panier-summary',
+		ADDRESS_CHOICE: '/address-choice',
+		CARRIER_CHOICE: '/carrier-choice',
 	},
 };
 
@@ -101,6 +105,8 @@ function AppRouter() {
 						<Route path={routes.ADRESSES.ADD} element={<AddAdressePage />} />
 						<Route path={routes.ADRESSES.EDIT} element={<EditAdressePage />} />
 						<Route path={routes.COMMANDS.PANIER_SUMMARY} element={<PanierSummary />} />
+						<Route path={routes.COMMANDS.ADDRESS_CHOICE} element={<AddressChoice />} />
+						<Route path={routes.COMMANDS.CARRIER_CHOICE} element={<CarrierChoice />} />
 
 						<Route
 							index

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom'; // Importer useNavigate pour gérer la redirection
+import { useNavigate, useLocation } from 'react-router-dom'; // Importer useNavigate pour gérer la redirection
 import AdresseApi from '../../pages/Adresses/services/Adresses.api'; // Mettez à jour le chemin selon votre structure de projet
 import { showSuccess, showError } from '../../services/popupService'; // Importer les fonctions de notification
 
@@ -22,6 +22,8 @@ const AddAdressePage = () => {
 	});
 
 	const navigate = useNavigate(); // Hook pour gérer la navigation
+	const location = useLocation(); // Hook pour récupérer les données de l'URL
+	const fromAddressChoice = location.state?.fromAddressChoice; // Récupérer la valeur de fromAddressChoice depuis l'état de l'emplacement
 
 	// Fonction de gestion des changements dans le formulaire
 	const handleChange = (e) => {
@@ -38,7 +40,14 @@ const AddAdressePage = () => {
 		try {
 			const response = await AdresseApi.createAdresse(adresseData);
 			showSuccess('Adresse créée avec succès !'); // Afficher une notification de succès
-			navigate('/adresses'); // Redirection vers la page des adresses après succès
+			// Redirection après la sauvegarde de l'adresse
+			if (fromAddressChoice) {
+				// Rediriger vers la page de choix de l'adresse si l'utilisateur venait de la page de choix de l'adresse
+				navigate("/address-choice");
+			} else {
+				// Rediriger vers la liste des adresses si l'utilisateur venait de la liste des adresses
+				navigate("/adresses");
+			}
 		} catch (error) {
 			showError("Erreur lors de la création de l'adresse. Veuillez réessayer."); // Afficher une notification d'erreur
 			console.error("Erreur lors de la création de l'adresse :", error);

@@ -3,8 +3,9 @@ import { Container, Row, Col, Button } from 'react-bootstrap'; // Importation de
 import { UserContext } from '../../context/UserContext'; // Importation du contexte UserContext
 import { useCart } from '../../context/CartContext'; // Importation du hook personnalisé useCart
 import { FaTrashAlt } from "react-icons/fa"; // Importation de l'icône de la corbeille
-import { GoArrowRight } from "react-icons/go"; // Importation de l'icône de la flèche droite
+import { HiArrowLongRight } from "react-icons/hi2"; // Importation de l'icône de la flèche droite
 import { extractIdFromUrl } from '../../utils/tools'; // Assurez-vous d'importer cette fonction
+import { Link } from 'react-router-dom';
 
 const PanierSummary = () => {
 	// Utilisation du UserContext pour récupérer les informations de l'utilisateur connecté
@@ -84,10 +85,12 @@ const PanierSummary = () => {
 
 			<Row className="mt-4">
 				<Col className="d-flex align-items-center justify-content-center">
-					<Button className="d-flex align-items-center justify-content-center gap-2" variant="dark" size="lg">
-						Choix de l'adresse
-						<GoArrowRight className="ms-2" size={30} />
-					</Button>
+					<Link to="/address-choice" className="text-decoration-none">
+						<Button className="d-flex align-items-center justify-content-center gap-2" variant="dark" size="lg">
+							Choix de l'adresse
+							<HiArrowLongRight className="ms-2" size={35} />
+						</Button>
+					</Link>
 				</Col>
 			</Row>
 		</Container>

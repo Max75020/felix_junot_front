@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import AdresseApi from './services/Adresses.api';
 import { showSuccess, showError } from '../../services/popupService';
 
 const EditAdressePage = () => {
 	const { id } = useParams(); // Récupérer l'ID de l'adresse à partir de l'URL
 	const navigate = useNavigate();
+	const location = useLocation();
+	const fromAddressChoice = location.state?.fromAddressChoice;
 	const [adresseData, setAdresseData] = useState({
 		nom_adresse: '',
 		type: 'Livraison',
@@ -65,7 +67,14 @@ const EditAdressePage = () => {
 		try {
 			await AdresseApi.updateAdresse(id, adresseData);
 			showSuccess('Adresse mise à jour avec succès !');
-			navigate('/adresses'); // Redirection vers la page des adresses après succès
+			// Redirection après la sauvegarde de l'adresse
+			if (fromAddressChoice) {
+				// Rediriger vers la page de choix de l'adresse si l'utilisateur venait de la page de choix de l'adresse
+				navigate("/address-choice");
+			} else {
+				// Rediriger vers la liste des adresses si l'utilisateur venait de la liste des adresses
+				navigate("/adresses");
+			}
 		} catch (error) {
 			showError("Erreur lors de la mise à jour de l'adresse.");
 			console.error('Erreur lors de la mise à jour:', error);

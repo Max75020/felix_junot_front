@@ -1,0 +1,20 @@
+/* Ajustements du style des cartes, en particulier pour la sélection */
+.carrier-card {
+	transition: box-shadow 0.3s ease, border-color 0.3s ease;
+	cursor: pointer;
+}
+
+.carrier-card:hover {
+	box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.carrier-card.selected {
+	border-color: #000;
+	box-shadow: 0px 6px 25px rgba(0, 0, 0, 0.15);
+}
+
+@media screen and (max-width: 576px) {
+	.card {
+		width: 80% !important;
+	}
+}
