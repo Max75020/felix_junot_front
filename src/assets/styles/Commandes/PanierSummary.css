@@ -1,1 +1,9 @@
+.p-card {
+	font-size: 22px;
+}
 
+@media screen and (max-width: 768px) {
+	.p-card {
+		font-size: 18px;
+	}
+}

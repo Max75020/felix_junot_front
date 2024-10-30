@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Card, Container, Row, Col, Form } from 'react-bootstrap'; // Import des composants nécessaires depuis react-bootstrap
-import AdresseApi from '../Adresses/services/Adresses.api'; // API pour récupérer les adresses
-import { useNavigate, Link } from "react-router-dom";
-import { HiArrowLongRight } from "react-icons/hi2"; // Importation de l'icône de la flèche droite
+import { Button, Card, Container, Row, Col, Form } from 'react-bootstrap';
+import AdresseApi from '../Adresses/services/Adresses.api';
+import { useNavigate } from "react-router-dom";
+import { HiArrowLongRight } from "react-icons/hi2";
+import '../../assets/styles/Commandes/AddressChoice.css';
 
 const AddressChoice = () => {
 	// États pour gérer les adresses et l'état de chargement
@@ -52,7 +53,14 @@ const AddressChoice = () => {
 		<Row className='col-12 mx-auto d-flex align-items-center flex-column flex-md-row justify-content-center'>
 			{adresses.map((adresse) => (
 				<Col key={adresse.id_adresse} xs={8} sm={7} md={5} lg={4} xl={3} className="mb-4">
-					<Card className="text-center border-dark position-relative">
+					<Card
+						className={`text-center border-dark position-relative card-hover ${type === "Livraison" && selectedLivraison === adresse.id_adresse ? 'selected' : ''} ${type === "Facturation" && selectedFacturation === adresse.id_adresse ? 'selected' : ''}`}
+						onClick={() =>
+							type === "Livraison"
+								? setSelectedLivraison(adresse.id_adresse)
+								: setSelectedFacturation(adresse.id_adresse)
+						}
+					>
 						<Card.Header className="d-flex align-items-center justify-content-between">
 							<Form.Check
 								type="radio"
@@ -82,13 +90,13 @@ const AddressChoice = () => {
 								{adresse.telephone} <br />
 							</Card.Text>
 							<div className="d-flex flex-column justify-content-center">
-								<Button onClick={() => handleEditAddress(adresse.id_adresse)} variant="dark" className="m-1 w-100">
+								<Button onClick={(e) => { e.stopPropagation(); handleEditAddress(adresse.id_adresse); }} variant="dark" className="m-1 w-100">
 									Modifier
 								</Button>
 								<Button
 									variant="dark"
 									className="m-1 w-100"
-									onClick={() => handleDelete(adresse.id_adresse)}
+									onClick={(e) => { e.stopPropagation(); handleDelete(adresse.id_adresse); }}
 								>
 									Supprimer
 								</Button>
@@ -100,7 +108,12 @@ const AddressChoice = () => {
 		</Row>
 	);
 
-	// Affichage pendant le chargement des adresses
+	const handleCarrierChoice = () => {
+		if (selectedLivraison && selectedFacturation) {
+			navigate('/carrier-choice', { state: { selectedLivraison, selectedFacturation } });
+		}
+	};
+
 	if (loading) {
 		return (
 			<Container className="my-5">
@@ -119,16 +132,23 @@ const AddressChoice = () => {
 			<h2 className="mt-5 mb-5">Adresse de Facturation</h2>
 			{renderAdresses(adresses.filter((adresse) => adresse.type === 'Facturation'), "Facturation")}
 
-			<div className="text-center mt-4 d-flex flex-column justify-content-center align-items-center gap-5">
+			<div className="text-center mt-2 mb-5 d-flex flex-column justify-content-center align-items-center gap-5">
 				<Button onClick={handleAddNewAddress} variant="dark" size="lg" className="m-2">
 					Ajouter une nouvelle adresse
 				</Button>
-				<Link to="/carrier-choice" className="text-decoration-none">
-					<Button className="d-flex align-items-center justify-content-center gap-1" variant="dark" size="lg">
-						Choix du transporteur
-						<HiArrowLongRight className="ms-2" size={35} />
-					</Button>
-				</Link>
+			</div>
+
+			<div className="text-center mt-5 d-flex flex-column justify-content-center align-items-center gap-5">
+				<Button
+					size="lg"
+					onClick={handleCarrierChoice}
+					disabled={!selectedLivraison || !selectedFacturation}
+					className="d-flex align-items-center justify-content-center gap-1"
+					variant="dark"
+				>
+					Choix du transporteur
+					<HiArrowLongRight className="ms-2" size={35} />
+				</Button>
 			</div>
 		</Container>
 	);

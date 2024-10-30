@@ -1,16 +1,19 @@
-import React, { useContext, useEffect } from 'react'; // Importation de useEffect depuis la bibliothèque react
-import { Container, Row, Col, Button } from 'react-bootstrap'; // Importation des composants Container, Row, Col et Button depuis la bibliothèque react-bootstrap
-import { UserContext } from '../../context/UserContext'; // Importation du contexte UserContext
-import { useCart } from '../../context/CartContext'; // Importation du hook personnalisé useCart
-import { FaTrashAlt } from "react-icons/fa"; // Importation de l'icône de la corbeille
-import { HiArrowLongRight } from "react-icons/hi2"; // Importation de l'icône de la flèche droite
-import { extractIdFromUrl } from '../../utils/tools'; // Assurez-vous d'importer cette fonction
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
+import { Container, Row, Col, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom'; // Import de useNavigate pour la navigation programmatique
+import { UserContext } from '../../context/UserContext';
+import { useCart } from '../../context/CartContext';
+import { FaTrashAlt } from "react-icons/fa";
+import { HiArrowLongRight } from "react-icons/hi2";
+import { extractIdFromUrl } from '../../utils/tools';
+import '../../assets/styles/Commandes/PanierSummary.css';
+
 
 const PanierSummary = () => {
 	// Utilisation du UserContext pour récupérer les informations de l'utilisateur connecté
 	const { user } = useContext(UserContext);
-	const { cartItems, removeFromCart, fetchCart, totalPanier } = useCart(); // Utilisation du CartContext pour accéder aux fonctions nécessaires
+	const { cartItems, removeFromCart, fetchCart, totalPanier } = useCart();
+	const navigate = useNavigate(); // Hook pour naviguer programmatique
 
 	// Fonction déclenchée lors du montage du composant ou lorsque l'utilisateur change
 	useEffect(() => {
@@ -29,7 +32,12 @@ const PanierSummary = () => {
 		}
 	};
 
-	// Vérifier si l'utilisateur ou le panier est disponible
+	const handleAdresseChoice = () => {
+		if (cartItems.length > 0) {
+			navigate("/address-choice"); // Navigation conditionnelle
+		}
+	};
+
 	if (!user || !user.paniers || user.paniers.length === 0) {
 		return <div className="text-center mt-4">Aucun produit dans le panier.</div>;
 	}
@@ -46,9 +54,9 @@ const PanierSummary = () => {
 				{cartItems.map((produitPanier, index) => (
 					<div key={index} className="border border-dark rounded p-3 position-relative" style={{ maxWidth: "300px" }}>
 						<button
-							className="btn btn-link position-absolute top-0 start-0 m-2 p-0 text-dark"
+							className="btn btn-link position-absolute top-0 start-0 m-2 p-0 text-dark color-link-hover"
 							aria-label="Supprimer le produit"
-							onClick={() => handleRemoveFromCart(produitPanier.id)} // Appel de la fonction handleRemoveFromCart avec l'ID du produit
+							onClick={() => handleRemoveFromCart(produitPanier.id)}
 						>
 							<FaTrashAlt size={20} />
 						</button>
@@ -61,16 +69,16 @@ const PanierSummary = () => {
 						/>
 						<div className="d-flex flex-column align-items-center">
 							<h4 className="text-dark">RÉFÉRENCE</h4>
-							<p className="text-muted">{produitPanier.produit.reference}</p>
+							<p className="text-muted p-card">{produitPanier.produit.reference}</p>
 
 							<h4 className="text-dark">QUANTITÉ</h4>
-							<p className="text-muted">{produitPanier.quantite}</p>
+							<p className="text-muted p-card">{produitPanier.quantite}</p>
 
 							<h4 className="text-dark">PRIX UNITAIRE</h4>
-							<p className="text-muted">{(produitPanier.produit.prix_ttc)}€</p>
+							<p className="text-muted p-card">{(produitPanier.produit.prix_ttc)}€</p>
 
 							<h4 className="text-dark">PRIX TOTAL</h4>
-							<p className="fw-bold">{produitPanier.prix_total_produit}€</p>
+							<p className="fw-bold ">{produitPanier.prix_total_produit}€</p>
 						</div>
 					</div>
 				))}
@@ -85,12 +93,16 @@ const PanierSummary = () => {
 
 			<Row className="mt-4">
 				<Col className="d-flex align-items-center justify-content-center">
-					<Link to="/address-choice" className="text-decoration-none">
-						<Button className="d-flex align-items-center justify-content-center gap-2" variant="dark" size="lg">
-							Choix de l'adresse
-							<HiArrowLongRight className="ms-2" size={35} />
-						</Button>
-					</Link>
+					<Button
+						className="d-flex align-items-center justify-content-center gap-2"
+						variant="dark"
+						size="lg"
+						onClick={handleAdresseChoice}
+						disabled={cartItems.length === 0} // Désactiver si le panier est vide
+					>
+						Choix de l'adresse
+						<HiArrowLongRight className="ms-2" size={35} />
+					</Button>
 				</Col>
 			</Row>
 		</Container>
