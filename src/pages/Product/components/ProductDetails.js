@@ -38,7 +38,9 @@ const ProductDetail = () => {
 			? extractIdFromUrl(user.paniers[0]["@id"])
 			: null;
 
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const fetchProduct = async () => {
+		if (!id) return; // S'assurer que l'id est présent
 		try {
 			const response = await produitApi.getProduitById(id);
 			setProduct(response);
@@ -152,6 +154,7 @@ const ProductDetail = () => {
 	};
 
 
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const checkIfProductIsFavorite = () => {
 		// Vérifiez si l'utilisateur et le produit existent
 		if (user && product && user.favoris) {
@@ -238,24 +241,28 @@ const ProductDetail = () => {
 						</div>
 						{/* Boutons d'action */}
 						<div className="d-flex justify-content-center align-items-center flex-wrap mt-3 mt-md-0">
-							{isInCart ? (
-								<Button
-									variant="danger"
-									size="lg"
-									onClick={handleRemoveFromCart}
-									className="d-flex align-items-center remove-from-cart-btn"
-								>
-									Supprimer du panier
-								</Button>
+							{product?.stock > 0 ? (
+								isInCart ? (
+									<Button
+										variant="danger"
+										size="lg"
+										onClick={handleRemoveFromCart}
+										className="d-flex align-items-center remove-from-cart-btn"
+									>
+										Supprimer du panier
+									</Button>
+								) : (
+									<Button
+										variant="dark"
+										size="lg"
+										onClick={handleAddToCart}
+										className="d-flex align-items-center add-to-cart-btn"
+									>
+										Ajouter au panier
+									</Button>
+								)
 							) : (
-								<Button
-									variant="dark"
-									size="lg"
-									onClick={handleAddToCart}
-									className="d-flex align-items-center add-to-cart-btn"
-								>
-									Ajouter au panier
-								</Button>
+								<span className="text-dark fs-5 text-center">Œuvre victime de son succès stock indisponible</span>
 							)}
 						</div>
 					</div>
