@@ -21,7 +21,7 @@ import FavoritesPage from '../pages/Favorites/FavoritesPage';
 import AdressesPage from '../pages/Adresses/AdressesPage';
 import AddAdressePage from '../pages/Adresses/AddAdressePage';
 import EditAdressePage from '../pages/Adresses/EditAdressePage';
-import PanierSummary from '../pages/Commands/PanierSummary';
+import CartSummary from '../pages/Commands/CartSummary';
 import AddressChoice from '../pages/Commands/AddressChoice';
 import CarrierChoice from '../pages/Commands/CarrierChoice';
 import OrderSummary from '../pages/Commands/OrderSummary';
@@ -74,7 +74,7 @@ export const routes = {
 		EDIT: '/adresses/edit/:id',
 	},
 	COMMANDS: {
-		PANIER_SUMMARY: '/panier-summary',
+		CART_SUMMARY: '/panier-summary',
 		ADDRESS_CHOICE: '/address-choice',
 		CARRIER_CHOICE: '/carrier-choice',
 		ORDER_SUMMARY: '/order-summary',
@@ -106,7 +106,7 @@ function AppRouter() {
 						<Route path={routes.ADRESSES.INDEX} element={<AdressesPage />} />
 						<Route path={routes.ADRESSES.ADD} element={<AddAdressePage />} />
 						<Route path={routes.ADRESSES.EDIT} element={<EditAdressePage />} />
-						<Route path={routes.COMMANDS.PANIER_SUMMARY} element={<PanierSummary />} />
+						<Route path={routes.COMMANDS.CART_SUMMARY} element={<CartSummary />} />
 						<Route path={routes.COMMANDS.ADDRESS_CHOICE} element={<AddressChoice />} />
 						<Route path={routes.COMMANDS.CARRIER_CHOICE} element={<CarrierChoice />} />
 						<Route path={routes.COMMANDS.ORDER_SUMMARY} element={<OrderSummary />} />

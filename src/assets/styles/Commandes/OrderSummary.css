@@ -1,0 +1,32 @@
+.order-summary-container h4, .order-summary-container h5 {
+	font-weight: bold;
+}
+
+.order-summary-container .card {
+	border-radius: 8px;
+}
+
+.order-summary-container .card-body p {
+	font-size: 16px;
+	margin-bottom: 0.5rem;
+}
+
+.order-summary-container .btn-lg {
+	padding: 0.5rem 2rem;
+	font-size: 1.2rem;
+}
+
+.accordion-button:not(.collapsed), .accordion-button:focus {
+    background-color: transparent !important;
+    color: inherit;
+    box-shadow: none !important;
+}
+
+@media screen and (max-width: 768px) {
+	.order-summary-container h4, .order-summary-container h5 {
+		font-size: 1.1rem;
+	}
+	.order-summary-container .btn-lg {
+		font-size: 1rem;
+	}
+}

@@ -6,9 +6,9 @@ import { useOrder } from '../../context/OrderContext';
 import { useCart } from '../../context/CartContext';
 import { FaTrashAlt } from "react-icons/fa";
 import { HiArrowLongRight } from "react-icons/hi2";
-import '../../assets/styles/Commandes/PanierSummary.css';
+import '../../assets/styles/Commandes/CartSummary.css';
 
-const PanierSummary = () => {
+const CartSummary = () => {
 	const { user } = useContext(UserContext);
 	const { orderData } = useOrder(); // Utilise orderData depuis OrderContext
 	const { removeFromCart } = useCart(); // Utilisation directe de la fonction de suppression depuis CartContext
@@ -113,4 +113,4 @@ const PanierSummary = () => {
 	);
 };
 
-export default PanierSummary;
+export default CartSummary;

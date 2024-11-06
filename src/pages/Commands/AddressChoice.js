@@ -64,7 +64,7 @@ const AddressChoice = () => {
 			{adresses.map((adresse) => (
 				<Col key={adresse.id_adresse} xs={8} sm={7} md={5} lg={4} xl={3} className="mb-4">
 					<Card
-						className={`text-center border-dark position-relative card-hover ${type === "Livraison" && selectedLivraison === adresse.id_adresse ? 'selected' : ''} ${type === "Facturation" && selectedFacturation === adresse.id_adresse ? 'selected' : ''}`}
+						className={`text-center border-dark position-relative card-hover address-card ${type === "Livraison" && selectedLivraison === adresse.id_adresse ? 'selected' : ''} ${type === "Facturation" && selectedFacturation === adresse.id_adresse ? 'selected' : ''}`}
 						onClick={() => type === "Livraison" ? handleLivraisonSelect(adresse) : handleFacturationSelect(adresse)}
 					>
 						<Card.Header className="d-flex align-items-center justify-content-between">
