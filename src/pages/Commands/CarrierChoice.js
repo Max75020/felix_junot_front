@@ -3,11 +3,17 @@ import { Button, Container, Row, Col, Card, Form } from 'react-bootstrap';
 import '../../assets/styles/Commandes/CarrierChoice.css';
 import CarrierApi from '../Carrier/services/Carrier.api'; // Importation du service API
 import { useNavigate } from 'react-router-dom'; // Import de useNavigate pour la navigation programmatique
+import { useOrder } from '../../context/OrderContext';
 
 const CarrierChoice = () => {
 	const [carriers, setCarriers] = useState([]);
-	const [selectedCarrier, setSelectedCarrier] = useState(null);
-	const navigate = useNavigate(); // Hook pour naviguer programmatique
+	const [selectedMethode, setSelectedMethode] = useState(null); // Méthode de livraison sélectionnée
+	const navigate = useNavigate();
+
+	const { orderData, updateSelectedCarrier } = useOrder(); // Récupère le contexte pour sauvegarder la sélection
+
+	// Affiche le contenu de orderData dans la console pour vérification
+	console.log("Contenu de OrderContext (orderData) :", orderData);
 
 	// Récupération des transporteurs depuis l'API
 	useEffect(() => {
@@ -22,14 +28,15 @@ const CarrierChoice = () => {
 		fetchCarriers();
 	}, []);
 
-	// Gestionnaire de sélection d'un transporteur
-	const handleSelectCarrier = (id) => {
-		setSelectedCarrier(id);
+	// Gestionnaire de sélection d'une méthode de livraison
+	const handleSelectMethode = (carrier, methode) => {
+		setSelectedMethode({ carrier, methode });
+		updateSelectedCarrier({ carrier, methode }); // Met à jour le contexte avec le transporteur et la méthode
 	};
 
 	const handleOrderSummary = () => {
-		if (carriers.length > 0) {
-			navigate("/order-summary"); // Navigation conditionnelle
+		if (selectedMethode) {
+			navigate("/order-summary"); // Navigation vers l'étape suivante
 		}
 	};
 
@@ -41,7 +48,7 @@ const CarrierChoice = () => {
 				</Col>
 			</Row>
 
-			{/* Liste des transporteurs */}
+			{/* Liste des transporteurs et de leurs méthodes de livraison */}
 			{carriers.map((carrier) => (
 				<div key={carrier['@id']} className="carrier-section mb-5">
 					<h2 className="text-center mb-4">{carrier.nom}</h2>
@@ -51,8 +58,8 @@ const CarrierChoice = () => {
 							carrier.methodeLivraison.map((methode) => (
 								<Card
 									key={methode.id_methode_livraison}
-									className={`carrier-card d-flex justify-content-center col-xs-10 col-sm-6 col-md-5 col-lg-4 col-xl-10 ${selectedCarrier === carrier.id ? 'border-dark shadow-lg' : ''}`}
-									onClick={() => handleSelectCarrier(carrier.id)}
+									className={`carrier-card d-flex justify-content-center col-xs-10 col-sm-6 col-md-5 col-lg-4 col-xl-10 ${selectedMethode?.methode.id_methode_livraison === methode.id_methode_livraison ? 'border-dark shadow-lg' : ''}`}
+									onClick={() => handleSelectMethode(carrier, methode)}
 									style={{
 										cursor: 'pointer',
 										transition: 'box-shadow 0.3s ease, border-color 0.3s ease',
@@ -62,7 +69,7 @@ const CarrierChoice = () => {
 										<Col xs={12} xl={3} className="d-flex justify-content-center mb-3 mt-3">
 											<Card.Img
 												variant="left"
-												src="https://via.placeholder.com/300" // Image par défaut (remplacer si nécessaire)
+												src="https://via.placeholder.com/300" // Image par défaut
 												className="carrier-image img-fluid rounded"
 												style={{ objectFit: 'cover' }}
 											/>
@@ -84,8 +91,8 @@ const CarrierChoice = () => {
 												id={`carrier-${methode.id_methode_livraison}`}
 												name="carrier"
 												value={methode.id_methode_livraison}
-												checked={selectedCarrier === carrier.id}
-												onChange={() => handleSelectCarrier(carrier.id)}
+												checked={selectedMethode?.methode.id_methode_livraison === methode.id_methode_livraison}
+												onChange={() => handleSelectMethode(carrier, methode)}
 												className="carrier-input"
 											/>
 										</Col>
@@ -108,7 +115,7 @@ const CarrierChoice = () => {
 						className="d-flex align-items-center justify-content-center gap-2"
 						variant="dark"
 						size="lg"
-						disabled={selectedCarrier === null} // Désactive le bouton tant qu'aucun transporteur n'est sélectionné
+						disabled={!selectedMethode} // Désactive le bouton tant qu'aucune méthode de livraison n'est sélectionnée
 						onClick={handleOrderSummary}
 					>
 						Étape Suivante

@@ -4,15 +4,16 @@ import AdresseApi from '../Adresses/services/Adresses.api';
 import { useNavigate } from "react-router-dom";
 import { HiArrowLongRight } from "react-icons/hi2";
 import '../../assets/styles/Commandes/AddressChoice.css';
+import { useOrder } from '../../context/OrderContext';
 
 const AddressChoice = () => {
-	// États pour gérer les adresses et l'état de chargement
 	const [adresses, setAdresses] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [selectedLivraison, setSelectedLivraison] = useState(null);
 	const [selectedFacturation, setSelectedFacturation] = useState(null);
 
 	const navigate = useNavigate();
+	const { updateSelectedLivraison, updateSelectedFacturation } = useOrder();
 
 	const handleAddNewAddress = () => {
 		navigate("/adresses/add", { state: { fromAddressChoice: true } });
@@ -20,6 +21,16 @@ const AddressChoice = () => {
 
 	const handleEditAddress = (id) => {
 		navigate(`/adresses/edit/${id}`, { state: { fromAddressChoice: true } });
+	};
+
+	// Fonction pour supprimer une adresse
+	const handleDelete = async (id) => {
+		try {
+			await AdresseApi.deleteAdresse(id);
+			setAdresses(adresses.filter((adresse) => adresse.id_adresse !== id));
+		} catch (error) {
+			console.error("Erreur lors de la suppression de l'adresse:", error);
+		}
 	};
 
 	// Fonction pour récupérer les adresses lors du chargement du composant
@@ -38,43 +49,30 @@ const AddressChoice = () => {
 		fetchAdresses();
 	}, []);
 
-	// Fonction pour supprimer une adresse
-	const handleDelete = async (id) => {
-		try {
-			await AdresseApi.deleteAdresse(id);
-			setAdresses(adresses.filter((adresse) => adresse.id_adresse !== id));
-		} catch (error) {
-			console.error("Erreur lors de la suppression de l'adresse:", error);
-		}
+	const handleLivraisonSelect = (adresse) => {
+		setSelectedLivraison(adresse.id_adresse);
+		updateSelectedLivraison(adresse); // Met à jour l'adresse de livraison dans OrderContext
 	};
 
-	// Fonction de rendu des adresses
+	const handleFacturationSelect = (adresse) => {
+		setSelectedFacturation(adresse.id_adresse);
+		updateSelectedFacturation(adresse); // Met à jour l'adresse de facturation dans OrderContext
+	};
+
 	const renderAdresses = (adresses, type) => (
 		<Row className='col-12 mx-auto d-flex align-items-center flex-column flex-md-row justify-content-center'>
 			{adresses.map((adresse) => (
 				<Col key={adresse.id_adresse} xs={8} sm={7} md={5} lg={4} xl={3} className="mb-4">
 					<Card
 						className={`text-center border-dark position-relative card-hover ${type === "Livraison" && selectedLivraison === adresse.id_adresse ? 'selected' : ''} ${type === "Facturation" && selectedFacturation === adresse.id_adresse ? 'selected' : ''}`}
-						onClick={() =>
-							type === "Livraison"
-								? setSelectedLivraison(adresse.id_adresse)
-								: setSelectedFacturation(adresse.id_adresse)
-						}
+						onClick={() => type === "Livraison" ? handleLivraisonSelect(adresse) : handleFacturationSelect(adresse)}
 					>
 						<Card.Header className="d-flex align-items-center justify-content-between">
 							<Form.Check
 								type="radio"
 								name={`adresse-${type}`}
-								checked={
-									type === "Livraison"
-										? selectedLivraison === adresse.id_adresse
-										: selectedFacturation === adresse.id_adresse
-								}
-								onChange={() =>
-									type === "Livraison"
-										? setSelectedLivraison(adresse.id_adresse)
-										: setSelectedFacturation(adresse.id_adresse)
-								}
+								checked={type === "Livraison" ? selectedLivraison === adresse.id_adresse : selectedFacturation === adresse.id_adresse}
+								onChange={() => type === "Livraison" ? handleLivraisonSelect(adresse) : handleFacturationSelect(adresse)}
 							/>
 							<h6 className="mb-0">{adresse.nom_adresse}</h6>
 						</Card.Header>
