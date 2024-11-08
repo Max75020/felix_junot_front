@@ -4,7 +4,7 @@ import { useOrder } from '../../context/OrderContext';
 import '../../assets/styles/Commandes/OrderSummary.css';
 
 const OrderSummary = () => {
-	const { orderData } = useOrder();
+	const { orderData, makePayment } = useOrder();
 
 	// Fonction pour formater les prix en euros
 	const formatPrice = (price) => {
@@ -119,14 +119,14 @@ const OrderSummary = () => {
 					<h5>Prix de la Livraison : {formatPrice(orderData.selectedCarrier?.methode.prix || 0)}</h5>
 				</Col>
 				<Col>
-					<h4>Total : {formatPrice(parseFloat(orderData.totalPanier) + parseFloat(orderData.selectedCarrier?.methode.prix || 0))}</h4>
+					<h4>Total : {formatPrice(orderData.totalCommande)}</h4>
 				</Col>
 			</Row>
 
 			{/* Boutons de Paiement */}
 			<Row className="mb-5 text-center">
 				<Col>
-					<Button variant="dark" size="lg" className="me-2">Payer par Carte Bancaire</Button>
+					<Button onClick={() => makePayment(orderData)} variant="dark" size="lg" className="me-2">Payer par Carte Bancaire</Button>
 				</Col>
 			</Row>
 		</Container>

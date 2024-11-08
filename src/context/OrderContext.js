@@ -1,6 +1,6 @@
-// OrderContext.js
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { useCart } from '../context/CartContext'; // Assurez-vous que le CartContext est bien importé
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { useCart } from '../context/CartContext';
+import cartApi from '../pages/Cart/services/Cart.api';
 
 const OrderContext = createContext();
 
@@ -9,12 +9,12 @@ export const useOrder = () => {
 };
 
 export const OrderProvider = ({ children }) => {
-	const { cartItems, totalPanier } = useCart();
+	const { cartItems, totalPanier, cartId } = useCart();
 	const [orderData, setOrderData] = useState(() => {
 		const savedOrderData = localStorage.getItem('orderData');
 		return savedOrderData
 			? JSON.parse(savedOrderData)
-			: { cartItems: [], totalPanier: 0.00, selectedLivraison: null, selectedFacturation: null, selectedCarrier: null};
+			: { cartItems: [], totalPanier: 0.00, selectedLivraison: null, selectedFacturation: null, selectedCarrier: null, totalCommande: 0.00 };
 	});
 
 	useEffect(() => {
@@ -22,12 +22,28 @@ export const OrderProvider = ({ children }) => {
 			...prevOrderData,
 			cartItems,
 			totalPanier,
+			id_panier: cartId
 		}));
-	}, [cartItems, totalPanier]);
+	}, [cartItems, totalPanier, cartId]);
 
 	useEffect(() => {
 		localStorage.setItem('orderData', JSON.stringify(orderData));
 	}, [orderData]);
+
+	// Mémorisation de la fonction pour éviter l'avertissement
+	const calculateTotalCommande = useCallback(() => {
+		const prixLivraison = orderData.selectedCarrier?.methode?.prix || 0;
+		const totalCommande = parseFloat(orderData.totalPanier) + parseFloat(prixLivraison);
+
+		setOrderData((prevOrderData) => ({
+			...prevOrderData,
+			totalCommande
+		}));
+	}, [orderData.totalPanier, orderData.selectedCarrier]);
+
+	useEffect(() => {
+		calculateTotalCommande();
+	}, [calculateTotalCommande]);
 
 	const updateSelectedLivraison = (adresse) => {
 		setOrderData((prevOrderData) => ({
@@ -57,8 +73,12 @@ export const OrderProvider = ({ children }) => {
 		}));
 	};
 
+	const makePayment = async (cartData) => {
+		await cartApi.makePaymentWithStripe(cartData);
+	}
+
 	return (
-		<OrderContext.Provider value={{ orderData, updateSelectedLivraison, updateSelectedFacturation, updateSelectedCarrier, updateSelectedMethodeLivraison }}>
+		<OrderContext.Provider value={{ orderData, updateSelectedLivraison, updateSelectedFacturation, updateSelectedCarrier, updateSelectedMethodeLivraison, makePayment }}>
 			{children}
 		</OrderContext.Provider>
 	);

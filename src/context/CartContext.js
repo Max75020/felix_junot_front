@@ -138,6 +138,7 @@ export const CartProvider = ({ children }) => {
 		decrementQuantity,
 		fetchCart,
 		totalPanier,
+		cartId: user && user.paniers.length > 0 ? extractIdFromUrl(user.paniers[0]["@id"]) : null,
 	};
 
 	// Retourne le contexte avec les données et les fonctions liées au panier

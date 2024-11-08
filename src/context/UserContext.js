@@ -88,12 +88,18 @@ export const UserProvider = ({ children }) => {
 		}
 	};
 
+	// Fonction utilitaire pour vérifier si l'utilisateur est admin
+	const isAdmin = () => {
+		return user?.roles_generated?.includes('ROLE_ADMIN');
+	};
+
+
 	useEffect(() => {
 		checkUserLoggedIn();
 	}, []);
 
 	return (
-		<UserContext.Provider value={{ user, setUser, loading, login, logout, updateUser }}>
+		<UserContext.Provider value={{ user, setUser, loading, login, logout, updateUser, isAdmin }}>
 			{!loading && children}
 		</UserContext.Provider>
 	);

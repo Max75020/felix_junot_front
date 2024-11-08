@@ -21,10 +21,11 @@ import FavoritesPage from '../pages/Favorites/FavoritesPage';
 import AdressesPage from '../pages/Adresses/AdressesPage';
 import AddAdressePage from '../pages/Adresses/AddAdressePage';
 import EditAdressePage from '../pages/Adresses/EditAdressePage';
-import CartSummary from '../pages/Commands/CartSummary';
-import AddressChoice from '../pages/Commands/AddressChoice';
-import CarrierChoice from '../pages/Commands/CarrierChoice';
-import OrderSummary from '../pages/Commands/OrderSummary';
+import CartSummary from '../pages/Order/CartSummary';
+import AddressChoice from '../pages/Order/AddressChoice';
+import CarrierChoice from '../pages/Order/CarrierChoice';
+import OrderSummary from '../pages/Order/OrderSummary';
+import OrderSuccess from '../pages/Order/OrderSuccess';
 
 export const routes = {
 	AUTH: {
@@ -78,6 +79,7 @@ export const routes = {
 		ADDRESS_CHOICE: '/address-choice',
 		CARRIER_CHOICE: '/carrier-choice',
 		ORDER_SUMMARY: '/order-summary',
+		ORDER_SUCCESS: '/order-success',
 	},
 };
 
@@ -110,6 +112,7 @@ function AppRouter() {
 						<Route path={routes.COMMANDS.ADDRESS_CHOICE} element={<AddressChoice />} />
 						<Route path={routes.COMMANDS.CARRIER_CHOICE} element={<CarrierChoice />} />
 						<Route path={routes.COMMANDS.ORDER_SUMMARY} element={<OrderSummary />} />
+						<Route path={routes.COMMANDS.ORDER_SUCCESS} element={<OrderSuccess />} />
 
 						<Route
 							index

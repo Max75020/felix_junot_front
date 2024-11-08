@@ -7,7 +7,7 @@ import { FaBox } from "react-icons/fa"; // Import pour l'icône Commandes
 import { HiLocationMarker } from "react-icons/hi"; // Import pour l'icône Adresses
 import UserAvatar from "../../components/UserAvatar/UserAvatar"; // Import du composant UserAvatar
 import AccountNavButton from "./components/AccountNavButton"; // Import du composant AccountNavButton
-import { showSuccess, showError } from '../../services/popupService';
+import { showSuccess } from '../../services/popupService';
 
 const ProfilePage = () => {
 	const { user, loading, updateUser } = useContext(UserContext);
