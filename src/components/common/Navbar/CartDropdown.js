@@ -26,7 +26,7 @@ function CartDropdown({ cartItems, totalPanier, removeFromCart }) {
 					position: "absolute",
 					top: "40px",
 					right: "0px",
-					width: "300px", // Ajuste la largeur du menu pour correspondre à l'image
+					width: "350px", // Ajuste la largeur du menu pour correspondre à l'image
 				}}
 			>
 				{/* Header du panier */}
@@ -45,7 +45,7 @@ function CartDropdown({ cartItems, totalPanier, removeFromCart }) {
 					<>
 						{cartItems.map((item) => (
 							<div
-								className="position-relative d-flex align-items-center mb-3 border-bottom pb-2"
+								className="position-relative d-flex align-items-center mb-3 border-bottom pb-3"
 								key={item.id}
 								style={{ padding: "10px" }} // Ajout d'un padding pour l'espacement
 							>
@@ -105,7 +105,7 @@ function CartDropdown({ cartItems, totalPanier, removeFromCart }) {
 											</span>
 										</div>
 										<div className="text-end">
-											<span className="fw-bold">
+											<span className="fw-bold d-flex" style={{ minWidth: "50px"}}>
 												{parseFloat(item.prix_total_produit).toFixed(2)} €
 											</span>
 										</div>

@@ -9,6 +9,12 @@ const cartApi = {
 		return await apiService.get(`${CART_ENDPOINT}/${cartId}`);
 	},
 
+	// Récupérer ou créer un panier ouvert
+	getOpenCart: async () => {
+		// Appelle l'endpoint dédié pour obtenir un panier "ouvert" ou en créer un si aucun n'existe
+		return await apiService.get(`${CART_ENDPOINT}/ouvert`);
+	},
+
 	addProductToCart: async (productIri, quantity) => {
 		// Envoyer un objet avec la clé "produit" et non "productId"
 		return await apiService.post(`${CART_ENDPOINT}/add-product`, {
@@ -43,10 +49,6 @@ const cartApi = {
 		const stripe = await loadStripe(
 			process.env.REACT_APP_STRIPE_PUBLIC_KEY
 		);
-		console.log("Clé publique Stripe:", process.env.REACT_APP_STRIPE_PUBLIC_KEY);
-		console.log("Session de paiement Stripe:", stripe);
-
-		console.log("Données du panier pour le paiement:", cartData);
 
 		const items = cartData.cartItems.map((item) => ({
 			// Assurez-vous que ces propriétés existent
@@ -56,8 +58,6 @@ const cartApi = {
 			prix_ttc: item.produit.prix_ttc,
 			produitId: item.produit.id_produit,
 		}));
-
-		console.log("Informations pour chaque produit : ", items);
 
 		// Itérer sur items pour accéder aux propriétés de chaque produit
 		items.forEach((item, index) => {

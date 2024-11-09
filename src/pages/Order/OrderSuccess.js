@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { useOrder } from '../../context/OrderContext';
 import apiService from '../../services/apiService';
+import { useCart } from '../../context/CartContext';
 
 const OrderSuccess = () => {
 	const { orderData, isOrderCreated, setIsOrderCreated } = useOrder();
+	const { fetchCart } = useCart(); // Importer la fonction pour récupérer le panier
 	const [orderReference, setOrderReference] = useState(null);
 	const [userEmail, setUserEmail] = useState(null);
 
@@ -18,9 +20,8 @@ const OrderSuccess = () => {
 				orderData.totalPanier > 0 &&
 				orderData.totalCommande > 0;
 
-			if (areOrderDetailsReady && !isOrderCreated && !localStorage.getItem('orderCreated')) {
+			if (areOrderDetailsReady && !isOrderCreated) {
 				try {
-
 					// Récupération de l'email de l'utilisateur depuis orderData
 					const emailApi = orderData.selectedLivraison.utilisateur.email;
 					setUserEmail(emailApi);
@@ -38,10 +39,14 @@ const OrderSuccess = () => {
 						total_produits_commande: orderData.totalPanier.toString(),
 					});
 
-					// Si la commande est créée avec succès, mise à jour de l'état et du localStorage
+					// Si la commande est créée avec succès
 					setOrderReference(response.reference);
 					setIsOrderCreated(true);
-					localStorage.setItem('orderCreated', 'true');
+
+					// Supprimer les données de commande du localStorage
+					localStorage.removeItem('orderData');
+					// Rafraîchir le panier ouvert pour afficher le panier vide
+					await fetchCart('ouvert');
 				} catch (error) {
 					console.error("Erreur lors de la création de la commande :", error);
 				}
@@ -51,7 +56,7 @@ const OrderSuccess = () => {
 		};
 
 		createOrder();
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (

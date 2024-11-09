@@ -40,7 +40,7 @@ const CartSummary = () => {
 	};
 
 	// Vérifie si l'utilisateur n'a pas de panier
-	if (!user || !user.paniers || user.paniers.length === 0) {
+	if (!user || !user.panierOuvert) {
 		return <div className="text-center mt-4">Aucun produit dans le panier.</div>;
 	}
 

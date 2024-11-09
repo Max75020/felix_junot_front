@@ -21,7 +21,7 @@ export const OrderProvider = ({ children }) => {
 			...prevOrderData,
 			cartItems,
 			totalPanier,
-			id_panier: cartId
+			id_panier: cartId,
 		}));
 	}, [cartItems, totalPanier, cartId]);
 
@@ -72,7 +72,11 @@ export const OrderProvider = ({ children }) => {
 		}));
 	};
 
-	const makePayment = async (cartData) => {
+	const makePayment = async () => {
+		const cartData = {
+			...orderData,
+			id_panier: cartId,  // Utilise le cartId actuel
+		};
 		await cartApi.makePaymentWithStripe(cartData);
 	};
 

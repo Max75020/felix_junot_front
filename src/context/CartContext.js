@@ -8,21 +8,21 @@ import { showSuccess } from "../services/popupService"; // Importation de showSu
 // Création de la constante CartContext qui permet de créer un contexte pour le panier
 const CartContext = createContext();
 
-// Création de la constante CartProvider qui prend en paramètre children
 export const CartProvider = ({ children }) => {
 	// Création de l'état pour stocker les éléments du panier et leur état de chargement
 	const [cartItems, setCartItems] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const { user } = useContext(UserContext); // Accès aux informations utilisateur depuis le contexte UserContext
 	const [totalPanier, setTotalPanier] = useState(0); // État pour stocker le total du panier
+	const [cartId, setCartId] = useState(null);
+	const [cartEtat, setCartEtat] = useState(null);
 
-	// Fonction pour récupérer le panier d'un utilisateur en fonction de l'ID du panier
-	const fetchCart = async (cartId) => {
-		setLoading(true); // Début du chargement
+	// Fonction pour récupérer le panier ouvert d'un utilisateur
+	const fetchCart = async () => {
+		setLoading(true);
 		try {
-			const response = await cartApi.getCartById(cartId); // Appel à l'API pour récupérer les informations du panier
+			const response = await cartApi.getOpenCart();
 
-			// Vérifie si la réponse contient des produits du panier
 			if (!response || !response.panierProduits) {
 				return;
 			}
@@ -48,6 +48,8 @@ export const CartProvider = ({ children }) => {
 
 			setCartItems(items); // Mise à jour de l'état avec les éléments du panier
 			setTotalPanier(parseFloat(response.prix_total_panier)); // Mise à jour du total du panier
+			setCartId(response.id_panier); // Mise à jour du cartId
+			setCartEtat(response.etat); // Mise à jour de l'état du panier
 		} catch (error) {
 			console.error("Erreur lors de la récupération du panier:", error);
 		} finally {
@@ -61,9 +63,8 @@ export const CartProvider = ({ children }) => {
 		try {
 			await cartApi.addProductToCart(productIri, quantity);
 			showSuccess("Oeuvre ajoutée au panier !"); // Notification de succès
-			if (user && user.paniers.length > 0) {
-				const userCartId = extractIdFromUrl(user.paniers[0]["@id"]);
-				await fetchCart(userCartId); // Mise à jour du panier après ajout
+			if (user && user.panierOuvert) {
+				await fetchCart(); // Mise à jour du panier après ajout
 			}
 		} catch (error) {
 			console.error("Erreur lors de l'ajout au panier:", error);
@@ -77,9 +78,8 @@ export const CartProvider = ({ children }) => {
 		try {
 			await cartApi.removeProductFromCart(productId);
 			showSuccess("Oeuvre retirée du panier !"); // Notification de succès
-			if (user && user.paniers.length > 0) {
-				const userCartId = extractIdFromUrl(user.paniers[0]["@id"]);
-				await fetchCart(userCartId); // Mise à jour du panier après suppression
+			if (user && user.panierOuvert) {
+				await fetchCart(); // Mise à jour du panier après suppression
 			}
 		} catch (error) {
 			console.error("Erreur lors de la suppression du produit du panier:", error);
@@ -90,11 +90,10 @@ export const CartProvider = ({ children }) => {
 	const incrementQuantity = async (cartLineId) => {
 		setLoading(true);
 		try {
-			const userCartId = extractIdFromUrl(user.paniers[0]["@id"]);
-			await cartApi.addQuantityToCart(cartLineId, userCartId);
+			await cartApi.addQuantityToCart(cartLineId, cartEtat);
 			showSuccess("Quantité augmentée !"); // Notification de succès
-			if (user && user.paniers.length > 0) {
-				await fetchCart(userCartId); // Mise à jour du panier après l'incrémentation
+			if (user && user.panierOuvert) {
+				await fetchCart(); // Mise à jour du panier après l'incrémentation
 			}
 		} catch (error) {
 			console.error("Erreur lors de l'augmentation de la quantité :", error);
@@ -107,11 +106,10 @@ export const CartProvider = ({ children }) => {
 	const decrementQuantity = async (cartLineId) => {
 		setLoading(true);
 		try {
-			const userCartId = extractIdFromUrl(user.paniers[0]["@id"]);
-			await cartApi.removeQuantityFromCart(cartLineId, userCartId);
+			await cartApi.removeQuantityFromCart(cartLineId, cartEtat);
 			showSuccess("Quantité diminuée !"); // Notification de succès
-			if (user && user.paniers.length > 0) {
-				await fetchCart(userCartId); // Mise à jour du panier après la décrémentation
+			if (user && user.panierOuvert) {
+				await fetchCart(); // Mise à jour du panier après la décrémentation
 			}
 		} catch (error) {
 			console.error("Erreur lors de la diminution de la quantité :", error);
@@ -122,9 +120,8 @@ export const CartProvider = ({ children }) => {
 
 	// Effet pour récupérer le panier de l'utilisateur lorsque les données utilisateur changent
 	useEffect(() => {
-		if (user && user.paniers.length > 0) {
-			const userCartId = extractIdFromUrl(user.paniers[0]["@id"]);
-			fetchCart(userCartId); // Récupérer le panier dès que l'utilisateur est chargé
+		if (user && user.panierOuvert) {
+			fetchCart(); // Récupérer le panier dès que l'utilisateur est chargé
 		}
 	}, [user]);
 
@@ -138,7 +135,7 @@ export const CartProvider = ({ children }) => {
 		decrementQuantity,
 		fetchCart,
 		totalPanier,
-		cartId: user && user.paniers.length > 0 ? extractIdFromUrl(user.paniers[0]["@id"]) : null,
+		cartId,
 	};
 
 	// Retourne le contexte avec les données et les fonctions liées au panier
