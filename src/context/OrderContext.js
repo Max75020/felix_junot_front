@@ -4,9 +4,7 @@ import cartApi from '../pages/Cart/services/Cart.api';
 
 const OrderContext = createContext();
 
-export const useOrder = () => {
-	return useContext(OrderContext);
-};
+export const useOrder = () => useContext(OrderContext);
 
 export const OrderProvider = ({ children }) => {
 	const { cartItems, totalPanier, cartId } = useCart();
@@ -16,6 +14,7 @@ export const OrderProvider = ({ children }) => {
 			? JSON.parse(savedOrderData)
 			: { cartItems: [], totalPanier: 0.00, selectedLivraison: null, selectedFacturation: null, selectedCarrier: null, totalCommande: 0.00 };
 	});
+	const [isOrderCreated, setIsOrderCreated] = useState(false);
 
 	useEffect(() => {
 		setOrderData((prevOrderData) => ({
@@ -75,10 +74,21 @@ export const OrderProvider = ({ children }) => {
 
 	const makePayment = async (cartData) => {
 		await cartApi.makePaymentWithStripe(cartData);
-	}
+	};
 
 	return (
-		<OrderContext.Provider value={{ orderData, updateSelectedLivraison, updateSelectedFacturation, updateSelectedCarrier, updateSelectedMethodeLivraison, makePayment }}>
+		<OrderContext.Provider
+			value={{
+				orderData,
+				updateSelectedLivraison,
+				updateSelectedFacturation,
+				updateSelectedCarrier,
+				updateSelectedMethodeLivraison,
+				makePayment,
+				isOrderCreated,
+				setIsOrderCreated,
+			}}
+		>
 			{children}
 		</OrderContext.Provider>
 	);

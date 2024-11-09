@@ -6,7 +6,6 @@ import Unauthorized from '../pages/Auth/Unauthorized/Unhautorized';
 import CategoryList from '../pages/Category/components/CategoryList';
 import AllElementsOfCategory from '../pages/Category/components/AllElementsOfCategory';
 import ProductDetail from '../pages/Product/components/ProductDetails';
-import { UserProvider } from "../context/UserContext";
 import LoginForm from '../pages/Auth/Login/components/LoginForm';
 import RegisterForm from '../pages/Auth/Register/components/RegisterForm';
 import ForgotPasswordForm from '../pages/Auth/ForgotPassword/components/ForgotPasswordRequestForm';
@@ -85,48 +84,46 @@ export const routes = {
 
 function AppRouter() {
 	return (
-		<UserProvider> {/* Envelopper toute l'application avec UserProvider */}
-			<Router>
-				<Routes>
-					<Route path={routes.HOME.INDEX} element={<MainLayout />}>
-						<Route index element={<Home />} />
-						<Route path={routes.AUTH.LOGIN} element={<LoginForm />} />
-						<Route path={routes.AUTH.REGISTER} element={<RegisterForm />} />
-						<Route path={routes.AUTH.FORGOT_PASSWORD} element={<ForgotPasswordForm />} />
-						<Route path={routes.AUTH.NEW_PASSWORD} element={<NewPasswordForm />} />
+		<Router>
+			<Routes>
+				<Route path={routes.HOME.INDEX} element={<MainLayout />}>
+					<Route index element={<Home />} />
+					<Route path={routes.AUTH.LOGIN} element={<LoginForm />} />
+					<Route path={routes.AUTH.REGISTER} element={<RegisterForm />} />
+					<Route path={routes.AUTH.FORGOT_PASSWORD} element={<ForgotPasswordForm />} />
+					<Route path={routes.AUTH.NEW_PASSWORD} element={<NewPasswordForm />} />
 
-						<Route path={routes.CATEGORIES.INDEX} element={<CategoryList />} />
-						<Route path={routes.CATEGORIES.ALL_ELEMENTS} element={<AllElementsOfCategory />} />
-						<Route path={routes.PRODUCT.DETAIL} element={<ProductDetail />} />
-						<Route path={routes.LEGAL.FAQ} element={<Faq />} />
-						<Route path={routes.LEGAL.CGV} element={<Cgv />} />
-						<Route path={routes.LEGAL.PRIVACYPOLICY} element={<PrivacyPolicy />} />
-						<Route path={routes.LEGAL.LEGAL} element={<LegalNotices />} />
-						<Route path={routes.CONTACT.INDEX} element={<ContactForm />} />
-						<Route path={routes.PROFIL.INDEX} element={<ProfilePage />} />
-						<Route path={routes.FAVORITES.INDEX} element={<FavoritesPage />} />
-						<Route path={routes.ADRESSES.INDEX} element={<AdressesPage />} />
-						<Route path={routes.ADRESSES.ADD} element={<AddAdressePage />} />
-						<Route path={routes.ADRESSES.EDIT} element={<EditAdressePage />} />
-						<Route path={routes.COMMANDS.CART_SUMMARY} element={<CartSummary />} />
-						<Route path={routes.COMMANDS.ADDRESS_CHOICE} element={<AddressChoice />} />
-						<Route path={routes.COMMANDS.CARRIER_CHOICE} element={<CarrierChoice />} />
-						<Route path={routes.COMMANDS.ORDER_SUMMARY} element={<OrderSummary />} />
-						<Route path={routes.COMMANDS.ORDER_SUCCESS} element={<OrderSuccess />} />
+					<Route path={routes.CATEGORIES.INDEX} element={<CategoryList />} />
+					<Route path={routes.CATEGORIES.ALL_ELEMENTS} element={<AllElementsOfCategory />} />
+					<Route path={routes.PRODUCT.DETAIL} element={<ProductDetail />} />
+					<Route path={routes.LEGAL.FAQ} element={<Faq />} />
+					<Route path={routes.LEGAL.CGV} element={<Cgv />} />
+					<Route path={routes.LEGAL.PRIVACYPOLICY} element={<PrivacyPolicy />} />
+					<Route path={routes.LEGAL.LEGAL} element={<LegalNotices />} />
+					<Route path={routes.CONTACT.INDEX} element={<ContactForm />} />
+					<Route path={routes.PROFIL.INDEX} element={<ProfilePage />} />
+					<Route path={routes.FAVORITES.INDEX} element={<FavoritesPage />} />
+					<Route path={routes.ADRESSES.INDEX} element={<AdressesPage />} />
+					<Route path={routes.ADRESSES.ADD} element={<AddAdressePage />} />
+					<Route path={routes.ADRESSES.EDIT} element={<EditAdressePage />} />
+					<Route path={routes.COMMANDS.CART_SUMMARY} element={<CartSummary />} />
+					<Route path={routes.COMMANDS.ADDRESS_CHOICE} element={<AddressChoice />} />
+					<Route path={routes.COMMANDS.CARRIER_CHOICE} element={<CarrierChoice />} />
+					<Route path={routes.COMMANDS.ORDER_SUMMARY} element={<OrderSummary />} />
+					<Route path={routes.COMMANDS.ORDER_SUCCESS} element={<OrderSuccess />} />
 
-						<Route
-							index
-							element={
-								// <RoleGuard role="admin">
-								<Home />
-								// </RoleGuard>
-							}
-						/>
-						<Route path={routes.AUTH.UNAUTHORIZED} element={<Unauthorized />} />
-					</Route>
-				</Routes>
-			</Router>
-		</UserProvider>
+					<Route
+						index
+						element={
+							// <RoleGuard role="admin">
+							<Home />
+							// </RoleGuard>
+						}
+					/>
+					<Route path={routes.AUTH.UNAUTHORIZED} element={<Unauthorized />} />
+				</Route>
+			</Routes>
+		</Router>
 	);
 }
 
