@@ -8,8 +8,6 @@ const OrderSuccess = () => {
 	const [orderReference, setOrderReference] = useState(null);
 	const [userEmail, setUserEmail] = useState(null);
 
-	console.log("Valeur initiale de orderCreated dans localStorage:", localStorage.getItem('orderCreated'));
-
 	useEffect(() => {
 		const createOrder = async () => {
 			// Vérification que toutes les informations sont disponibles
@@ -22,13 +20,11 @@ const OrderSuccess = () => {
 
 			if (areOrderDetailsReady && !isOrderCreated && !localStorage.getItem('orderCreated')) {
 				try {
-					console.log("Création de la commande en cours...");
 
 					// Récupération de l'email de l'utilisateur depuis orderData
 					const emailApi = orderData.selectedLivraison.utilisateur.email;
 					setUserEmail(emailApi);
 
-				
 					// Appel API pour créer la commande
 					const response = await apiService.post('commandes', {
 						utilisateur: orderData.selectedLivraison.utilisateur["@id"],
@@ -43,11 +39,9 @@ const OrderSuccess = () => {
 					});
 
 					// Si la commande est créée avec succès, mise à jour de l'état et du localStorage
-					console.log("Réponse de la création de la commande :", response);
 					setOrderReference(response.reference);
 					setIsOrderCreated(true);
 					localStorage.setItem('orderCreated', 'true');
-					console.log("Commande créée avec succès, orderCreated mis à jour dans localStorage");
 				} catch (error) {
 					console.error("Erreur lors de la création de la commande :", error);
 				}

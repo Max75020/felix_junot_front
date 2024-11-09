@@ -10,10 +10,7 @@ const CarrierChoice = () => {
 	const [selectedMethode, setSelectedMethode] = useState(null); // Méthode de livraison sélectionnée
 	const navigate = useNavigate();
 
-	const { orderData, updateSelectedCarrier } = useOrder(); // Récupère le contexte pour sauvegarder la sélection
-
-	// Affiche le contenu de orderData dans la console pour vérification
-	console.log("Contenu de OrderContext (orderData) :", orderData);
+	const { updateSelectedCarrier } = useOrder(); // Récupère le contexte pour sauvegarder la sélection
 
 	// Récupération des transporteurs depuis l'API
 	useEffect(() => {

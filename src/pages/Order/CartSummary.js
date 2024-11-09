@@ -22,8 +22,6 @@ const CartSummary = () => {
 		}).format(price);
 	};
 
-	// Affiche le contenu de orderData dans la console
-	console.log("Contenu de OrderContext (orderData) :", orderData);
 
 	// Fonction pour gérer la suppression d'un article
 	const handleRemoveFromCart = async (productId) => {
