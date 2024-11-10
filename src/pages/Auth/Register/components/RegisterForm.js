@@ -16,6 +16,7 @@ const RegisterForm = () => {
 	const [error, setError] = useState('');
 	const [isRegistered, setIsRegistered] = useState(false); // Pour la redirection
 
+	// eslint-disable-next-line no-unused-vars
 	const { login, user } = useContext(UserContext); // Accéder à la fonction login et à l'utilisateur
 
 	const handleSubmit = async (event) => {

@@ -38,6 +38,7 @@ const AddAdressePage = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
+			// eslint-disable-next-line no-unused-vars
 			const response = await AdresseApi.createAdresse(adresseData);
 			showSuccess('Adresse créée avec succès !'); // Afficher une notification de succès
 			// Redirection après la sauvegarde de l'adresse

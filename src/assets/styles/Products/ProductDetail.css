@@ -1,20 +1,115 @@
-.product-card {
-	transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* CSS pour les miniatures */
+.thumbnail-item {
+	display: flex;
+	justify-content: center;
+	padding: 5px !important;
+	/* Utilisation de !important pour forcer un padding cohérent */
 }
 
-.product-card:hover {
-	transform: translateY(-10px);
-	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+.thumbnail-item img {
+	width: 50px;
+	height: 50px;
+	object-fit: cover;
+	border-radius: 5px;
+	transition: border 0.3s ease;
+	cursor: pointer;
 }
 
-.product-image-container {
-	overflow: hidden;
+.thumbnail-item img.selected-thumbnail {
+	border: 2px solid #000;
 }
 
-.product-image {
-	transition: transform 0.3s ease;
+.thumbnail-item img:not(.selected-thumbnail):hover {
+	border: 2px solid #ccc;
 }
 
-.product-card:hover .product-image {
-	transform: scale(1.1);
+/* Redéfinition du container pour ne pas restreindre la largeur */
+.container-fluid-custom {
+	max-width: 100% !important;
+	padding: 0 2rem;
+	/* Ajuste le padding pour éviter que le contenu touche les bords */
+}
+
+/* Styles supplémentaires pour le bouton d'ajout au panier */
+.add-to-cart-btn,
+.remove-from-cart-btn {
+	padding: 10px 20px;
+	font-size: 1rem;
+	border-radius: 5px;
+	transition: background-color 0.3s ease;
+	margin-bottom: 1rem;
+	/* Ajoute un espace entre le bouton et le texte du stock */
+}
+
+.add-to-cart-btn:hover,
+.remove-from-cart-btn:hover {
+	background-color: #333;
+	color: #fff;
+}
+
+.carousel-image-mobile {
+	/* Taille des images dans le carrousel pour les mobiles */
+	width: 100%;
+	/* Garder l'image entière dans le carré sans la rogner */
+	object-fit: contain;
+	/* Centrer l'image */
+	margin: 0 auto;
+	/* Coins arrondis */
+	border-radius: 10px;
+}
+
+/* Responsiveness for better layout on smaller screens */
+@media (max-width: 768px) {
+	.product-details {
+		text-align: center;
+	}
+
+	.thumbnail-item {
+		padding: 3px !important;
+	}
+
+	.product-title {
+		font-size: 1.5rem;
+	}
+
+	.add-to-cart-btn,
+	.remove-from-cart-btn {
+		width: 100%;
+	}
+}
+
+/* Taille des images dans le carrousel pour les mobiles en dessous de 576px*/
+@media (max-width: 576px) {
+	.carousel-image-mobile {
+		max-width: 500px;
+		/* Taille maximale de 400px pour garder une limite */
+		max-height: 500px;
+	}
+}
+
+/* Taille des images dans le carrousel pour les mobiles en dessous de 500px */
+@media (max-width: 500px) {
+	.carousel-image-mobile {
+		max-width: 450px;
+		/* Taille maximale de 400px pour garder une limite */
+		max-height: 450px;
+	}
+}
+
+/* Taille des images dans le carrousel pour les mobiles en dessous de 400px */
+@media (max-width: 400px) {
+	.carousel-image-mobile {
+		max-width: 350px;
+		/* Taille maximale de 400px pour garder une limite */
+		max-height: 350px;
+	}
+}
+
+/* Taille des images dans le carrousel pour les mobiles en dessous de 300px */
+@media (max-width: 300px) {
+	.carousel-image-mobile {
+		max-width: 250px;
+		/* Taille maximale de 400px pour garder une limite */
+		max-height: 250px;
+	}
 }

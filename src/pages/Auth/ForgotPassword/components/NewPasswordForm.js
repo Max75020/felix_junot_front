@@ -10,6 +10,7 @@ const NewPasswordForm = () => {
     const queryParams = new URLSearchParams(location.search);
     const token = queryParams.get("token");
     const [error, setError] = useState("");
+    // eslint-disable-next-line no-unused-vars
     const [successMessage, setSuccessMessage] = useState("");
 
     const [password, setPassword] = useState("");

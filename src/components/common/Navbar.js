@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Navbar, Nav, Container } from "react-bootstrap";
+import { Navbar, Nav} from "react-bootstrap";
 import logonoir from "../../img/logo/logonoir.svg";
 import logoblanc from "../../img/logo/logoblanc.svg";
 import { UserContext } from "../../context/UserContext";

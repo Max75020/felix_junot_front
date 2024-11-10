@@ -3,6 +3,7 @@ import { Dropdown } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 function UserDropdown({ user, userInitials, handleLogout }) {
+    // eslint-disable-next-line no-unused-vars
     const navigate = useNavigate();
 
     return (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Container, Row, Col, Button, Image, ListGroup } from "react-bootstrap";
+import { Container, Row, Col, Button, Image, ListGroup, Carousel } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import produitApi from "../services/Product.api";
 import { FiPlus, FiMinus } from "react-icons/fi";
@@ -9,8 +9,6 @@ import { UserContext } from "../../../context/UserContext";
 import { extractIdFromUrl } from "../../../utils/tools";
 import { showWarning } from "../../../services/popupService";
 import favorisApi from "../../Favorites/services/Favorites.api";
-
-/* Importer le css */
 import "../../../assets/styles/Products/ProductDetail.css";
 
 const ProductDetail = () => {
@@ -19,6 +17,7 @@ const ProductDetail = () => {
 	const [isInCart, setIsInCart] = useState(false);
 	const [isFavorite, setIsFavorite] = useState(false);
 	const [favoriteId, setFavoriteId] = useState(null);
+	const [selectedImage, setSelectedImage] = useState(null); // Pour gérer l'image sélectionnée
 	const { id } = useParams();
 	const {
 		addToCart,
@@ -31,8 +30,6 @@ const ProductDetail = () => {
 	const { user, setUser } = useContext(UserContext);
 
 	const isUserConnected = !!user;
-
-	// Récupérer le panier ID à partir de l'IRI du panier
 	const userCartId = user && user.panierOuvert ? extractIdFromUrl(user.panierOuvert["@id"]) : null;
 
 	const fetchProduct = async () => {
@@ -40,12 +37,11 @@ const ProductDetail = () => {
 		try {
 			const response = await produitApi.getProduitById(id);
 			setProduct(response);
+			setSelectedImage(response.images.find(img => img.cover)?.Chemin || response.images[0]?.Chemin);
 
-			// Vérification si le produit est dans le panier de l'utilisateur
 			const existingCartItem = cartItems.find(
 				(item) => item.produit["@id"] === response["@id"]
 			);
-
 			if (existingCartItem) {
 				setIsInCart(true);
 				setQuantity(existingCartItem.quantite);
@@ -156,6 +152,7 @@ const ProductDetail = () => {
 		if (user && product) {
 			checkIfProductIsFavorite();
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user, product]);
 
 	useEffect(() => {
@@ -163,6 +160,7 @@ const ProductDetail = () => {
 			fetchCart(userCartId);
 		}
 		fetchProduct();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [id, userCartId]);
 
 	// Synchroniser l'état `isInCart` et `quantity` avec `cartItems`
@@ -179,13 +177,29 @@ const ProductDetail = () => {
 		}
 	}, [cartItems, product]);
 
+	const handleImageSelect = (imagePath) => {
+		setSelectedImage(imagePath);
+	};
+
 	const renderConnectedView = () => (
 		<Row>
-			<Col md={1}>
+			<Col md={1} className="d-flex flex-column align-items-center overflow-auto" style={{ maxHeight: "600px" }}>
 				<ListGroup variant="flush">
 					{product?.images.map((image, index) => (
-						<ListGroup.Item key={index}>
-							<Image src={`http://localhost:8741/${image.Chemin}`} thumbnail />
+						<ListGroup.Item key={index} onClick={() => handleImageSelect(image.Chemin)} className="thumbnail-item">
+							<Image
+								src={`${process.env.REACT_APP_URL_SERVER}/${image.Chemin}`}
+								thumbnail
+								className={selectedImage === image.Chemin ? "selected-thumbnail" : ""}
+								style={{
+									cursor: "pointer",
+									border: selectedImage === image.Chemin ? "2px solid #000" : "1px solid #ddd",
+									borderRadius: "5px",
+									width: "50px",
+									height: "50px",
+									objectFit: "cover"
+								}}
+							/>
 						</ListGroup.Item>
 					))}
 				</ListGroup>
@@ -193,11 +207,8 @@ const ProductDetail = () => {
 
 			<Col md={6} className="d-flex justify-content-center">
 				<Image
-					src={
-						product?.images.find(img => img.cover)?.Chemin
-							? `http://localhost:8741/${product.images.find(img => img.cover).Chemin}`
-							: "https://placehold.co/500"
-					}
+				style={{ borderRadius: "10px", objectFit: "cover" }}
+					src={`${process.env.REACT_APP_URL_SERVER}/${selectedImage}`}
 					fluid
 				/>
 			</Col>
@@ -224,7 +235,7 @@ const ProductDetail = () => {
 					<p className="text-muted text-left">
 						{product?.description || "Description non disponible."}
 					</p>
-					<div className="d-flex align-items-center justify-content-between flex-wrap flex-column flex-lg-row">
+					<div className="d-flex align-items-center justify-content-between flex-wrap flex-column flex-lg-row gap-3">
 						<div className="d-flex align-items-center gap-3">
 							<p className="mb-0">Prix :</p>
 							<p className="color-title mb-0 fw-bolder">
@@ -286,23 +297,115 @@ const ProductDetail = () => {
 		</Row>
 	);
 
+
+	const renderMobileView = () => (
+		<div>
+			<Carousel>
+				{product?.images.map((image, index) => (
+					<Carousel.Item key={index}>
+						<Image
+							className="d-block w-100 carousel-image-mobile"
+							src={`${process.env.REACT_APP_URL_SERVER}/${image.Chemin}`}
+							alt={`Image de ${product?.nom}`}
+						/>
+					</Carousel.Item>
+				))}
+			</Carousel>
+
+			<div className="product-details p-3 mt-3 text-center">
+				<div className="d-flex justify-content-center align-items-center mb-3 flex-column">
+					<h2 className="product-title position-relative m-0">
+						{product?.nom}
+					</h2>
+					<Button
+						variant="none"
+						size="lg"
+						className="d-flex align-items-center justify-content-center p-2 bg-t border-0"
+						style={{
+							width: "50px",
+							height: "50px",
+						}}
+						onClick={isFavorite ? handleRemoveFromFavorites : handleAddToFavorites}
+					>
+						{isFavorite ? <FaHeart /> : <FaRegHeart />}
+					</Button>
+				</div>
+
+				<p className="text-muted text-left">
+					{product?.description || "Description non disponible."}
+				</p>
+
+				<div className="d-flex align-items-center justify-content-center flex-column">
+					<div className="d-flex align-items-center gap-3 mb-3">
+						<p className="mb-0">Prix :</p>
+						<p className="color-title mb-0 fw-bolder">{product?.prix_ttc} €</p>
+					</div>
+					<div className="d-flex justify-content-center align-items-center flex-wrap mt-3">
+						{product?.stock > 0 ? (
+							isInCart ? (
+								<Button
+									variant="danger"
+									size="lg"
+									onClick={handleRemoveFromCart}
+									className="d-flex align-items-center remove-from-cart-btn mb-3"
+								>
+									Supprimer du panier
+								</Button>
+							) : (
+								<Button
+									variant="dark"
+									size="lg"
+									onClick={handleAddToCart}
+									className="d-flex align-items-center add-to-cart-btn mb-3"
+								>
+									Ajouter au panier
+								</Button>
+							)
+						) : (
+							<span className="text-dark fs-5">Stock indisponible</span>
+						)}
+					</div>
+
+					{isInCart && (
+						<div className="d-flex justify-content-center align-items-center my-3 mt-3">
+							<Button
+								variant="none"
+								onClick={handleDecrementQuantity}
+								className="p-1 border-0"
+							>
+								<FiMinus />
+							</Button>
+							<span className="mx-3 fs-5">{quantity}</span>
+							<Button
+								variant="none"
+								onClick={handleIncrementQuantity}
+								className="p-1 border-0"
+								disabled={quantity >= product?.stock}
+							>
+								<FiPlus />
+							</Button>
+						</div>
+					)}
+					<p className="text-muted fs-6 mb-0 mt-2">{product?.stock} en stock</p>
+				</div>
+			</div>
+		</div>
+	);
+
+
 	const renderDisconnectedView = () => (
 		<div className="disconnected-view text-center">
 			<h2 className="text-uppercase">{product?.nom}</h2>
 			<div className="product-images">
 				<Image
-					src={
-						product?.images.find(img => img.cover)?.Chemin
-							? `http://localhost:8741/${product.images.find(img => img.cover).Chemin}`
-							: "https://placehold.co/500"
-					}
+					src={`${process.env.REACT_APP_URL_SERVER}/${selectedImage}`}
 					fluid
 					className="mb-3"
 				/>
 				{product?.images.map((image, index) => (
 					<Image
 						key={index}
-						src={`http://localhost:8741/${image.Chemin}`}
+						src={`${process.env.REACT_APP_URL_SERVER}/${image.Chemin}`}
 						thumbnail
 						className="mx-1"
 					/>
@@ -312,8 +415,18 @@ const ProductDetail = () => {
 	);
 
 	return (
-		<Container className="mt-5">
-			{isUserConnected ? renderConnectedView() : renderDisconnectedView()}
+		<Container className="container-fluid-custom mt-5">
+			{isUserConnected ? (
+				<>
+					{/* Affichage pour mobile */}
+					<div className="d-md-none">{renderMobileView()}</div>
+
+					{/* Affichage pour desktop */}
+					<div className="d-none d-md-block">{renderConnectedView()}</div>
+				</>
+			) : (
+				renderDisconnectedView()
+			)}
 		</Container>
 	);
 };

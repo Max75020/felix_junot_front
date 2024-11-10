@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:8741/api';
+const BASE_URL = `${process.env.REACT_APP_URL_SERVER}/api`;
 
 // Récupérer le token d'accès
 const getToken = () => {

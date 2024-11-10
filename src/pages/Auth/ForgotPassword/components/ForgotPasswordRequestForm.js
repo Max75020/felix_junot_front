@@ -6,6 +6,7 @@ import { showSuccess } from '../../../../services/popupService';
 const ForgotPasswordForm = () => {
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
+    // eslint-disable-next-line no-unused-vars
     const [successMessage, setSuccessMessage] = useState('');
 
     const handleSubmit = async (event) => {

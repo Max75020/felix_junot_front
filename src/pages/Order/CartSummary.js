@@ -10,8 +10,8 @@ import '../../assets/styles/Commandes/CartSummary.css';
 
 const CartSummary = () => {
 	const { user } = useContext(UserContext);
-	const { orderData } = useOrder(); // Utilise orderData depuis OrderContext
-	const { removeFromCart } = useCart(); // Utilisation directe de la fonction de suppression depuis CartContext
+	const { orderData } = useOrder();
+	const { removeFromCart } = useCart();
 	const navigate = useNavigate();
 
 	// Fonction pour formater les prix en euros
@@ -22,11 +22,16 @@ const CartSummary = () => {
 		}).format(price);
 	};
 
+	// Fonction pour obtenir l'URL de l'image de couverture du produit
+	const getCoverImageUrl = (produit) => {
+		const coverImage = produit.images?.find((image) => image.cover);
+		return coverImage ? `${process.env.REACT_APP_URL_SERVER}/${coverImage.Chemin}` : "https://placehold.co/400";
+	};
 
 	// Fonction pour gérer la suppression d'un article
 	const handleRemoveFromCart = async (productId) => {
 		try {
-			await removeFromCart(productId); // Suppression via CartContext
+			await removeFromCart(productId);
 		} catch (error) {
 			console.error("Erreur lors de la suppression de l'article :", error);
 		}
@@ -64,10 +69,10 @@ const CartSummary = () => {
 						</button>
 						<h4 className="text-center mt-4 text-dark">{produitPanier.produit.nom}</h4>
 						<img
-							src="https://placehold.co/400"
+							src={getCoverImageUrl(produitPanier.produit)}
 							alt={produitPanier.produit.nom}
 							className="mx-auto d-block img-fluid my-3 rounded"
-							style={{ maxWidth: "100%", maxHeight: "300px" }}
+							style={{ width: "100%", height: "250px", objectFit: "cover" }}
 						/>
 						<div className="d-flex flex-column align-items-center">
 							<h4 className="text-dark">RÉFÉRENCE</h4>

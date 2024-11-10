@@ -50,14 +50,21 @@ const cartApi = {
 			process.env.REACT_APP_STRIPE_PUBLIC_KEY
 		);
 
-		const items = cartData.cartItems.map((item) => ({
-			// Assurez-vous que ces propriétés existent
-			prix_total_produit: item.prix_total_produit,
-			nom: item.produit.nom,
-			quantite: item.quantite,
-			prix_ttc: item.produit.prix_ttc,
-			produitId: item.produit.id_produit,
-		}));
+		const items = cartData.cartItems.map((item) => {
+			const coverImage = item.produit.images.find((img) => img.cover);
+			const imageUrl = coverImage
+				? `${process.env.REACT_APP_URL_SERVER}/${coverImage.Chemin}`
+				: "https://placehold.co/400"; // Image de remplacement si aucune image de couverture n'est trouvée
+		
+			return {
+				prix_total_produit: item.prix_total_produit,
+				nom: item.produit.nom,
+				quantite: item.quantite,
+				prix_ttc: item.produit.prix_ttc,
+				produitId: item.produit.id_produit,
+				imageUrl: imageUrl, // Ajout de l'URL de l'image
+			};
+		});
 
 		// Itérer sur items pour accéder aux propriétés de chaque produit
 		items.forEach((item, index) => {
@@ -67,6 +74,7 @@ const cartApi = {
 			console.log("  quantité : ", item.quantite);
 			console.log("  prix TTC : ", item.prix_ttc);
 			console.log("  id produit : ", item.produitId);
+			console.log("  URL de l'image : ", item.imageUrl);
 		});
 
 		console.log("Informations pour le panier : ", cartData);

@@ -40,7 +40,7 @@ const CardSliderWithArrows = () => {
 	const getProductImageUrl = (produit) => {
 		const coverImage = produit.images?.find((img) => img.cover);
 		const imagePath = coverImage ? coverImage.Chemin : produit.images?.[0]?.Chemin;
-		return imagePath ? `http://localhost:8741/${imagePath}` : "https://placehold.co/250";
+		return imagePath ? `${process.env.REACT_APP_URL_SERVER}/${imagePath}` : "https://placehold.co/250";
 	};
 
 	useEffect(() => {

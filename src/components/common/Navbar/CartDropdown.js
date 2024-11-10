@@ -6,6 +6,14 @@ import { MdClose } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 function CartDropdown({ cartItems, totalPanier, removeFromCart }) {
+	console.log("cartItems", cartItems);
+
+	// Fonction utilitaire pour obtenir l'URL de l'image de couverture du produit
+	const getCoverImageUrl = (produit) => {
+		const coverImage = produit.images.find((image) => image.cover);
+		return coverImage ? `${process.env.REACT_APP_URL_SERVER}/${coverImage.Chemin}` : "https://placehold.co/80";
+	};
+
 	return (
 		<Dropdown align="end">
 			<Dropdown.Toggle
@@ -26,7 +34,7 @@ function CartDropdown({ cartItems, totalPanier, removeFromCart }) {
 					position: "absolute",
 					top: "40px",
 					right: "0px",
-					width: "350px", // Ajuste la largeur du menu pour correspondre à l'image
+					width: "350px",
 				}}
 			>
 				{/* Header du panier */}
@@ -47,7 +55,7 @@ function CartDropdown({ cartItems, totalPanier, removeFromCart }) {
 							<div
 								className="position-relative d-flex align-items-center mb-3 border-bottom pb-3"
 								key={item.id}
-								style={{ padding: "10px" }} // Ajout d'un padding pour l'espacement
+								style={{ padding: "10px" }}
 							>
 								{/* Icône de poubelle */}
 								<Button
@@ -64,7 +72,7 @@ function CartDropdown({ cartItems, totalPanier, removeFromCart }) {
 
 								{/* Image du produit */}
 								<img
-									src={item.produit.image || "https://placehold.co/80"}
+									src={getCoverImageUrl(item.produit)}
 									alt={item.produit.nom}
 									className="rounded"
 									style={{
@@ -105,7 +113,7 @@ function CartDropdown({ cartItems, totalPanier, removeFromCart }) {
 											</span>
 										</div>
 										<div className="text-end">
-											<span className="fw-bold d-flex" style={{ minWidth: "50px"}}>
+											<span className="fw-bold d-flex" style={{ minWidth: "50px" }}>
 												{parseFloat(item.prix_total_produit).toFixed(2)} €
 											</span>
 										</div>
@@ -116,11 +124,11 @@ function CartDropdown({ cartItems, totalPanier, removeFromCart }) {
 
 						{/* Bouton Checkout */}
 						<div className="text-center p-2">
-						<Link to="/panier-summary" className="text-decoration-none">
-							<button className="btn btn-dark w-100">
-								Payer
-							</button>
-						</Link>
+							<Link to="/panier-summary" className="text-decoration-none">
+								<button className="btn btn-dark w-100">
+									Payer
+								</button>
+							</Link>
 						</div>
 					</>
 				) : (

@@ -36,11 +36,12 @@ const AllElementsOfCategory = () => {
 	const getProductImageUrl = (produit) => {
 		const coverImage = produit.images?.find((img) => img.cover);
 		const imagePath = coverImage ? coverImage.Chemin : produit.images?.[0]?.Chemin;
-		return imagePath ? `http://localhost:8741/${imagePath}` : "https://placehold.co/400";
+		return imagePath ? `${process.env.REACT_APP_URL_SERVER}/${imagePath}` : "https://placehold.co/400";
 	};
 
 	useEffect(() => {
 		fetchCategory();
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [id]);
 
 	return (
@@ -49,19 +50,21 @@ const AllElementsOfCategory = () => {
 			{category && category.produits && category.produits.length > 0 ? (
 				<Row>
 					{category.produits.map((produit) => (
-						<Col key={produit["@id"]} md={4} className="mb-4">
+						<Col key={produit["@id"]} xs={12} sm={6} md={4} className="mb-4 d-flex justify-content-center">
 							<Card
 								className="text-center cursor-pointer h-100 product-card"
 								onClick={() => handleProductClick(produit["@id"])}
+								style={{ width: "100%", maxWidth: "300px" }}
 							>
-								<div className="product-image-container">
+								<div className="product-image-container" style={{ height: "300px", overflow: "hidden" }}>
 									<Card.Img
 										variant="top"
 										src={getProductImageUrl(produit)}
 										alt={`Image de ${produit.nom}`}
 										style={{
-											height: "400px", // Hauteur fixe de 400px
-											objectFit: "cover", // Recadrage pour remplir l'espace sans déformation
+											width: "100%",
+											height: "100%",
+											objectFit: "cover",
 										}}
 										className="product-image"
 									/>
