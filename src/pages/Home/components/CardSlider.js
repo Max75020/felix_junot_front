@@ -7,7 +7,7 @@ import { extractIdFromUrl } from "../../../utils/tools";
 const CardSliderWithArrows = () => {
 	const [category, setCategory] = useState(null);
 	const [isMobile, setIsMobile] = useState(false);
-	const navigate = useNavigate(); // Hook for navigation
+	const navigate = useNavigate();
 
 	const fetchCategory = async () => {
 		try {
@@ -18,10 +18,7 @@ const CardSliderWithArrows = () => {
 				console.error("Aucune catégorie trouvée");
 			}
 		} catch (error) {
-			console.error(
-				"Erreur lors de la récupération de la catégorie:",
-				error
-			);
+			console.error("Erreur lors de la récupération de la catégorie:", error);
 		}
 	};
 
@@ -30,21 +27,26 @@ const CardSliderWithArrows = () => {
 	};
 
 	const handleProductClick = (productUrl) => {
-		const productId = extractIdFromUrl(productUrl); // Utilisation de la fonction générique
-		navigate(`/product/${productId}`); // Redirection vers la page produit
+		const productId = extractIdFromUrl(productUrl);
+		navigate(`/product/${productId}`);
 	};
 
 	const handleSeeAllClick = () => {
 		if (category && category.id_categorie) {
-			// Rediriger vers la page "TOUT VOIR" de la catégorie
 			navigate(`/categories/${category.id_categorie}/all`);
 		}
 	};
 
+	const getProductImageUrl = (produit) => {
+		const coverImage = produit.images?.find((img) => img.cover);
+		const imagePath = coverImage ? coverImage.Chemin : produit.images?.[0]?.Chemin;
+		return imagePath ? `http://localhost:8741/${imagePath}` : "https://placehold.co/250";
+	};
+
 	useEffect(() => {
 		fetchCategory();
-		handleResize(); // Initial check
-		window.addEventListener("resize", handleResize); // Écouter le redimensionnement de la fenêtre
+		handleResize();
+		window.addEventListener("resize", handleResize);
 		return () => window.removeEventListener("resize", handleResize);
 	}, []);
 
@@ -54,64 +56,59 @@ const CardSliderWithArrows = () => {
 				<>
 					<h2 style={{ marginBottom: "40px" }}>{category.nom}</h2>
 					{isMobile ? (
-						// Swiper en mode mobile
 						<Carousel>
-							{category.produits
-								.slice(0, 3)
-								.map((produit, index) => (
-									<Carousel.Item key={index}>
-										<Card>
-											<NavLink
-												to={`/categories/${category.id_categorie}/all`}
-											>
-												<Card.Img
-													variant="top"
-													src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6ot2SnJSVboBI9WKAVAt13u75_PB3TJvv0g&s"
-												/>
-												<Card.Body>
-													<Card.Title>
-														{produit.nom}
-													</Card.Title>
-												</Card.Body>
-											</NavLink>
-										</Card>
-									</Carousel.Item>
-								))}
+							{category.produits.slice(0, 3).map((produit, index) => (
+								<Carousel.Item key={index}>
+									<Card className="text-center mx-auto" style={{ width: "400px" }}>
+										<NavLink to={`/categories/${category.id_categorie}/all`}>
+											<Card.Img
+												variant="top"
+												src={getProductImageUrl(produit)}
+												style={{
+													height: "300px",
+													objectFit: "cover",
+												}}
+												alt={`Image de ${produit.nom}`}
+											/>
+											<Card.Body>
+												<Card.Title>{produit.nom}</Card.Title>
+											</Card.Body>
+										</NavLink>
+									</Card>
+								</Carousel.Item>
+							))}
 						</Carousel>
 					) : (
-						// Mode bureau
 						<Row className="justify-content-center">
-							{category.produits &&
-								category.produits.length > 0 ? (
-								category.produits
-									.slice(0, 3)
-									.map((produit, index) => (
-										<Col
-											key={produit["@id"]}
-											md={4}
-											xs={12}
-											sm={6}
-											className="d-flex justify-content-center mb-4 gap-5"
+							{category.produits && category.produits.length > 0 ? (
+								category.produits.slice(0, 3).map((produit, index) => (
+									<Col
+										key={produit["@id"]}
+										md={4}
+										xs={12}
+										sm={6}
+										className="d-flex justify-content-center mb-4"
+									>
+										<Card
+											className="cursor-pointer card-hover text-center"
+											onClick={() => handleProductClick(produit["@id"])}
+											style={{ width: "300px" }}
 										>
-											<Card
-												className="cursor-pointer card-hover"
-												onClick={() =>
-													handleProductClick(produit["@id"])
-												}
-												style={{ width: "18rem" }}
-											>
-												<Card.Img
-													variant="top"
-													src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6ot2SnJSVboBI9WKAVAt13u75_PB3TJvv0g&s"
-												/>
-												<Card.Body>
-													<Card.Title>
-														{produit.nom}
-													</Card.Title>
-												</Card.Body>
-											</Card>
-										</Col>
-									))
+											<Card.Img
+												variant="top"
+												src={getProductImageUrl(produit)}
+												style={{
+													height: "300px",
+													objectFit: "cover",
+												}}
+												alt={`Image de ${produit.nom}`}
+											/>
+											<Card.Body>
+												<Card.Title>{produit.nom}</Card.Title>
+											</Card.Body>
+										</Card>
+									</Col>
+								))
 							) : (
 								<p>Aucun produit disponible</p>
 							)}

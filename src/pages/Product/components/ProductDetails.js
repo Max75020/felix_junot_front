@@ -6,6 +6,7 @@ import { FiPlus, FiMinus } from "react-icons/fi";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
 import { useCart } from "../../../context/CartContext";
 import { UserContext } from "../../../context/UserContext";
+import { extractIdFromUrl } from "../../../utils/tools";
 import { showWarning } from "../../../services/popupService";
 import favorisApi from "../../Favorites/services/Favorites.api";
 
@@ -31,72 +32,67 @@ const ProductDetail = () => {
 
 	const isUserConnected = !!user;
 
-	// Fonction pour récupérer les détails du produit
+	// Récupérer le panier ID à partir de l'IRI du panier
+	const userCartId = user && user.panierOuvert ? extractIdFromUrl(user.panierOuvert["@id"]) : null;
+
 	const fetchProduct = async () => {
 		if (!id) return;
 		try {
 			const response = await produitApi.getProduitById(id);
 			setProduct(response);
-			updateCartStatus(response); // Mise à jour de l'état du panier
+
+			// Vérification si le produit est dans le panier de l'utilisateur
+			const existingCartItem = cartItems.find(
+				(item) => item.produit["@id"] === response["@id"]
+			);
+
+			if (existingCartItem) {
+				setIsInCart(true);
+				setQuantity(existingCartItem.quantite);
+			} else {
+				setIsInCart(false);
+				setQuantity(1);
+			}
 		} catch (error) {
 			console.error("Erreur lors de la récupération du produit:", error);
 		}
 	};
 
-	// Fonction pour mettre à jour l'état `isInCart` et `quantity` en fonction de `cartItems`
-	const updateCartStatus = (currentProduct) => {
-		const cartItem = cartItems.find(
-			(item) => item.produit["@id"] === currentProduct["@id"]
-		);
-		if (cartItem) {
-			setIsInCart(true);
-			setQuantity(cartItem.quantite);
-		} else {
-			setIsInCart(false);
-			setQuantity(1);
-		}
-	};
-
-	const handleAddToCart = async () => {
+	const handleAddToCart = () => {
 		if (product) {
-			await addToCart(product["@id"], quantity); // Ajout au panier via le contexte
-			await fetchCart(); // Rafraîchit le panier après l'ajout
-			updateCartStatus(product); // Met à jour l'état du panier
+			addToCart(product["@id"], quantity);
+			setIsInCart(true);
 		}
 	};
 
-	const handleRemoveFromCart = async () => {
+	const handleRemoveFromCart = () => {
 		if (product) {
 			const cartItem = cartItems.find(
 				(item) => item.produit["@id"] === product["@id"]
 			);
 			if (cartItem) {
-				await removeFromCart(cartItem.id); // Suppression via le contexte
-				await fetchCart(); // Rafraîchit le panier après la suppression
-				updateCartStatus(product); // Met à jour l'état du panier
+				removeFromCart(cartItem.id);
+				setIsInCart(false);
+				setQuantity(1);
 			}
 		}
 	};
 
-	const handleIncrementQuantity = async () => {
+	const handleIncrementQuantity = () => {
 		if (product && product["@id"]) {
 			if (quantity < product.stock) {
 				setQuantity((prevQuantity) => prevQuantity + 1);
-				await incrementQuantity(product["@id"]);
-				await fetchCart();
-				updateCartStatus(product);
+				incrementQuantity(product["@id"]);
 			} else {
 				showWarning("Stock maximum atteint pour ce produit.");
 			}
 		}
 	};
 
-	const handleDecrementQuantity = async () => {
+	const handleDecrementQuantity = () => {
 		if (product && product["@id"] && quantity > 1) {
 			setQuantity((prevQuantity) => prevQuantity - 1);
-			await decrementQuantity(product["@id"]);
-			await fetchCart();
-			updateCartStatus(product);
+			decrementQuantity(product["@id"]);
 		}
 	};
 
@@ -108,10 +104,8 @@ const ProductDetail = () => {
 				console.error("Erreur : L'ID du favori ajouté est manquant dans la réponse.");
 				return;
 			}
-
 			setFavoriteId(response.id_favoris);
 			setIsFavorite(true);
-
 			setUser((prevUser) => ({
 				...prevUser,
 				favoris: [
@@ -135,7 +129,6 @@ const ProductDetail = () => {
 			await favorisApi.deleteFavori(favoriteId);
 			setFavoriteId(null);
 			setIsFavorite(false);
-
 			setUser((prevUser) => ({
 				...prevUser,
 				favoris: prevUser.favoris.filter((fav) => fav.id_favoris !== favoriteId)
@@ -166,13 +159,23 @@ const ProductDetail = () => {
 	}, [user, product]);
 
 	useEffect(() => {
-		fetchCart();
+		if (userCartId) {
+			fetchCart(userCartId);
+		}
 		fetchProduct();
-	}, [id]);
+	}, [id, userCartId]);
 
+	// Synchroniser l'état `isInCart` et `quantity` avec `cartItems`
 	useEffect(() => {
 		if (product) {
-			updateCartStatus(product); // Mise à jour de l'état du panier si `cartItems` change
+			const cartItem = cartItems.find((item) => item.produit["@id"] === product["@id"]);
+			if (cartItem) {
+				setIsInCart(true);
+				setQuantity(cartItem.quantite);
+			} else {
+				setIsInCart(false);
+				setQuantity(1);
+			}
 		}
 	}, [cartItems, product]);
 
@@ -182,7 +185,7 @@ const ProductDetail = () => {
 				<ListGroup variant="flush">
 					{product?.images.map((image, index) => (
 						<ListGroup.Item key={index}>
-							<Image src={image} thumbnail />
+							<Image src={`http://localhost:8741/${image.Chemin}`} thumbnail />
 						</ListGroup.Item>
 					))}
 				</ListGroup>
@@ -190,7 +193,11 @@ const ProductDetail = () => {
 
 			<Col md={6} className="d-flex justify-content-center">
 				<Image
-					src={product?.imagePrincipal || "https://placehold.co/500"}
+					src={
+						product?.images.find(img => img.cover)?.Chemin
+							? `http://localhost:8741/${product.images.find(img => img.cover).Chemin}`
+							: "https://placehold.co/500"
+					}
 					fluid
 				/>
 			</Col>
@@ -284,14 +291,18 @@ const ProductDetail = () => {
 			<h2 className="text-uppercase">{product?.nom}</h2>
 			<div className="product-images">
 				<Image
-					src={product?.imagePrincipal || "https://placehold.co/500"}
+					src={
+						product?.images.find(img => img.cover)?.Chemin
+							? `http://localhost:8741/${product.images.find(img => img.cover).Chemin}`
+							: "https://placehold.co/500"
+					}
 					fluid
 					className="mb-3"
 				/>
 				{product?.images.map((image, index) => (
 					<Image
 						key={index}
-						src={image || "https://placehold.co/100"}
+						src={`http://localhost:8741/${image.Chemin}`}
 						thumbnail
 						className="mx-1"
 					/>

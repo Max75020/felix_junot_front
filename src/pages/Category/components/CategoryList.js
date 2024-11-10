@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom";
 import categoryApi from "../services/Category.api";
 import { Card, Col, Row, Container } from "react-bootstrap";
 import { extractIdFromUrl } from "../../../utils/tools";
+import "../../../assets/styles/Products/ProductDetail.css";
 
 const CategoryList = () => {
 	const [categories, setCategories] = useState([]);
-	const navigate = useNavigate(); // Hook for navigation
+	const navigate = useNavigate();
 
 	const fetchCategory = async () => {
 		try {
@@ -25,15 +26,17 @@ const CategoryList = () => {
 		fetchCategory();
 	}, []);
 
-	// Function to handle category click
-	const handleCategoryClick = (categoryId) => {
-		navigate(`/categories/${categoryId}/all`); // Redirect to the category page
+	// Fonction pour rediriger vers la page produit
+	const handleProductClick = (productUrl) => {
+		const productId = extractIdFromUrl(productUrl);
+		navigate(`/product/${productId}`);
 	};
 
-	// Function to handle product click
-	const handleProductClick = (productUrl) => {
-		const productId = extractIdFromUrl(productUrl); // Utilisation de la fonction générique
-		navigate(`/product/${productId}`); // Redirect to the product page
+	// Utilitaire pour obtenir l'URL de l'image principale d'un produit
+	const getProductImageUrl = (produit) => {
+		const coverImage = produit.images?.find((img) => img.cover);
+		const imagePath = coverImage ? coverImage.Chemin : produit.images?.[0]?.Chemin;
+		return imagePath ? `http://localhost:8741/${imagePath}` : "https://placehold.co/400";
 	};
 
 	return (
@@ -43,26 +46,34 @@ const CategoryList = () => {
 				<div key={category.id_categorie} className="mb-5">
 					<h2
 						className="text-center text-uppercase mb-4"
-						style={{ cursor: "pointer", color: "blue" }} // Indicate clickable style
-						onClick={() => handleCategoryClick(category.id_categorie)} // Redirect on click
+						style={{ cursor: "pointer", color: "blue" }}
+						onClick={() => navigate(`/categories/${category.id_categorie}/all`)}
 					>
 						{category.nom}
 					</h2>
 					<Row>
 						{category.produits && category.produits.length > 0 ? (
-							category.produits.slice(0, 3).map((produit) => ( // Limit to 3 products
+							category.produits.slice(0, 3).map((produit) => (
 								<Col key={produit["@id"]} md={4} className="mb-4">
-									<Card className="text-center">
-										<Card.Img
-											variant="top"
-											src="https://placehold.co/400" // Replace with the actual product image URL
-											alt={`Image de ${produit.nom}`}
-										/>
+									<Card
+										className="text-center h-100 product-card"
+										onClick={() => handleProductClick(produit["@id"])}
+										style={{ cursor: "pointer" }}
+									>
+										<div className="product-image-container">
+											<Card.Img
+												variant="top"
+												src={getProductImageUrl(produit)}
+												alt={`Image de ${produit.nom}`}
+												className="product-image"
+												style={{
+													height: "400px",
+													objectFit: "cover",
+												}}
+											/>
+										</div>
 										<Card.Body>
-											<Card.Title
-												style={{ cursor: "pointer", color: "blue" }} // Indicate clickable style
-												onClick={() => handleProductClick(produit["@id"])} // Redirect on click
-											>
+											<Card.Title className="product-title">
 												{produit.nom}
 											</Card.Title>
 										</Card.Body>

@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom"; // Ajout de useNavigate pour la redirection
+import { useParams, useNavigate } from "react-router-dom";
 import categoryApi from "../services/Category.api";
 import { Card, Col, Row, Container } from "react-bootstrap";
-import { extractIdFromUrl } from "../../../utils/tools"; // Utiliser une fonction utilitaire pour extraire l'ID du produit si nécessaire
+import { extractIdFromUrl } from "../../../utils/tools";
+import "../../../assets/styles/Products/ProductList.css"; // Assurez-vous d'avoir ce fichier CSS pour les effets
 
 const AllElementsOfCategory = () => {
 	const [category, setCategory] = useState(null);
-	const { id } = useParams(); // Récupère l'ID de la catégorie depuis l'URL
-	const navigate = useNavigate(); // Utiliser useNavigate pour la navigation
+	const { id } = useParams();
+	const navigate = useNavigate();
 
 	const fetchCategory = async () => {
 		try {
 			const response = await categoryApi.getAllCategoriesNoToken();
 			if (response && response["hydra:member"]) {
-				const selectedCategory = response["hydra:member"].find(cat => cat.id_categorie === parseInt(id));
-				setCategory(selectedCategory); // Stocke la catégorie trouvée
+				const selectedCategory = response["hydra:member"].find(
+					(cat) => cat.id_categorie === parseInt(id)
+				);
+				setCategory(selectedCategory);
 			} else {
 				console.error("Aucune catégorie trouvée");
 			}
@@ -25,13 +28,20 @@ const AllElementsOfCategory = () => {
 
 	// Fonction pour rediriger vers la page du produit
 	const handleProductClick = (productUrl) => {
-		const productId = extractIdFromUrl(productUrl); // Extraire l'ID du produit de l'URL
-		navigate(`/product/${productId}`); // Redirige vers la page du produit avec l'ID
+		const productId = extractIdFromUrl(productUrl);
+		navigate(`/product/${productId}`);
+	};
+
+	// Utilitaire pour obtenir l'URL de l'image principale d'un produit
+	const getProductImageUrl = (produit) => {
+		const coverImage = produit.images?.find((img) => img.cover);
+		const imagePath = coverImage ? coverImage.Chemin : produit.images?.[0]?.Chemin;
+		return imagePath ? `http://localhost:8741/${imagePath}` : "https://placehold.co/400";
 	};
 
 	useEffect(() => {
 		fetchCategory();
-	}, [id]); // Utiliser l'id pour recharger les données si la catégorie change
+	}, [id]);
 
 	return (
 		<Container>
@@ -41,15 +51,21 @@ const AllElementsOfCategory = () => {
 					{category.produits.map((produit) => (
 						<Col key={produit["@id"]} md={4} className="mb-4">
 							<Card
-								className="text-center cursor-pointer"
-								onClick={() => handleProductClick(produit["@id"])} // Redirige vers la page produit lors du clic
+								className="text-center cursor-pointer h-100 product-card"
+								onClick={() => handleProductClick(produit["@id"])}
 							>
-								<Card.Img
-									variant="top"
-									src="https://placehold.co/400" // Remplace par l'URL de l'image du produit si disponible
-									alt={`Image de ${produit.nom}`}
-									className="card-hover"
-								/>
+								<div className="product-image-container">
+									<Card.Img
+										variant="top"
+										src={getProductImageUrl(produit)}
+										alt={`Image de ${produit.nom}`}
+										style={{
+											height: "400px", // Hauteur fixe de 400px
+											objectFit: "cover", // Recadrage pour remplir l'espace sans déformation
+										}}
+										className="product-image"
+									/>
+								</div>
 								<Card.Body>
 									<Card.Title>{produit.nom}</Card.Title>
 								</Card.Body>
