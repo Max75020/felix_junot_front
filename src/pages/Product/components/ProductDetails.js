@@ -210,6 +210,7 @@ const ProductDetail = () => {
 				style={{ borderRadius: "10px", objectFit: "cover" }}
 					src={`${process.env.REACT_APP_URL_SERVER}/${selectedImage}`}
 					fluid
+					className="max-vh-75"
 				/>
 			</Col>
 

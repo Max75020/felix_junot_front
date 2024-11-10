@@ -66,7 +66,7 @@ const cartApi = {
 			};
 		});
 
-		// Itérer sur items pour accéder aux propriétés de chaque produit
+/* 		// Itérer sur items pour accéder aux propriétés de chaque produit
 		items.forEach((item, index) => {
 			console.log(`Informations pour le produit ${index + 1}:`);
 			console.log("  prix_total_produit : ", item.prix_total_produit);
@@ -77,7 +77,7 @@ const cartApi = {
 			console.log("  URL de l'image : ", item.imageUrl);
 		});
 
-		console.log("Informations pour le panier : ", cartData);
+		console.log("Informations pour le panier : ", cartData); */
 
 		const body = {
 			id_panier: cartData.id_panier,
@@ -87,14 +87,14 @@ const cartApi = {
 			totalCommande: cartData.totalCommande,
 		};
 
-		console.log("Toutes les informations envoyées au back", body);
+		/* console.log("Toutes les informations envoyées au back", body); */
 
 		try {
 			const response = await apiService.post(
 				`${CART_ENDPOINT}/payment`,
 				body
 			);
-			console.log("Réponse du backend pour la session de paiement", response);
+			/* console.log("Réponse du backend pour la session de paiement", response); */
 			await stripe.redirectToCheckout({ sessionId: response.id });
 		} catch (error) {
 			console.error(

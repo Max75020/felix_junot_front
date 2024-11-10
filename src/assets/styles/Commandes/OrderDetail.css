@@ -1,0 +1,96 @@
+.order-detail-container {
+	max-width: 100%;
+	padding: 0 1.5rem;
+}
+
+.product-card-detail {
+	border: none;
+	
+}
+
+.image-mobile {
+	width: 250px;
+	height: 250px;
+	object-fit: cover;
+	margin: 0 auto;
+	border-radius: 10px;
+}
+
+/* Styles responsives pour ajuster la taille de l'image sur différents écrans */
+
+
+@media (max-width: 400px) {
+	.image-mobile {
+		max-width: 220px;
+		max-height: 220px;
+	}
+}
+
+@media (max-width: 340px) {
+	.image-mobile {
+		max-width: 200px;
+		max-height: 200px;
+	}
+}
+
+@media (max-width: 320px) {
+	.image-mobile {
+		max-width: 180px;
+		max-height: 180px;
+	}
+}
+
+@media (max-width: 300px) {
+	.image-mobile {
+		max-width: 160px;
+		max-height: 160px;
+	}
+}
+
+@media (max-width: 280px) {
+	.image-mobile {
+		max-width: 140px;
+		max-height: 140px;
+	}
+}
+
+@media (max-width: 260px) {
+	.image-mobile {
+		max-width: 120px;
+		max-height: 120px;
+	}
+}
+
+@media (max-width: 240px) {
+	.image-mobile {
+		max-width: 100px;
+		max-height: 100px;
+	}
+}
+
+@media (max-width: 220px) {
+	.image-mobile {
+		max-width: 80px;
+		max-height: 80px;
+	}
+}
+
+
+.order-detail-text-align-image {
+    text-align: center;
+}
+
+.order-detail-text-align-product {
+    text-align: center;
+}
+
+
+/* Aligne le texte à gauche pour les écrans larges et au-dessus */
+@media (min-width: 576px) { /* lg */
+    .order-detail-text-align-image {
+        text-align: left;
+    }
+	.order-detail-text-align-product {
+		text-align: right;
+	}
+}

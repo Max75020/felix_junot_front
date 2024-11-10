@@ -25,6 +25,8 @@ import AddressChoice from '../pages/Order/AddressChoice';
 import CarrierChoice from '../pages/Order/CarrierChoice';
 import OrderSummary from '../pages/Order/OrderSummary';
 import OrderSuccess from '../pages/Order/OrderSuccess';
+import OrdersList from '../pages/Order/OrdersList';
+import OrderDetail from '../pages/Order/OrderDetail';
 
 export const routes = {
 	AUTH: {
@@ -79,6 +81,8 @@ export const routes = {
 		CARRIER_CHOICE: '/carrier-choice',
 		ORDER_SUMMARY: '/order-summary',
 		ORDER_SUCCESS: '/order-success',
+		ORDERS_LIST: '/orders-list',
+		ORDER_DETAIL: '/order-detail/:id',
 	},
 };
 
@@ -111,6 +115,8 @@ function AppRouter() {
 					<Route path={routes.COMMANDS.CARRIER_CHOICE} element={<CarrierChoice />} />
 					<Route path={routes.COMMANDS.ORDER_SUMMARY} element={<OrderSummary />} />
 					<Route path={routes.COMMANDS.ORDER_SUCCESS} element={<OrderSuccess />} />
+					<Route path={routes.COMMANDS.ORDERS_LIST} element={<OrdersList />} />
+					<Route path={routes.COMMANDS.ORDER_DETAIL} element={<OrderDetail />} />
 
 					<Route
 						index

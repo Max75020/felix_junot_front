@@ -9,7 +9,6 @@ const orderApi = {
 		return await apiService.find(ORDER_ENDPOINT, params);
 	},
 
-
 	// Récupérer une commande par ID
 	getOrderById: async (id) => {
 		return await apiService.get(`${ORDER_ENDPOINT}/${id}`);

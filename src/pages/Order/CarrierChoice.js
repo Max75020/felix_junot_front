@@ -63,15 +63,7 @@ const CarrierChoice = () => {
 									}}
 								>
 									<Row className="align-items-center flex-column flex-xl-row">
-										<Col xs={12} xl={3} className="d-flex justify-content-center mb-3 mt-3">
-											<Card.Img
-												variant="left"
-												src="https://via.placeholder.com/300" // Image par défaut
-												className="carrier-image img-fluid rounded"
-												style={{ objectFit: 'cover' }}
-											/>
-										</Col>
-										<Col xs={12} xl={7} className="d-flex flex-column align-items-center align-items-md-start my-3 text-center text-xl-start">
+										<Col xs={12} xl={10} className="d-flex flex-column align-items-center align-items-md-start my-3 text-center text-xl-start">
 											<Card.Body>
 												<Card.Title className="mb-3 text-align-center" style={{ fontSize: '1.5em' }}>
 													{methode.nom.toUpperCase()}

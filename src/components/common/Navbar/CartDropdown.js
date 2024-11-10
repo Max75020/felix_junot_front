@@ -6,7 +6,7 @@ import { MdClose } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 function CartDropdown({ cartItems, totalPanier, removeFromCart }) {
-	console.log("cartItems", cartItems);
+/* 	console.log("cartItems", cartItems); */
 
 	// Fonction utilitaire pour obtenir l'URL de l'image de couverture du produit
 	const getCoverImageUrl = (produit) => {
