@@ -1,0 +1,46 @@
+/* CardSlider.css */
+
+/* Conteneur de l'image */
+.image-container {
+	/* Bordures arrondies */
+	border-radius: 8px;
+	/* Masque le débordement */
+	overflow: hidden;
+	/* Position relative */
+	position: relative;
+	/* Largeur à 100% */
+	width: 100%;
+	/* Hauteur initiale à 0 */
+	height: 0;
+	/* Maintient un format carré */
+	padding-bottom: 100%;
+	/* Taille de fond couvrante */
+	background-size: cover;
+	/* Position du fond centrée */
+	background-position: center;
+	/* Couleur de fond */
+	background-color: #f5f5f5;
+	/* Transition pour la transformation */
+	transition: transform 0.3s ease;
+}
+
+/* Effet au survol de la carte */
+.card-hover:hover .image-container {
+	/* Agrandissement de l'image */
+	transform: scale(1.05);
+}
+
+/* Styles responsives pour ajuster la taille de l'image sur différents écrans */
+@media (max-width: 576px) {
+	.image-container {
+		/* Maintient un format carré */
+		padding-bottom: 100%;
+	}
+}
+
+@media (max-width: 400px) {
+	.image-container {
+		/* Maintient un format carré */
+		padding-bottom: 100%;
+	}
+}

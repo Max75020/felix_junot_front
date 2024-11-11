@@ -3,7 +3,7 @@ import { Button, Card, Container, Row, Col, Form } from 'react-bootstrap';
 import AdresseApi from '../Adresses/services/Adresses.api';
 import { useNavigate } from "react-router-dom";
 import { HiArrowLongRight } from "react-icons/hi2";
-import '../../assets/styles/Commandes/AddressChoice.css';
+import '../../assets/styles/Order/AddressChoice.css';
 import { useOrder } from '../../context/OrderContext';
 
 const AddressChoice = () => {

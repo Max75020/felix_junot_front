@@ -6,7 +6,7 @@ import { useOrder } from '../../context/OrderContext';
 import { useCart } from '../../context/CartContext';
 import { FaTrashAlt } from "react-icons/fa";
 import { HiArrowLongRight } from "react-icons/hi2";
-import '../../assets/styles/Commandes/CartSummary.css';
+import '../../assets/styles/Order/CartSummary.css';
 
 const CartSummary = () => {
 	const { user } = useContext(UserContext);

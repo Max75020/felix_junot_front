@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Container, Row, Col, Card, Form } from 'react-bootstrap';
-import '../../assets/styles/Commandes/CarrierChoice.css';
+import '../../assets/styles/Order/CarrierChoice.css';
 import CarrierApi from '../Carrier/services/Carrier.api'; // Importation du service API
 import { useNavigate } from 'react-router-dom'; // Import de useNavigate pour la navigation programmatique
 import { useOrder } from '../../context/OrderContext';

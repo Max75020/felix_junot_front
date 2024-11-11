@@ -2,64 +2,77 @@
 	border: none !important;
 	/* Supprimer la bordure */
 	background: none;
-	/* Supprimer le fond par défaut */
+	/* Supprimer l'arrière-plan par défaut */
 	padding: 0;
 	/* Ajuster l'espacement si nécessaire */
 }
 
 .burger-toggle:focus {
 	box-shadow: none !important;
-	/* Supprimer l'effet focus (si présent) */
+	/* Supprimer l'effet de focus (si présent) */
 }
 
 #navbar-logo {
 	width: 50px;
+	/* Largeur du logo de la navbar */
 }
 
-/* Animation for categories */
+/* Animation pour les catégories */
 .categories-container {
 	max-height: 0;
+	/* Hauteur maximale initiale */
 	overflow: hidden;
+	/* Masquer le contenu débordant */
 	transition: max-height 0.3s ease-out;
+	/* Transition pour l'animation de la hauteur */
 }
 
 .categories-container.open {
 	max-height: 500px;
-	/* Adjust as needed */
+	/* Hauteur maximale lorsque ouvert */
 	transition: max-height 0.5s ease-in;
+	/* Transition pour l'animation de la hauteur */
 }
 
-/* Animation for icon rotation */
+/* Animation pour la rotation de l'icône */
 .icon-rotate {
 	display: inline-flex;
+	/* Affichage en ligne avec flexbox */
 	align-items: center;
+	/* Aligner les éléments au centre */
 	justify-content: center;
+	/* Justifier les éléments au centre */
 	width: 24px;
 	/* Assurez-vous que la taille est constante */
 	height: 24px;
 	/* Assurez-vous que la taille est constante */
 	transition: transform 0.3s ease-in-out;
+	/* Transition pour l'animation de la rotation */
 }
 
 .icon-rotate.open {
 	transform: rotate(180deg);
-	/* Rotate the icon */
+	/* Faire pivoter l'icône */
 }
 
 .navbar-home {
 	background-color: transparent !important;
-	/* Transparente sur la page d'accueil */
+	/* Transparent sur la page d'accueil */
 	position: absolute !important;
+	/* Position absolue */
 	top: 0;
+	/* En haut de la page */
 	left: 0;
+	/* À gauche de la page */
 	width: 100%;
+	/* Largeur de 100% */
 	z-index: 10;
 	/* Pour s'assurer qu'elle est au-dessus du contenu */
 }
 
 .navbar {
 	background-color: white;
-	/* Autres pages ont une navbar blanche */
+	/* Les autres pages ont une navbar blanche */
 }
 
 .burger-toggle span:hover {
@@ -74,18 +87,21 @@
 
 .navbar-home .custom-dropdown-toggle,.navbar-home .nav-link {
 	color: white;
+	/* Couleur blanche pour les liens et les toggles */
 }
 
 @media screen and (max-width: 572px) {
-	.navbar svg{
+	.navbar svg {
 		width: 20px !important;
+		/* Largeur des icônes dans la navbar */
 		height: 20px !important;
+		/* Hauteur des icônes dans la navbar */
 	}
-	
 }
 
-.navbar svg{
+.navbar svg {
 	width: 28px;
+	/* Largeur des icônes dans la navbar */
 	height: 28px;
+	/* Hauteur des icônes dans la navbar */
 }
-

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Card, Button, Accordion } from 'react-bootstrap';
 import { useOrder } from '../../context/OrderContext';
-import '../../assets/styles/Commandes/OrderSummary.css';
+import '../../assets/styles/Order/OrderSummary.css';
 
 const OrderSummary = () => {
 	const { orderData, makePayment } = useOrder();

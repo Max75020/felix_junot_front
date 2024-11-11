@@ -3,6 +3,7 @@ import { Card, Button, Row, Col, Container, Carousel } from "react-bootstrap";
 import categoryApi from "../../Category/services/Category.api";
 import { NavLink, useNavigate } from "react-router-dom";
 import { extractIdFromUrl } from "../../../utils/tools";
+import "../../../assets/styles/components/CardSlider.css";
 
 const CardSliderWithArrows = () => {
 	const [category, setCategory] = useState(null);
@@ -59,19 +60,16 @@ const CardSliderWithArrows = () => {
 						<Carousel>
 							{category.produits.slice(0, 3).map((produit, index) => (
 								<Carousel.Item key={index}>
-									<Card className="text-center mx-auto" style={{ width: "400px" }}>
+									<Card className="text-center mx-auto">
 										<NavLink to={`/categories/${category.id_categorie}/all`}>
-											<Card.Img
-												variant="top"
-												src={getProductImageUrl(produit)}
+											<div
+												className="image-container"
 												style={{
-													height: "300px",
-													objectFit: "cover",
+													backgroundImage: `url(${getProductImageUrl(produit)})`,
 												}}
-												alt={`Image de ${produit.nom}`}
-											/>
+											></div>
 											<Card.Body>
-												<Card.Title>{produit.nom}</Card.Title>
+												<Card.Title className="text-dark no-underline">{produit.nom}</Card.Title>
 											</Card.Body>
 										</NavLink>
 									</Card>
@@ -92,17 +90,14 @@ const CardSliderWithArrows = () => {
 										<Card
 											className="cursor-pointer card-hover text-center"
 											onClick={() => handleProductClick(produit["@id"])}
-											style={{ width: "300px" }}
+											style={{ width: "300px", height: "300px" }}
 										>
-											<Card.Img
-												variant="top"
-												src={getProductImageUrl(produit)}
+											<div
+												className="image-container"
 												style={{
-													height: "300px",
-													objectFit: "cover",
+													backgroundImage: `url(${getProductImageUrl(produit)})`,
 												}}
-												alt={`Image de ${produit.nom}`}
-											/>
+											></div>
 											<Card.Body>
 												<Card.Title>{produit.nom}</Card.Title>
 											</Card.Body>

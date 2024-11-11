@@ -41,7 +41,7 @@ const AllElementsOfCategory = () => {
 
 	useEffect(() => {
 		fetchCategory();
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [id]);
 
 	return (
@@ -56,19 +56,12 @@ const AllElementsOfCategory = () => {
 								onClick={() => handleProductClick(produit["@id"])}
 								style={{ width: "100%", maxWidth: "300px" }}
 							>
-								<div className="product-image-container" style={{ height: "300px", overflow: "hidden" }}>
-									<Card.Img
-										variant="top"
-										src={getProductImageUrl(produit)}
-										alt={`Image de ${produit.nom}`}
-										style={{
-											width: "100%",
-											height: "100%",
-											objectFit: "cover",
-										}}
-										className="product-image"
-									/>
-								</div>
+								<div
+									className="product-image-container"
+									style={{
+										backgroundImage: `url(${getProductImageUrl(produit)})`,
+									}}
+								></div>
 								<Card.Body>
 									<Card.Title>{produit.nom}</Card.Title>
 								</Card.Body>

@@ -26,6 +26,10 @@ body {
 	margin: 0;
 }
 
+a{
+	text-decoration: none !important;
+}
+
 /* Style général du bouton radio */
 .form-check-input {
 	background-color: #ffffff !important;

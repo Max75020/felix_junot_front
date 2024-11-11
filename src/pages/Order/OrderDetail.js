@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import orderApi from './services/Order.api';
 import { Container, Row, Col, Card, ListGroup, Spinner, Alert, Image } from 'react-bootstrap';
-import '../../assets/styles/Commandes/OrderDetail.css';
+import '../../assets/styles/Order/OrderDetail.css';
 
 const OrderDetail = () => {
 	const { id } = useParams();

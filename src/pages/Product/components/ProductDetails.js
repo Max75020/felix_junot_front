@@ -207,7 +207,7 @@ const ProductDetail = () => {
 
 			<Col md={6} className="d-flex justify-content-center">
 				<Image
-				style={{ borderRadius: "10px", objectFit: "cover" }}
+					style={{ borderRadius: "10px", objectFit: "cover" }}
 					src={`${process.env.REACT_APP_URL_SERVER}/${selectedImage}`}
 					fluid
 					className="max-vh-75"
@@ -304,11 +304,13 @@ const ProductDetail = () => {
 			<Carousel>
 				{product?.images.map((image, index) => (
 					<Carousel.Item key={index}>
-						<Image
-							className="d-block w-100 carousel-image-mobile"
-							src={`${process.env.REACT_APP_URL_SERVER}/${image.Chemin}`}
-							alt={`Image de ${product?.nom}`}
-						/>
+						<div className="carousel-image-container-mobile">
+							<Image
+								className="carousel-image-mobile"
+								src={`${process.env.REACT_APP_URL_SERVER}/${image.Chemin}`}
+								alt={`Image de ${product?.nom}`}
+							/>
+						</div>
 					</Carousel.Item>
 				))}
 			</Carousel>
@@ -395,25 +397,25 @@ const ProductDetail = () => {
 
 
 	const renderDisconnectedView = () => (
-		<div className="disconnected-view text-center">
-			<h2 className="text-uppercase">{product?.nom}</h2>
-			<div className="product-images">
-				<Image
-					src={`${process.env.REACT_APP_URL_SERVER}/${selectedImage}`}
-					fluid
-					className="mb-3"
-				/>
+		<div className="disconnected-view">
+			<h1 className="product-title position-relative mb-5">
+				{product?.nom}
+			</h1>
+			<div className="gallery">
 				{product?.images.map((image, index) => (
-					<Image
-						key={index}
-						src={`${process.env.REACT_APP_URL_SERVER}/${image.Chemin}`}
-						thumbnail
-						className="mx-1"
-					/>
+					<div key={index} className="gallery-item">
+						<img
+							src={`${process.env.REACT_APP_URL_SERVER}/${image.Chemin}`}
+							alt={product?.nom}
+							className="gallery-image"
+						/>
+					</div>
 				))}
 			</div>
 		</div>
 	);
+
+
 
 	return (
 		<Container className="container-fluid-custom mt-5">

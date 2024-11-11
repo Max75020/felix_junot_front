@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import categoryApi from "../services/Category.api";
 import { Card, Col, Row, Container } from "react-bootstrap";
 import { extractIdFromUrl } from "../../../utils/tools";
-import "../../../assets/styles/Products/ProductDetail.css";
+import "../../../assets/styles/Category/CategoryList.css";
 
 const CategoryList = () => {
 	const [categories, setCategories] = useState([]);
@@ -60,19 +60,12 @@ const CategoryList = () => {
 										onClick={() => handleProductClick(produit["@id"])}
 										style={{ cursor: "pointer", width: "100%", maxWidth: "300px" }}
 									>
-										<div className="product-image-container" style={{ height: "300px", overflow: "hidden" }}>
-											<Card.Img
-												variant="top"
-												src={getProductImageUrl(produit)}
-												alt={`Image de ${produit.nom}`}
-												className="product-image"
-												style={{
-													width: "100%",
-													height: "100%",
-													objectFit: "cover",
-												}}
-											/>
-										</div>
+										<div
+											className="product-image-container"
+											style={{
+												backgroundImage: `url(${getProductImageUrl(produit)})`,
+											}}
+										></div>
 										<Card.Body>
 											<Card.Title className="product-title">
 												{produit.nom}
