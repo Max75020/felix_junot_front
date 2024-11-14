@@ -92,8 +92,8 @@ const Footer = () => {
 								</a>
 							</li>
 							<li>
-								{/* Lien vers la page des Conditions de Livraison */}
-								<Link to="/delivery-conditions">Conditions de Livraison</Link>
+								{/* Lien vers la page des Charte de Confidentialité */}
+								<Link to="/privacy-policy">Charte de Confidentialité</Link>
 							</li>
 						</ul>
 					</div>
@@ -126,8 +126,8 @@ const Footer = () => {
 								</a>
 							</li>
 							<li>
-								{/* Lien vers la page des Conditions de Livraison */}
-								<Link to="/delivery-conditions">Conditions de Livraison</Link>
+								{/* Lien vers la page des Charte de Confidentialité */}
+								<Link to="/privacy-policy">Charte de Confidentialité</Link>
 							</li>
 						</ul>
 					</div>
