@@ -8,6 +8,7 @@ import AllElementsOfCategory from '../pages/Category/components/AllElementsOfCat
 import ProductDetail from '../pages/Product/components/ProductDetails';
 import LoginForm from '../pages/Auth/Login/components/LoginForm';
 import RegisterForm from '../pages/Auth/Register/components/RegisterForm';
+import ConfirmSignupPage from '../pages/Auth/Register/components/ConfirmSignupPage';
 import ForgotPasswordForm from '../pages/Auth/ForgotPassword/components/ForgotPasswordRequestForm';
 import NewPasswordForm from '../pages/Auth/ForgotPassword/components/NewPasswordForm';
 import Faq from '../pages/Legal/Faq';
@@ -32,10 +33,9 @@ export const routes = {
 	AUTH: {
 		LOGIN: '/login',
 		REGISTER: '/register',
-
+		CONFIRM_SIGNUP: '/confirm-signup',
 		FORGOT_PASSWORD: '/forgot-password',
 		NEW_PASSWORD: '/new-password',
-
 		UNAUTHORIZED: '/unauthorized',
 	},
 	HOME: {
@@ -94,6 +94,7 @@ function AppRouter() {
 					<Route index element={<Home />} />
 					<Route path={routes.AUTH.LOGIN} element={<LoginForm />} />
 					<Route path={routes.AUTH.REGISTER} element={<RegisterForm />} />
+					<Route path={routes.AUTH.CONFIRM_SIGNUP} element={<ConfirmSignupPage />} />
 					<Route path={routes.AUTH.FORGOT_PASSWORD} element={<ForgotPasswordForm />} />
 					<Route path={routes.AUTH.NEW_PASSWORD} element={<NewPasswordForm />} />
 
