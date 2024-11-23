@@ -75,50 +75,55 @@ const ProfilePage = () => {
 					<h3>{`${user.prenom} ${user.nom}`}</h3>
 					<p className="text-muted">{user.email}</p>
 					<p className="text-muted mb-1">{user.telephone}</p>
-					<div className="d-flex justify-content-center flex-column align-items-center gap-5">
-						<Button onClick={handleEditToggle} className="my-3 btn-dark editbutton">
+					<div className="d-flex flex-column align-items-center gap-4">
+						{/* Bouton Modifier / Annuler */}
+						<Button onClick={handleEditToggle} className="btn-dark editbutton">
 							{isEditing ? "Annuler" : "Modifier"}
 						</Button>
+
+						{/* Formulaire d'édition */}
+						{isEditing && (
+							<Form className="w-100 px-3" onSubmit={handleSave}>
+								<Form.Group className="mb-3">
+									<Form.Label>Prénom :</Form.Label>
+									<Form.Control
+										type="text"
+										placeholder="Prénom"
+										value={prenom}
+										onChange={(e) => setPrenom(e.target.value)}
+									/>
+								</Form.Group>
+								<Form.Group className="mb-3">
+									<Form.Label>Nom :</Form.Label>
+									<Form.Control
+										type="text"
+										placeholder="Nom"
+										value={nom}
+										onChange={(e) => setNom(e.target.value)}
+									/>
+								</Form.Group>
+								<Form.Group className="mb-3">
+									<Form.Label>Numéro de Téléphone :</Form.Label>
+									<Form.Control
+										type="tel"
+										placeholder="Numéro de Téléphone"
+										value={telephone}
+										onChange={(e) => setTelephone(e.target.value)}
+									/>
+								</Form.Group>
+								<Button variant="success" type="submit" className="w-100">
+									Sauvegarder
+								</Button>
+							</Form>
+						)}
+
+						{/* Bouton Supprimer */}
 						<Button onClick={handleDeleteUser} variant="danger" className="deletebutton">
 							Supprimer votre compte
 						</Button>
 					</div>
 
-					{/* Formulaire d'édition */}
-					{isEditing && (
-						<Form className="text-left" onSubmit={handleSave}>
-							<Form.Group className="mb-3">
-								<Form.Label>Prénom :</Form.Label>
-								<Form.Control
-									type="text"
-									placeholder="Prénom"
-									value={prenom}
-									onChange={(e) => setPrenom(e.target.value)}
-								/>
-							</Form.Group>
-							<Form.Group className="mb-3">
-								<Form.Label>Nom :</Form.Label>
-								<Form.Control
-									type="text"
-									placeholder="Nom"
-									value={nom}
-									onChange={(e) => setNom(e.target.value)}
-								/>
-							</Form.Group>
-							<Form.Group className="mb-3">
-								<Form.Label>Numéro de Téléphone :</Form.Label>
-								<Form.Control
-									type="tel"
-									placeholder="Numéro de Téléphone"
-									value={telephone}
-									onChange={(e) => setTelephone(e.target.value)}
-								/>
-							</Form.Group>
-							<Button variant="success" type="submit" className="w-100">
-								Sauvegarder
-							</Button>
-						</Form>
-					)}
+
 				</Col>
 			</Row>
 
