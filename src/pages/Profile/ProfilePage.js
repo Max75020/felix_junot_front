@@ -12,6 +12,7 @@ import { showSuccess } from '../../services/popupService';
 const ProfilePage = () => {
 	const { user, loading, updateUser } = useContext(UserContext);
 	const [isEditing, setIsEditing] = useState(false);
+	const { deleteUser } = useContext(UserContext);
 	const [prenom, setPrenom] = useState(user?.prenom || "");
 	const [nom, setNom] = useState(user?.nom || "");
 	const [telephone, setTelephone] = useState(user?.telephone || "");
@@ -49,11 +50,17 @@ const ProfilePage = () => {
 		return <div>Chargement...</div>;
 	}
 
-	// Calculer les initiales de l'utilisateur
+	// Obtenir les initiales de l'utilisateur
 	const userInitials = `${user.prenom.charAt(0)}`;
 
 	const handleEditToggle = () => {
 		setIsEditing(!isEditing);
+	};
+
+	const handleDeleteUser = () => {
+		if (window.confirm("Êtes-vous sûr de vouloir supprimer votre compte ? Toutes vos données seront perdues.")) {
+			deleteUser();
+		}
 	};
 
 	return (
@@ -68,9 +75,14 @@ const ProfilePage = () => {
 					<h3>{`${user.prenom} ${user.nom}`}</h3>
 					<p className="text-muted">{user.email}</p>
 					<p className="text-muted mb-1">{user.telephone}</p>
-					<Button onClick={handleEditToggle} className="my-3 btn-dark">
-						{isEditing ? "Annuler" : "Modifier"}
-					</Button>
+					<div className="d-flex justify-content-center flex-column align-items-center gap-5">
+						<Button onClick={handleEditToggle} className="my-3 btn-dark editbutton">
+							{isEditing ? "Annuler" : "Modifier"}
+						</Button>
+						<Button onClick={handleDeleteUser} variant="danger" className="deletebutton">
+							Supprimer votre compte
+						</Button>
+					</div>
 
 					{/* Formulaire d'édition */}
 					{isEditing && (

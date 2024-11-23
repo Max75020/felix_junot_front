@@ -93,13 +93,28 @@ export const UserProvider = ({ children }) => {
 		return user?.roles_generated?.includes('ROLE_ADMIN');
 	};
 
+	// Supprimer l'utilisateur
+	const deleteUser = async () => {
+		if (!user || !user.id_utilisateur) {
+			console.error("ID utilisateur manquant.");
+			return;
+		}
+
+		try {
+			await apiService.delete(`utilisateurs/${user.id_utilisateur}`);
+			logout(); // Déconnecter l'utilisateur après la suppression
+		} catch (error) {
+			console.error("Erreur lors de la suppression de l'utilisateur", error);
+		}
+	};
+
 
 	useEffect(() => {
 		checkUserLoggedIn();
 	}, []);
 
 	return (
-		<UserContext.Provider value={{ user, setUser, loading, login, logout, updateUser, isAdmin }}>
+		<UserContext.Provider value={{ user, setUser, loading, login, logout, updateUser, isAdmin, deleteUser }}>
 			{!loading && children}
 		</UserContext.Provider>
 	);

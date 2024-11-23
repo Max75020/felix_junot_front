@@ -22,7 +22,7 @@
 }
 
 .profile-card {
-    padding: 20px;
+    padding: 15px;
     border: 1px solid #ddd;
     border-radius: 10px;
     background-color: #fff;
@@ -40,4 +40,12 @@
     padding: 10px;
     border-radius: 10px;
     margin: 10px 0;
+}
+
+.editbutton {
+max-width: 300px;
+}
+
+.deletebutton {
+max-width: 300px;
 }
