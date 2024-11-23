@@ -1,7 +1,7 @@
 import apiService from "../../../services/apiService";
 
 // Définitions des endpoints pour l'entité Favoris
-const FAVORIS_ENDPOINT = 'favoriss';
+const FAVORIS_ENDPOINT = 'favoris';
 
 const favorisApi = {
 	// Récupérer tous les favoris de l'utilisateur connecté
