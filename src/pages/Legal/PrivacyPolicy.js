@@ -2,6 +2,8 @@ import React from 'react';
 import "../../assets/styles/Legal/PrivacyPolicy.css";
 
 const PrivacyPolicy = () => {
+	const toEmail = `mailto:${process.env.REACT_APP_EMAIL}`;
+	const email = process.env.REACT_APP_EMAIL;
 	return (
 		<div className="privacy-policy-container col-10 mx-auto mt-5 mb-5">
 			<h1>Charte de Confidentialité</h1>
@@ -62,7 +64,7 @@ const PrivacyPolicy = () => {
 				<li><strong>Portabilité :</strong> Vous avez le droit de recevoir vos données dans un format structuré, couramment utilisé et lisible par machine.</li>
 			</ul>
 			<p>
-				Pour exercer ces droits, veuillez nous contacter à l'adresse suivante : [adresse email de contact].
+				Pour exercer ces droits, veuillez nous contacter à l'adresse suivante : <a href={toEmail}>{email}</a>.
 			</p>
 
 			<h2>7. Modifications de la Charte de Confidentialité</h2>
@@ -72,7 +74,7 @@ const PrivacyPolicy = () => {
 
 			<h2>8. Contact</h2>
 			<p>
-				Si vous avez des questions ou des préoccupations concernant cette charte de confidentialité, n'hésitez pas à nous contacter à l'adresse suivante : [adresse email de contact].
+				Si vous avez des questions ou des préoccupations concernant cette charte de confidentialité, n'hésitez pas à nous contacter à l'adresse suivante : <a href={toEmail}>{email}</a>
 			</p>
 		</div>
 	);

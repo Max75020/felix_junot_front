@@ -2,18 +2,20 @@ import React from 'react';
 import "../../assets/styles/Legal/Cgv.css";
 
 const Cgv = () => {
+	const textUrl = process.env.REACT_APP_URL_TEXT;
+	const realUrl = process.env.REACT_APP_URL;
 	return (
 		<div className="conditions-container col-10 mx-auto mt-5 mb-5">
 			<h1>Conditions Générales de Vente (CGV)</h1>
 
 			<h2>Préambule</h2>
 			<p>
-				Les présentes Conditions Générales de Vente (CGV) régissent l'ensemble des ventes effectuées sur le site internet https://www.felix-junot-ceramique.fr. En passant commande sur ce site, l'acheteur accepte sans réserve les présentes conditions.
+				Les présentes Conditions Générales de Vente (CGV) régissent l'ensemble des ventes effectuées sur le site internet <a href={realUrl}>{textUrl}</a>. En passant commande sur ce site, l'acheteur accepte sans réserve les présentes conditions.
 			</p>
 
 			<h2>Article 1 : Objet</h2>
 			<p>
-				Les présentes CGV ont pour objet de définir les droits et obligations des parties dans le cadre de la vente en ligne des produits proposés par Félix Junot Céramique via le site https://www.felix-junot-ceramique.fr.
+				Les présentes CGV ont pour objet de définir les droits et obligations des parties dans le cadre de la vente en ligne des produits proposés par Félix Junot Céramique via le site <a href={realUrl}>{textUrl}</a>.
 			</p>
 
 			<h2>Article 2 : Produits</h2>
@@ -61,12 +63,12 @@ const Cgv = () => {
 
 			<h2>Article 10 : Données Personnelles</h2>
 			<p>
-				Les informations recueillies sur le site sont nécessaires pour le traitement des commandes. Elles sont confidentielles et traitées dans le respect de la législation en vigueur relative à la protection des données personnelles. Le client dispose d'un droit d'accès, de rectification et de suppression de ses données personnelles en contactant Félix Junot Céramique. Voir la politique de confidentialité : https://www.felix-junot-ceramique.fr/politique-de-confidentialite
+				Les informations recueillies sur le site sont nécessaires pour le traitement des commandes. Elles sont confidentielles et traitées dans le respect de la législation en vigueur relative à la protection des données personnelles. Le client dispose d'un droit d'accès, de rectification et de suppression de ses données personnelles en contactant Félix Junot Céramique. Voir la politique de confidentialité : <a href={`${realUrl}/privacy-policy`}>{textUrl}/privacy-policy</a>
 			</p>
 
 			<h2>Article 11 : Propriété Intellectuelle</h2>
 			<p>
-				Tous les éléments du site https://www.felix-junot-ceramique.fr sont et restent la propriété intellectuelle et exclusive de Félix Junot Céramique. Nul n'est autorisé à reproduire, exploiter, rediffuser ou utiliser à quelque titre que ce soit, même partiellement, des éléments du site qu'ils soient logiciels, visuels ou sonores.
+				Tous les éléments du site <a href={realUrl}>{textUrl}</a> sont et restent la propriété intellectuelle et exclusive de Félix Junot Céramique. Nul n'est autorisé à reproduire, exploiter, rediffuser ou utiliser à quelque titre que ce soit, même partiellement, des éléments du site qu'ils soient logiciels, visuels ou sonores.
 			</p>
 
 			<h2>Article 12 : Droit Applicable et Juridiction Compétente</h2>

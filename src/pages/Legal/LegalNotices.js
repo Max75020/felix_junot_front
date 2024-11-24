@@ -2,8 +2,10 @@ import React from 'react';
 import "../../assets/styles/Legal/LegalNotices.css";
 
 const LegalNotices = () => {
-	const textUrl = process.env.REACT_APP_URL_TEST_TEXT;
-	const realUrl = process.env.REACT_APP_URL_TEST_REAL;
+	const textUrl = process.env.REACT_APP_URL_TEXT;
+	const realUrl = process.env.REACT_APP_URL;
+	const toEmail = `mailto:${process.env.REACT_APP_EMAIL}`;
+	const email = process.env.REACT_APP_EMAIL;
 	return (
 		<div className="legal-notices-container col-10 mx-auto mt-5 mb-5">
 			<h1>Mentions Légales</h1>
@@ -13,11 +15,11 @@ const LegalNotices = () => {
 				En vertu de l'article 6 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique, il est précisé aux utilisateurs du site internet <a href={realUrl}>{textUrl}</a> l'identité des différents intervenants dans le cadre de sa réalisation et de son suivi :
 			</p>
 			<ul>
-				<li><strong>Propriétaire du site :</strong> JUNOT Félix - Contact : felixjunot.ceramique@gmail.com - Adresse : LOGT N 16 35 IMP DES VERGERS 94500 CHAMPIGNY SUR MARNE.</li>
+				<li><strong>Propriétaire du site :</strong> JUNOT Félix - Contact : <a href={toEmail}>{email}</a> - Adresse : LOGT N 16 35 IMP DES VERGERS 94500 CHAMPIGNY SUR MARNE.</li>
 				<li><strong>Identification de l'entreprise :</strong> Entrepreneur individuel JUNOT Félix - SIREN : 829334390 - RCS : 829 334 390 R.C.S. Creteil - Adresse postale : LOGT N 16 35 IMP DES VERGERS 94500 CHAMPIGNY SUR MARNE.</li>
-				<li><strong>Directeur de la publication :</strong> felixjunot.ceramique@gmail.com</li>
+				<li><strong>Directeur de la publication :</strong> <a href={toEmail}>{email}</a></li>
 				<li><strong>Hébergeur :</strong> Digital Ocean, 01 Avenue of the Americas, New York, 10013, United States of America, +1.6463978051</li>
-				<li><strong>Délégué à la protection des données :</strong> Félix JUNOT - felixjunot.ceramique@gmail.com</li>
+				<li><strong>Délégué à la protection des données :</strong> Félix JUNOT - <a href={toEmail}>{email}</a></li>
 			</ul>
 
 			<h2>2 - Propriété intellectuelle et contrefaçons</h2>
@@ -35,7 +37,7 @@ const LegalNotices = () => {
 
 			<h2>4 - CNIL et gestion des données personnelles</h2>
 			<p>
-				Conformément aux dispositions de la loi 78-17 du 6 janvier 1978 modifiée, l’utilisateur du site <a href={realUrl}>{textUrl}</a> dispose d’un droit d’accès, de modification et de suppression des informations collectées. Pour exercer ce droit, envoyez un message à notre Délégué à la Protection des Données : Félix JUNOT - felixjunot.ceramique@gmail.com.
+				Conformément aux dispositions de la loi 78-17 du 6 janvier 1978 modifiée, l’utilisateur du site <a href={realUrl}>{textUrl}</a> dispose d’un droit d’accès, de modification et de suppression des informations collectées. Pour exercer ce droit, envoyez un message à notre Délégué à la Protection des Données : Félix JUNOT - <a href={toEmail}>{email}</a>.
 			</p>
 
 			<h2>5 - Liens hypertextes et cookies</h2>
