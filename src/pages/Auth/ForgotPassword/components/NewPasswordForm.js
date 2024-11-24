@@ -91,7 +91,7 @@ const NewPasswordForm = () => {
 
 	if (isSubmitted) {
 		return (
-			<Container className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
+			<Container className="d-flex justify-content-center align-items-center" style={{ minHeight: "70vh" }}>
 				<div className="alert alert-success text-center">
 					Votre mot de passe a été réinitialisé avec succès !
 				</div>
