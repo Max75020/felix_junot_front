@@ -1,18 +1,31 @@
+// Importation des bibliothèques React et des hooks nécessaires
 import React, { useEffect, useState } from 'react';
+
+// Importation des composants de React-Bootstrap
 import { Container } from 'react-bootstrap';
+
+// Importation des contextes pour accéder aux données de commande et de panier
 import { useOrder } from '../../context/OrderContext';
-import apiService from '../../services/apiService';
 import { useCart } from '../../context/CartContext';
 
+// Importation du service pour les appels API
+import apiService from '../../services/apiService';
+
 const OrderSuccess = () => {
+	// Accès aux données de commande via le contexte OrderContext
 	const { orderData, isOrderCreated, setIsOrderCreated } = useOrder();
-	const { fetchCart } = useCart(); // Importer la fonction pour récupérer le panier
+
+	// Accès à la fonction pour récupérer le panier via le contexte CartContext
+	const { fetchCart } = useCart();
+
+	// États pour gérer la référence de commande et l'email de l'utilisateur
 	const [orderReference, setOrderReference] = useState(null);
 	const [userEmail, setUserEmail] = useState(null);
 
+	// Effet pour créer la commande après le paiement
 	useEffect(() => {
 		const createOrder = async () => {
-			// Vérification que toutes les informations sont disponibles
+			// Vérification que toutes les informations nécessaires sont disponibles
 			const areOrderDetailsReady = orderData &&
 				orderData.selectedLivraison &&
 				orderData.selectedFacturation &&
@@ -20,9 +33,10 @@ const OrderSuccess = () => {
 				orderData.totalPanier > 0 &&
 				orderData.totalCommande > 0;
 
+			// Si les détails sont valides et que la commande n'a pas encore été créée
 			if (areOrderDetailsReady && !isOrderCreated) {
 				try {
-					// Récupération de l'email de l'utilisateur depuis orderData
+					// Récupération de l'email de l'utilisateur depuis les données de commande
 					const emailApi = orderData.selectedLivraison.utilisateur.email;
 					setUserEmail(emailApi);
 
@@ -39,13 +53,14 @@ const OrderSuccess = () => {
 						total_produits_commande: orderData.totalPanier.toString(),
 					});
 
-					// Si la commande est créée avec succès
+					// Mise à jour de la référence de commande et du statut
 					setOrderReference(response.reference);
 					setIsOrderCreated(true);
 
-					// Supprimer les données de commande du localStorage
+					// Suppression des données de commande du localStorage
 					localStorage.removeItem('orderData');
-					// Rafraîchir le panier ouvert pour afficher le panier vide
+
+					// Rafraîchissement du panier pour afficher un panier vide
 					await fetchCart('ouvert');
 				} catch (error) {
 					console.error("Erreur lors de la création de la commande :", error);

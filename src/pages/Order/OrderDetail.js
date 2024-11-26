@@ -1,31 +1,45 @@
+// Importation des librairies de base React et des hooks nécessaires
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+
+// Importation du service API pour récupérer les informations de commande
 import orderApi from './services/Order.api';
+
+// Importation des composants Bootstrap pour la mise en page et le rendu visuel
 import { Container, Row, Col, Card, ListGroup, Spinner, Alert, Image } from 'react-bootstrap';
+
+// Importation des styles CSS spécifiques à la page de détails de commande
 import '../../assets/styles/Order/OrderDetail.css';
 
 const OrderDetail = () => {
+	// Utilisation de useParams pour récupérer l'ID de la commande depuis l'URL
 	const { id } = useParams();
+
+	// États pour stocker la commande, le statut de chargement, et les erreurs éventuelles
 	const [order, setOrder] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState(null);
 
+	// Effet de chargement pour récupérer les détails de la commande lors du montage du composant
 	useEffect(() => {
 		const fetchOrderDetail = async () => {
 			try {
-				const data = await orderApi.getOrderById(id);
-				setOrder(data);
+				const data = await orderApi.getOrderById(id); // Appel à l'API pour obtenir les détails de la commande
+				setOrder(data); // Mise à jour de l'état avec les données récupérées
 			} catch (error) {
+				// Mise à jour de l'état d'erreur si la récupération échoue
 				setError("Erreur lors de la récupération de la commande.");
 				console.error("Erreur lors de la récupération de la commande:", error);
 			} finally {
+				// Fin du chargement une fois que les données ont été récupérées ou en cas d'erreur
 				setIsLoading(false);
 			}
 		};
 
 		fetchOrderDetail();
-	}, [id]);
+	}, [id]); // Dépendance sur l'ID pour relancer l'effet si l'ID change
 
+	// Affichage d'un spinner si les données sont en cours de chargement
 	if (isLoading) {
 		return (
 			<div className="text-center mt-5">
@@ -35,6 +49,7 @@ const OrderDetail = () => {
 		);
 	}
 
+	// Affichage d'une alerte en cas d'erreur
 	if (error) {
 		return (
 			<Alert variant="danger" className="text-center">
@@ -47,12 +62,14 @@ const OrderDetail = () => {
 		<Container fluid className="order-detail-container p-4">
 			{order ? (
 				<>
+					{/* Titre de la page de détails de commande */}
 					<Row className="mb-4">
 						<Col>
 							<h1 className="text-center">Détails de la commande</h1>
 						</Col>
 					</Row>
 
+					{/* Section de résumé de la commande */}
 					<Row className="justify-content-center">
 						<Col md={8}>
 							<Card className="mb-4 shadow-sm">
@@ -79,6 +96,7 @@ const OrderDetail = () => {
 						</Col>
 					</Row>
 
+					{/* Section des produits de la commande */}
 					<Row className="justify-content-center">
 						<Col md={8}>
 							<Card className="mb-4 shadow-sm">
@@ -91,6 +109,7 @@ const OrderDetail = () => {
 											<Card key={index} className="mb-3 product-card-detail">
 												<Card.Body>
 													<Row className="align-items-center">
+														{/* Image du produit */}
 														<Col xs={12} sm={6} md={8} lg={6} className="order-detail-text-align-image mb-3 mb-md-0">
 															<Image
 																src={`${process.env.REACT_APP_URL_SERVER}/${item.produit.urlCoverProduit}`}
@@ -98,6 +117,7 @@ const OrderDetail = () => {
 																className="image-mobile"
 															/>
 														</Col>
+														{/* Détails du produit */}
 														<Col xs={12} sm={6} md={4} lg={6}>
 															<h5 className="text-center text-md-center">{item.produit.nom}</h5>
 															<p className="text-center text-md-center"><strong>Référence :</strong> {item.produit.reference}</p>
@@ -117,6 +137,7 @@ const OrderDetail = () => {
 						</Col>
 					</Row>
 
+					{/* Section des informations de livraison */}
 					<Row className="justify-content-center">
 						<Col md={8}>
 							<Card className="shadow-sm">

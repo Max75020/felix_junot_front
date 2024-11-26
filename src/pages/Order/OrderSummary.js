@@ -1,12 +1,17 @@
+// Importation des bibliothèques React et des hooks nécessaires
 import React from 'react';
+// Importation des composants React-Bootstrap pour la mise en page
 import { Container, Row, Col, Card, Button, Accordion } from 'react-bootstrap';
+// Importation du contexte OrderContext pour accéder aux données de commande
 import { useOrder } from '../../context/OrderContext';
+// Importation des styles spécifiques à cette page
 import '../../assets/styles/Order/OrderSummary.css';
 
 const OrderSummary = () => {
+	// Récupération des données de commande et de la méthode de paiement depuis le contexte
 	const { orderData, makePayment } = useOrder();
 
-	// Fonction pour formater les prix en euros
+	// Fonction utilitaire pour formater les prix en euros
 	const formatPrice = (price) => {
 		return new Intl.NumberFormat('fr-FR', {
 			style: 'currency',
@@ -14,7 +19,7 @@ const OrderSummary = () => {
 		}).format(price);
 	};
 
-	// Fonction pour obtenir l'URL de l'image de couverture du produit
+	// Fonction pour obtenir l'URL de l'image de couverture d'un produit
 	const getCoverImageUrl = (produit) => {
 		const coverImage = produit.images?.find((image) => image.cover);
 		return coverImage ? `${process.env.REACT_APP_URL_SERVER}/${coverImage.Chemin}` : "https://placehold.co/400";
@@ -22,14 +27,16 @@ const OrderSummary = () => {
 
 	return (
 		<Container fluid className="order-summary-container my-5">
+			{/* Titre de la page */}
 			<Row className="mb-5">
 				<Col>
 					<h1 className="text-center">Récapitulatif de Commande</h1>
 				</Col>
 			</Row>
 
-			{/* Section Adresses et Méthode de Livraison */}
+			{/* Section des adresses et de la méthode de livraison */}
 			<Row className="mb-4 d-flex flex-lg-row flex-column align-items-stretch">
+				{/* Adresse de livraison */}
 				<Col lg={4} className="mb-4 d-flex align-items-stretch">
 					<Accordion className="w-100">
 						<Accordion.Item className="border-0 h-100" eventKey="0">
@@ -50,6 +57,8 @@ const OrderSummary = () => {
 						</Accordion.Item>
 					</Accordion>
 				</Col>
+
+				{/* Adresse de facturation */}
 				<Col lg={4} className="mb-4 d-flex align-items-stretch">
 					<Accordion className="w-100">
 						<Accordion.Item className="border-0 h-100" eventKey="1">
@@ -70,6 +79,8 @@ const OrderSummary = () => {
 						</Accordion.Item>
 					</Accordion>
 				</Col>
+
+				{/* Méthode de livraison */}
 				<Col lg={4} className="mb-4 d-flex align-items-stretch">
 					<Accordion className="w-100">
 						<Accordion.Item className="border-0 h-100" eventKey="2">
@@ -90,7 +101,7 @@ const OrderSummary = () => {
 				</Col>
 			</Row>
 
-			{/* Section Produits */}
+			{/* Section des produits */}
 			<Row className="mb-4">
 				<Col>
 					<h4 className="text-center mb-4">Produits</h4>
@@ -115,7 +126,7 @@ const OrderSummary = () => {
 									<p className="text-muted p-card">{formatPrice(item.produit.prix_ttc)}</p>
 
 									<h4 className="text-dark">PRIX TOTAL</h4>
-									<p className="fw-bold ">{formatPrice(item.prix_total_produit)}</p>
+									<p className="fw-bold">{formatPrice(item.prix_total_produit)}</p>
 								</div>
 							</div>
 						))}
@@ -123,7 +134,7 @@ const OrderSummary = () => {
 				</Col>
 			</Row>
 
-			{/* Section Totaux */}
+			{/* Section des totaux */}
 			<Row className="mb-4 text-center align-items-center justify-content-center">
 				<Col xs={12} sm={4} className="d-flex flex-column mb-3 mb-sm-0">
 					<h4 className="mb-1 text-secondary">Total Produits</h4>
@@ -139,9 +150,7 @@ const OrderSummary = () => {
 				</Col>
 			</Row>
 
-
-
-			{/* Boutons de Paiement */}
+			{/* Bouton pour effectuer le paiement */}
 			<Row className="mb-5 text-center">
 				<Col>
 					<Button onClick={() => makePayment(orderData)} variant="dark" size="lg" className="me-2">Payer par Carte Bancaire</Button>
