@@ -1,13 +1,19 @@
+/* Importation de React pour créer des composants fonctionnels */
 import React, { useMemo } from 'react';
+/* Importation de Link depuis React Router pour la navigation interne entre les pages */
 import { Link } from 'react-router-dom';
+/* Importation des styles spécifiques au footer */
 import '../../assets/styles/Footer/Footer.css';
+/* Importation de l'icône Instagram depuis react-icons/fa pour ajouter des liens vers les réseaux sociaux */
 import { FaInstagram } from "react-icons/fa";
+/* Importation du Container de React Bootstrap pour structurer la mise en page */
 import { Container } from 'react-bootstrap';
 
 const Footer = () => {
 	// Mémoriser l'année courante pour éviter de la recalculer à chaque rendu
 	const currentYear = useMemo(() => new Date().getFullYear(), []);
 
+	// URL de la page Instagram, configurable via une variable d'environnement
 	const instagramUrl = process.env.REACT_APP_INSTAGRAM_URL || 'https://www.instagram.com/felixjunot/';
 
 	return (
