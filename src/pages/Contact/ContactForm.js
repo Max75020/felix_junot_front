@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import "../../assets/styles/Contact/ContactForm.css";
+import React, { useState } from "react"; // Importation de React et du hook useState pour gérer les états
+import "../../assets/styles/Contact/ContactForm.css"; // Importation des styles CSS spécifiques au formulaire de contact
 
+// Composant principal pour le formulaire de contact
 const ContactForm = () => {
 	// État pour gérer les données du formulaire, initialisé avec des chaînes vides pour chaque champ
 	const [formData, setFormData] = useState({
@@ -13,7 +14,7 @@ const ContactForm = () => {
 
 	// État pour gérer les erreurs de validation pour chaque champ du formulaire
 	const [errors, setErrors] = useState({});
-	// État pour gérer le message de statut pour la soumission du formulaire
+	// État pour gérer le message de statut pour la soumission du formulaire (succès ou erreur)
 	const [status, setStatus] = useState("");
 
 	// Fonction pour valider les champs du formulaire avant la soumission
@@ -50,7 +51,7 @@ const ContactForm = () => {
 
 	// Gère la soumission du formulaire
 	const handleSubmit = async (e) => {
-		e.preventDefault();
+		e.preventDefault(); // Empêche le rechargement de la page lors de la soumission
 
 		// Valide les données du formulaire avant la soumission
 		if (!validate()) {
@@ -106,12 +107,14 @@ const ContactForm = () => {
 		}
 	};
 
+	// Rendu du composant : formulaire de contact
 	return (
 		<div className="contact-form-container">
 			<div className="contact-header">
-				<h2>CONTACTEZ MOI</h2>
+				<h2>CONTACTEZ MOI</h2> {/* Titre du formulaire de contact */}
 			</div>
 			<form className="contact-form" onSubmit={handleSubmit}>
+				{/* Champ Prénom */}
 				<div className="column-container">
 					<div className="prenom-container">
 						<label htmlFor="prenom">Prénom :</label>
@@ -120,10 +123,11 @@ const ContactForm = () => {
 							type="text"
 							placeholder="Prénom"
 							value={formData.prenom}
-							onChange={handleChange}
+							onChange={handleChange} // Gère les changements dans le champ prénom
 						/>
-						{errors.prenom && <p className="error-text centered-text">{errors.prenom}</p>}
+						{errors.prenom && <p className="error-text centered-text">{errors.prenom}</p>} {/* Affichage des erreurs de validation */}
 					</div>
+					{/* Champ Nom */}
 					<div className="nom-container">
 						<label htmlFor="nom">Nom :</label>
 						<input
@@ -131,11 +135,12 @@ const ContactForm = () => {
 							type="text"
 							placeholder="Nom"
 							value={formData.nom}
-							onChange={handleChange}
+							onChange={handleChange} // Gère les changements dans le champ nom
 						/>
 						{errors.nom && <p className="error-text centered-text">{errors.nom}</p>}
 					</div>
 				</div>
+				{/* Champ Email */}
 				<div className="column-container">
 					<div className="email-container">
 						<label htmlFor="email">Adresse Email :</label>
@@ -144,10 +149,11 @@ const ContactForm = () => {
 							type="email"
 							placeholder="Adresse Email"
 							value={formData.email}
-							onChange={handleChange}
+							onChange={handleChange} // Gère les changements dans le champ email
 						/>
 						{errors.email && <p className="error-text centered-text">{errors.email}</p>}
 					</div>
+					{/* Champ Sujet */}
 					<div className="sujet-container">
 						<label htmlFor="sujet">Sujet :</label>
 						<input
@@ -155,11 +161,12 @@ const ContactForm = () => {
 							type="text"
 							placeholder="Sujet"
 							value={formData.sujet}
-							onChange={handleChange}
+							onChange={handleChange} // Gère les changements dans le champ sujet
 						/>
 						{errors.sujet && <p className="error-text centered-text">{errors.sujet}</p>}
 					</div>
 				</div>
+				{/* Champ Message */}
 				<div className="message-container full-width">
 					<label htmlFor="message">Message :</label>
 					<textarea
@@ -167,10 +174,11 @@ const ContactForm = () => {
 						className="min-vh-25"
 						placeholder="Message"
 						value={formData.message}
-						onChange={handleChange}
+						onChange={handleChange} // Gère les changements dans le champ message
 					/>
 					{errors.message && <p className="error-text centered-text">{errors.message}</p>}
 				</div>
+				{/* Bouton Envoyer */}
 				<div className="button-container">
 					<button
 						className="btn btn-primary col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 col-2-xxl"
@@ -179,10 +187,11 @@ const ContactForm = () => {
 						ENVOYER
 					</button>
 				</div>
+				{/* Affichage du statut du message (succès ou erreur) */}
 				{status && <p className={`centered-text ${status.includes("succès") ? "success-text" : "error-text"}`}>{status}</p>}
 			</form>
 		</div>
 	);
 };
 
-export default ContactForm;
+export default ContactForm; // Exportation du composant ContactForm pour être utilisé ailleurs dans l'application
