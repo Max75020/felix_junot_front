@@ -1,23 +1,26 @@
-import React, { useContext, useState, useEffect } from "react";
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
-import { UserContext } from "../../context/UserContext";
-import "../../assets/styles/Profile/Profile.css";
-import { FaHeart } from "react-icons/fa6"; // Import pour l'icône Favoris
-import { FaBox } from "react-icons/fa"; // Import pour l'icône Commandes
-import { HiLocationMarker } from "react-icons/hi"; // Import pour l'icône Adresses
-import UserAvatar from "../../components/UserAvatar/UserAvatar"; // Import du composant UserAvatar
-import AccountNavButton from "./components/AccountNavButton"; // Import du composant AccountNavButton
-import { showSuccess } from '../../services/popupService';
+// Importation des bibliothèques nécessaires pour ce composant
+import React, { useContext, useState, useEffect } from "react"; // React pour la création de composants et les hooks
+import { Container, Row, Col, Button, Form } from "react-bootstrap"; // Composants Bootstrap pour la mise en page et les styles
+import { UserContext } from "../../context/UserContext"; // Contexte utilisateur pour récupérer les données de l'utilisateur
+import "../../assets/styles/Profile/Profile.css"; // Fichier CSS personnalisé pour styliser la page
+import { FaHeart } from "react-icons/fa6"; // Icône Favoris
+import { FaBox } from "react-icons/fa"; // Icône Commandes
+import { HiLocationMarker } from "react-icons/hi"; // Icône Adresses
+import UserAvatar from "../../components/UserAvatar/UserAvatar"; // Composant pour afficher l'avatar utilisateur
+import AccountNavButton from "./components/AccountNavButton"; // Boutons de navigation utilisateur
+import { showSuccess } from "../../services/popupService"; // Service pour afficher des notifications
 
+// Composant principal : ProfilePage
 const ProfilePage = () => {
+	// Récupération des données utilisateur depuis le contexte UserContext
 	const { user, loading, updateUser } = useContext(UserContext);
-	const [isEditing, setIsEditing] = useState(false);
-	const { deleteUser } = useContext(UserContext);
-	const [prenom, setPrenom] = useState(user?.prenom || "");
-	const [nom, setNom] = useState(user?.nom || "");
-	const [telephone, setTelephone] = useState(user?.telephone || "");
+	const [isEditing, setIsEditing] = useState(false); // État pour activer ou désactiver le mode édition
+	const { deleteUser } = useContext(UserContext); // Fonction pour supprimer l'utilisateur
+	const [prenom, setPrenom] = useState(user?.prenom || ""); // État pour le prénom
+	const [nom, setNom] = useState(user?.nom || ""); // État pour le nom
+	const [telephone, setTelephone] = useState(user?.telephone || ""); // État pour le téléphone
 
-	// Mettre à jour les champs d'édition lorsque les données utilisateur changent
+	// Effet pour synchroniser les données utilisateur avec les champs d'édition
 	useEffect(() => {
 		if (user) {
 			setPrenom(user.prenom || "");
@@ -26,62 +29,68 @@ const ProfilePage = () => {
 		}
 	}, [user]);
 
+	// Fonction pour sauvegarder les modifications apportées au profil
 	const handleSave = (e) => {
 		e.preventDefault();
 
-		// Préparer les données à mettre à jour
+		// Préparer les nouvelles données
 		const updatedData = {
 			prenom,
 			nom,
 			telephone,
 		};
 
-		// Appeler la fonction updateUser avec les nouvelles données
+		// Appeler la méthode updateUser avec les nouvelles données
 		updateUser(updatedData);
 
 		// Afficher une notification de succès
 		showSuccess("Profil mis à jour avec succès !");
 
-		// Optionnel : désactiver le mode d'édition après la mise à jour
+		// Sortir du mode édition
 		setIsEditing(false);
 	};
 
+	// Si les données utilisateur sont en cours de chargement
 	if (loading) {
 		return <div>Chargement...</div>;
 	}
 
-	// Obtenir les initiales de l'utilisateur
+	// Obtenir les initiales pour l'avatar utilisateur
 	const userInitials = `${user.prenom.charAt(0)}`;
 
+	// Fonction pour activer/désactiver le mode édition
 	const handleEditToggle = () => {
 		setIsEditing(!isEditing);
 	};
 
+	// Fonction pour supprimer l'utilisateur avec confirmation
 	const handleDeleteUser = () => {
 		if (window.confirm("Êtes-vous sûr de vouloir supprimer votre compte ? Toutes vos données seront perdues.")) {
 			deleteUser();
 		}
 	};
 
+	// Structure du composant
 	return (
 		<Container className="my-5 profile-page-container">
 			<Row className="justify-content-center">
 				{/* Carte de profil utilisateur */}
 				<Col md={6} className="text-center profile-card">
 					<div className="profile-avatar mb-3 d-flex justify-content-center">
-						{/* Utilisation du composant UserAvatar pour afficher les initiales */}
+						{/* Avatar utilisateur avec les initiales */}
 						<UserAvatar initials={userInitials} />
 					</div>
+					{/* Nom, email et téléphone de l'utilisateur */}
 					<h3>{`${user.prenom} ${user.nom}`}</h3>
 					<p className="text-muted">{user.email}</p>
 					<p className="text-muted mb-1">{user.telephone}</p>
 					<div className="d-flex flex-column align-items-center gap-4">
-						{/* Bouton Modifier / Annuler */}
+						{/* Bouton pour activer ou désactiver le mode édition */}
 						<Button onClick={handleEditToggle} className="btn-dark editbutton">
 							{isEditing ? "Annuler" : "Modifier"}
 						</Button>
 
-						{/* Formulaire d'édition */}
+						{/* Formulaire d'édition affiché uniquement en mode édition */}
 						{isEditing && (
 							<Form className="w-100 px-3" onSubmit={handleSave}>
 								<Form.Group className="mb-3">
@@ -117,17 +126,15 @@ const ProfilePage = () => {
 							</Form>
 						)}
 
-						{/* Bouton Supprimer */}
+						{/* Bouton pour supprimer le compte utilisateur */}
 						<Button onClick={handleDeleteUser} variant="danger" className="deletebutton">
 							Supprimer votre compte
 						</Button>
 					</div>
-
-
 				</Col>
 			</Row>
 
-			{/* Boutons de navigation */}
+			{/* Boutons de navigation pour les favoris, commandes et adresses */}
 			<Row className="justify-content-center mt-5 flex-column flex-md-row align-content-center">
 				<AccountNavButton icon={FaHeart} text="Favoris" size={24} link="/favorites" />
 				<AccountNavButton icon={FaBox} text="Commandes" size={24} link="/orders-list" />
@@ -137,4 +144,5 @@ const ProfilePage = () => {
 	);
 };
 
+// Exportation du composant pour l'utiliser dans d'autres fichiers
 export default ProfilePage;
