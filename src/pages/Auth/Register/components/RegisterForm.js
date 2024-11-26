@@ -1,15 +1,16 @@
-import React, { useState } from "react";
-import { Form, Button, Container, Alert } from "react-bootstrap";
-import registerApi from "../services/Register.api";
+import React, { useState } from "react"; // Importation de React et du hook useState pour gérer l'état du composant
+import { Form, Button, Container, Alert } from "react-bootstrap"; // Importation des composants React Bootstrap pour construire le formulaire
+import registerApi from "../services/Register.api"; // Importation du service d'API pour l'inscription
 
+// Composant principal pour le formulaire d'inscription
 const RegisterForm = () => {
 	// Déclaration des états pour stocker les données du formulaire
 	const [formData, setFormData] = useState({
-		prenom: "",
-		nom: "",
-		email: "",
-		password: "",
-		confirmPassword: "",
+		prenom: "", // Prénom
+		nom: "", // Nom
+		email: "", // Adresse email
+		password: "", // Mot de passe
+		confirmPassword: "", // Confirmation du mot de passe
 	});
 
 	// État pour gérer les erreurs d'inscription
@@ -23,11 +24,11 @@ const RegisterForm = () => {
 
 	// État pour suivre les critères de validation du mot de passe
 	const [passwordCriteria, setPasswordCriteria] = useState({
-		length: false,
-		uppercase: false,
-		lowercase: false,
-		digit: false,
-		specialChar: false,
+		length: false, // Longueur du mot de passe
+		uppercase: false, // Présence d'une lettre majuscule
+		lowercase: false, // Présence d'une lettre minuscule
+		digit: false, // Présence d'un chiffre
+		specialChar: false, // Présence d'un caractère spécial
 	});
 
 	// Fonction pour valider les mots de passe et vérifier s'ils correspondent
@@ -67,7 +68,7 @@ const RegisterForm = () => {
 		// Valide les mots de passe et leurs critères à chaque modification
 		if (name === "password" || name === "confirmPassword") {
 			validatePasswords(
-				name === "password" ? value : formData.password,
+				name === "password" ? value : formData.password, 
 				name === "confirmPassword" ? value : formData.confirmPassword
 			);
 		}
@@ -130,6 +131,7 @@ const RegisterForm = () => {
 		!passwordError && // Vérifie qu'il n'y a pas d'erreur de mot de passe
 		Object.values(formData).every((value) => value.trim() !== ""); // Vérifie que tous les champs du formulaire sont remplis
 
+	// Formulaire d'inscription
 	return (
 		<Container className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
 			<div className="w-100" style={{ maxWidth: "400px" }}>
@@ -142,11 +144,11 @@ const RegisterForm = () => {
 						<Form.Label>Prénom</Form.Label>
 						<Form.Control
 							type="text"
-							name="prenom"
-							placeholder="Prénom"
-							value={formData.prenom}
-							onChange={handleChange}
-							required
+							name="prenom" // Prénom
+							placeholder="Prénom" // Indication du champ à l'utilisateur
+							value={formData.prenom} // Valeur du champ prénom
+							onChange={handleChange} // Mise à jour de l'état à chaque changement
+							required // Champ Prénom obligatoire
 						/>
 					</Form.Group>
 
@@ -155,11 +157,11 @@ const RegisterForm = () => {
 						<Form.Label>Nom</Form.Label>
 						<Form.Control
 							type="text"
-							name="nom"
-							placeholder="Nom"
-							value={formData.nom}
-							onChange={handleChange}
-							required
+							name="nom" // Nom
+							placeholder="Nom" // Indication du champ à l'utilisateur
+							value={formData.nom} // Valeur du champ nom
+							onChange={handleChange} // Mise à jour de l'état à chaque changement
+							required // Champ Nom obligatoire
 						/>
 					</Form.Group>
 
@@ -168,11 +170,11 @@ const RegisterForm = () => {
 						<Form.Label>Adresse Email</Form.Label>
 						<Form.Control
 							type="email"
-							name="email"
-							placeholder="exemple@gmail.com"
-							value={formData.email}
-							onChange={handleChange}
-							required
+							name="email" // Email
+							placeholder="exemple@gmail.com" // Indication du champ à l'utilisateur
+							value={formData.email} // Valeur du champ email
+							onChange={handleChange} // Mise à jour de l'état à chaque changement
+							required // Champ Email obligatoire
 						/>
 					</Form.Group>
 
@@ -181,26 +183,31 @@ const RegisterForm = () => {
 						<Form.Label>Mot de passe</Form.Label>
 						<Form.Control
 							type="password"
-							name="password"
-							placeholder="Mot de passe"
-							value={formData.password}
-							onChange={handleChange}
-							required
+							name="password" // Mot de passe 
+							placeholder="Mot de passe" // Indication du champ à l'utilisateur
+							value={formData.password} // Valeur du champ mot de passe
+							onChange={handleChange} // Mise à jour de l'état à chaque changement
+							required // Champ Mot de passe obligatoire
 						/>
 						{/* Affichage des critères de validation du mot de passe */}
 						<ul>
+							{/* Vérification d'un mot de passe d'au moins 12 caractères */}
 							<li style={{ color: passwordCriteria.length ? "green" : "red" }}>
 								Au moins 12 caractères
 							</li>
+							{/* Vérification de la présence d'une lettre majuscule */}
 							<li style={{ color: passwordCriteria.uppercase ? "green" : "red" }}>
 								Une lettre majuscule
 							</li>
+							{/* Vérification de la présence d'une lettre minuscule */}
 							<li style={{ color: passwordCriteria.lowercase ? "green" : "red" }}>
 								Une lettre minuscule
 							</li>
+							{/* Vérification de la présence d'un chiffre */}
 							<li style={{ color: passwordCriteria.digit ? "green" : "red" }}>
 								Un chiffre
 							</li>
+							{/* Vérification de la présence d'un caractère spécial */}
 							<li style={{ color: passwordCriteria.specialChar ? "green" : "red" }}>
 								Un caractère spécial
 							</li>
@@ -212,11 +219,11 @@ const RegisterForm = () => {
 						<Form.Label>Confirmer le Mot de passe</Form.Label>
 						<Form.Control
 							type="password"
-							name="confirmPassword"
-							placeholder="Confirmer le Mot de passe"
-							value={formData.confirmPassword}
-							onChange={handleChange}
-							required
+							name="confirmPassword" // Confirmation du mot de passe
+							placeholder="Confirmer le Mot de passe" // Indication du champ à l'utilisateur
+							value={formData.confirmPassword} // Valeur du champ confirmation du mot de passe
+							onChange={handleChange} // Mise à jour de l'état à chaque changement
+							required // Champ Confirmation du mot de passe obligatoire
 						/>
 						{/* Affichage des erreurs de correspondance des mots de passe */}
 						<ul>
@@ -236,4 +243,4 @@ const RegisterForm = () => {
 	);
 };
 
-export default RegisterForm;
+export default RegisterForm; // Exportation du composant RegisterForm pour être utilisé dans l'application
