@@ -2,13 +2,9 @@
 import React from "react";
 /* Importation du composant Dropdown de React Bootstrap pour créer un menu déroulant */
 import { Dropdown } from "react-bootstrap";
-/* Importation du hook useNavigate de React Router pour la navigation programmatique */
-import { useNavigate } from "react-router-dom";
 
 /* Composant UserDropdown : menu déroulant pour les actions liées à l'utilisateur */
-function UserDropdown({ user, userInitials, handleLogout }) {
-	// Utilisation du hook useNavigate pour permettre la navigation programmatique
-	const navigate = useNavigate();
+function UserDropdown({ userInitials, handleLogout }) {
 
 	return (
 		<Dropdown align="end">
