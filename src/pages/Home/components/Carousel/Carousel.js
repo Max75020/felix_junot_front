@@ -11,15 +11,37 @@ import fiveImage from '../../../../assets/images/5/5.jpg';
 // Importation du fichier de styles CSS pour personnaliser l'apparence du carrousel
 import '../../../../assets/styles/components/MyCarousel.css';
 
-// Composant principal MyCarousel pour afficher un carrousel d'images
+/**
+ * Composant MyCarousel pour afficher un carrousel d'images.
+ *
+ * Ce composant utilise React Bootstrap pour afficher un carrousel interactif permettant de parcourir différentes images.
+ * Chaque élément du carrousel contient une image et un lien vers toutes les catégories.
+ *
+ * @component
+ * @example
+ * return (
+ *   <MyCarousel />
+ * )
+ *
+ * @returns {JSX.Element} Un carrousel d'images avec des légendes et des liens.
+ */
 const MyCarousel = () => {
 	// Déclaration de l'état pour suivre l'index de l'élément actif du carrousel
 	const [index, setIndex] = useState(0);
 
-	// Fonction pour gérer la sélection d'une nouvelle image dans le carrousel
+	/**
+	 * Met à jour l'état avec l'index de l'image sélectionnée dans le carrousel.
+	 *
+	 * Cette fonction est appelée lorsqu'une nouvelle image est sélectionnée dans le carrousel.
+	 *
+	 * @function handleSelect
+	 * @param {number} selectedIndex - L'index de l'image sélectionnée.
+	 * @returns {void}
+	 */
 	const handleSelect = (selectedIndex) => {
 		setIndex(selectedIndex); // Mise à jour de l'état avec l'index de l'élément sélectionné
 	};
+
 
 	return (
 		// Composant Carousel de React Bootstrap, avec un événement onSelect pour gérer le changement d'image

@@ -2,7 +2,17 @@ import React from 'react'; // Importation de React
 import CardSlider from './components/CardSlider'; // Importation du composant CardSlider pour afficher une sélection de cartes
 import MyCarousel from './components/Carousel/Carousel'; // Importation du composant MyCarousel pour afficher le carrousel
 
-// Composant principal pour la page d'accueil
+/**
+ * Composant principal pour la page d'accueil.
+ *
+ * @component
+ * @example
+ * return (
+ *   <Home />
+ * )
+ * 
+ * @returns {JSX.Element} La structure de la page d'accueil incluant un carrousel et un slider de cartes.
+ */
 function Home() {
 	return (
 		<div>

@@ -3,13 +3,37 @@ import { Button, Card, Container, Row, Col } from 'react-bootstrap'; // Importer
 import AdresseApi from './services/Adresses.api'; // Importer le service AdresseApi pour gérer les requêtes relatives aux adresses
 import { Link } from "react-router-dom"; // Importer Link pour gérer les liens internes dans l'application
 
+/**
+ * @module Adresses
+ * @description Gestion des adresses, incluant l'affichage, l'ajout, la modification et la suppression.
+ */
+
+/**
+ * @class AdressesPage
+ * @memberof module:Adresses
+ * @description Page principale pour afficher, ajouter, modifier et supprimer des adresses.
+ * @returns {JSX.Element} Élément JSX représentant la page des adresses.
+ */
 const AdressesPage = () => {
 	// État local pour stocker la liste des adresses et indiquer si les adresses sont en cours de chargement
 	const [adresses, setAdresses] = useState([]); // Initialiser adresses avec un tableau vide
 	const [loading, setLoading] = useState(true); // Initialiser loading à true pour indiquer que les adresses sont en cours de chargement
 
-	// useEffect pour exécuter une fonction après le montage du composant
+	/**
+	 * Effet exécuté après le montage du composant pour récupérer la liste des adresses.
+	 *
+	 * Cet effet utilise une fonction asynchrone pour appeler l'API, mettre à jour
+	 * l'état avec les adresses récupérées et gérer l'indicateur de chargement.
+	 */
 	useEffect(() => {
+		/**
+		 * Récupère toutes les adresses depuis l'API et met à jour l'état local.
+		 *
+		 * @async
+		 * @function fetchAdresses
+		 * @memberof module:Adresses
+		 * @returns {Promise<void>} Une promesse résolue une fois les adresses récupérées ou en cas d'erreur.
+		 */
 		const fetchAdresses = async () => {
 			try {
 				setLoading(true); // Activer l'indicateur de chargement avant de récupérer les adresses
@@ -25,7 +49,18 @@ const AdressesPage = () => {
 		fetchAdresses(); // Appeler la fonction de récupération des adresses
 	}, []); // Le tableau vide en dépendance indique que cet effet ne s'exécute que lors du montage initial
 
-	// Fonction pour supprimer une adresse
+	/**
+	 * Supprime une adresse par son identifiant.
+	 *
+	 * Cette fonction appelle l'API pour supprimer l'adresse spécifiée, puis met à jour l'état local
+	 * en filtrant l'adresse supprimée de la liste des adresses.
+	 *
+	 * @async
+	 * @function handleDelete
+	 * @memberof module:Adresses
+	 * @param {number} id - L'identifiant de l'adresse à supprimer.
+	 * @returns {Promise<void>} Une promesse résolue une fois la suppression terminée ou en cas d'erreur.
+	 */
 	const handleDelete = async (id) => {
 		try {
 			await AdresseApi.deleteAdresse(id); // Appeler l'API pour supprimer l'adresse par son id
@@ -39,7 +74,18 @@ const AdressesPage = () => {
 	const adressesFacturation = adresses.filter(adresse => adresse.type === "Facturation"); // Filtrer les adresses de type "Facturation"
 	const adressesLivraison = adresses.filter(adresse => adresse.type === "Livraison"); // Filtrer les adresses de type "Livraison"
 
-	// Fonction pour rendre les cartes des adresses
+	/**
+	 * Rend une liste de cartes affichant les détails des adresses.
+	 *
+	 * Cette fonction génère une mise en page sous forme de grille contenant une carte pour chaque adresse.
+	 * Chaque carte inclut les informations de l'adresse (nom, rue, ville, etc.) ainsi que des boutons pour modifier
+	 * ou supprimer l'adresse.
+	 *
+	 * @function renderAdresses
+	 * @memberof module:Adresses
+	 * @param {Array<Object>} adresses - La liste des adresses à afficher.
+	 * @returns {JSX.Element} Un composant JSX représentant les cartes des adresses.
+	 */
 	const renderAdresses = (adresses) => (
 		<Row className='col-12 mx-auto d-flex align-items-center flex-column flex-md-row justify-content-center'>
 			{adresses.map((adresse) => (
@@ -74,7 +120,7 @@ const AdressesPage = () => {
 		</Row>
 	);
 
-	// Affichage pendant le chargement des adresses
+	/** Affichage pendant le chargement des adresses */
 	if (loading) {
 		return (
 			<Container className="my-5">

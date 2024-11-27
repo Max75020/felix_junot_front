@@ -1,4 +1,32 @@
-import React, { useState } from 'react'; // Importer React et le hook useState pour gérer l'état local du formulaire
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Adresses/AddAdressePage.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Adresses/AddAdressePage.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from 'react'; // Importer React et le hook useState pour gérer l'état local du formulaire
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'; // Importer des composants Bootstrap pour la mise en page et le formulaire
 import { useNavigate, useLocation } from 'react-router-dom'; // Importer useNavigate et useLocation pour gérer la redirection et récupérer l'état de la page précédente
 import AdresseApi from '../../pages/Adresses/services/Adresses.api'; // Importer le service AdresseApi pour gérer les requêtes relatives aux adresses
@@ -66,7 +94,7 @@ const AddAdressePage = () => {
 	 * @function handleSubmit
 	 * @memberof Adresses/Pages.AddAdressePage
 	 * @param {Event} e - L'événement de soumission du formulaire.
-	 * @returns {Promise<void>} Une promesse résolue une fois l'adresse créée ou en cas d'erreur.
+	 * @returns {Promise&lt;void>} Une promesse résolue une fois l'adresse créée ou en cas d'erreur.
 	 */
 	const handleSubmit = async (e) => {
 		e.preventDefault(); // Empêcher le rechargement de la page lors de la soumission du formulaire
@@ -88,15 +116,15 @@ const AddAdressePage = () => {
 	};
 
 	return (
-		<Container className="my-5">
-			<h1 className="text-center mb-4">Ajouter une adresse</h1> {/* Titre de la page pour indiquer l'objectif de l'utilisateur */}
-			<Form onSubmit={handleSubmit}> {/* Formulaire pour ajouter une nouvelle adresse */}
-				<Row>
+		&lt;Container className="my-5">
+			&lt;h1 className="text-center mb-4">Ajouter une adresse&lt;/h1> {/* Titre de la page pour indiquer l'objectif de l'utilisateur */}
+			&lt;Form onSubmit={handleSubmit}> {/* Formulaire pour ajouter une nouvelle adresse */}
+				&lt;Row>
 					{/* Champ pour le nom de l'adresse */}
-					<Col xs={12} md={6} className="mb-3">
-						<Form.Group controlId="nomAdresse">
-							<Form.Label>Nom de l'adresse <span className="text-danger">*</span> :</Form.Label> {/* Nom de l'adresse avec une indication de champ obligatoire */}
-							<Form.Control
+					&lt;Col xs={12} md={6} className="mb-3">
+						&lt;Form.Group controlId="nomAdresse">
+							&lt;Form.Label>Nom de l'adresse &lt;span className="text-danger">*&lt;/span> :&lt;/Form.Label> {/* Nom de l'adresse avec une indication de champ obligatoire */}
+							&lt;Form.Control
 								type="text"
 								name="nom_adresse"
 								placeholder="Nom de l'adresse" // Placeholder pour guider l'utilisateur sur la valeur à saisir
@@ -104,29 +132,29 @@ const AddAdressePage = () => {
 								onChange={handleChange} // Mettre à jour l'état lorsqu'une saisie est effectuée
 								required // Champ requis pour la soumission du formulaire
 							/>
-						</Form.Group>
-					</Col>
+						&lt;/Form.Group>
+					&lt;/Col>
 					{/* Champ pour le type d'adresse (Livraison ou Facturation) */}
-					<Col xs={12} md={6} className="mb-3">
-						<Form.Group controlId="typeAdresse">
-							<Form.Label>Type d'Adresse <span className="text-danger">*</span> :</Form.Label> {/* Type de l'adresse (choix entre Livraison et Facturation) */}
-							<Form.Select
+					&lt;Col xs={12} md={6} className="mb-3">
+						&lt;Form.Group controlId="typeAdresse">
+							&lt;Form.Label>Type d'Adresse &lt;span className="text-danger">*&lt;/span> :&lt;/Form.Label> {/* Type de l'adresse (choix entre Livraison et Facturation) */}
+							&lt;Form.Select
 								name="type"
 								value={adresseData.type} // Valeur actuelle de l'état pour le type d'adresse
 								onChange={handleChange} // Mettre à jour l'état lorsqu'une sélection est effectuée
 								required // Champ requis pour la soumission du formulaire
 							>
-								<option value="">Sélectionner le type d'adresse</option> {/* Option par défaut */}
-								<option value="Facturation">Facturation</option> {/* Option pour une adresse de facturation */}
-								<option value="Livraison">Livraison</option> {/* Option pour une adresse de livraison */}
-							</Form.Select>
-						</Form.Group>
-					</Col>
+								&lt;option value="">Sélectionner le type d'adresse&lt;/option> {/* Option par défaut */}
+								&lt;option value="Facturation">Facturation&lt;/option> {/* Option pour une adresse de facturation */}
+								&lt;option value="Livraison">Livraison&lt;/option> {/* Option pour une adresse de livraison */}
+							&lt;/Form.Select>
+						&lt;/Form.Group>
+					&lt;/Col>
 					{/* Champ pour le prénom */}
-					<Col xs={12} md={6} className="mb-3">
-						<Form.Group controlId="prenom">
-							<Form.Label>Prénom <span className="text-danger">*</span> :</Form.Label> {/* Prénom de la personne */}
-							<Form.Control
+					&lt;Col xs={12} md={6} className="mb-3">
+						&lt;Form.Group controlId="prenom">
+							&lt;Form.Label>Prénom &lt;span className="text-danger">*&lt;/span> :&lt;/Form.Label> {/* Prénom de la personne */}
+							&lt;Form.Control
 								type="text"
 								name="prenom"
 								placeholder="Prénom" // Placeholder pour indiquer la saisie à l'utilisateur
@@ -134,13 +162,13 @@ const AddAdressePage = () => {
 								onChange={handleChange} // Mettre à jour l'état lorsqu'une saisie est effectuée
 								required // Champ requis pour la soumission du formulaire
 							/>
-						</Form.Group>
-					</Col>
+						&lt;/Form.Group>
+					&lt;/Col>
 					{/* Champ pour le nom */}
-					<Col xs={12} md={6} className="mb-3">
-						<Form.Group controlId="nom">
-							<Form.Label>Nom <span className="text-danger">*</span> :</Form.Label> {/* Nom de la personne */}
-							<Form.Control
+					&lt;Col xs={12} md={6} className="mb-3">
+						&lt;Form.Group controlId="nom">
+							&lt;Form.Label>Nom &lt;span className="text-danger">*&lt;/span> :&lt;/Form.Label> {/* Nom de la personne */}
+							&lt;Form.Control
 								type="text"
 								name="nom"
 								placeholder="Nom" // Placeholder pour indiquer la saisie à l'utilisateur
@@ -148,13 +176,13 @@ const AddAdressePage = () => {
 								onChange={handleChange} // Mettre à jour l'état lorsqu'une saisie est effectuée
 								required // Champ requis pour la soumission du formulaire
 							/>
-						</Form.Group>
-					</Col>
+						&lt;/Form.Group>
+					&lt;/Col>
 					{/* Champ pour la rue/avenue/boulevard */}
-					<Col xs={12} md={6} className="mb-3">
-						<Form.Group controlId="rue">
-							<Form.Label>Rue/Avenue/Bd <span className="text-danger">*</span> :</Form.Label> {/* Adresse de la rue */}
-							<Form.Control
+					&lt;Col xs={12} md={6} className="mb-3">
+						&lt;Form.Group controlId="rue">
+							&lt;Form.Label>Rue/Avenue/Bd &lt;span className="text-danger">*&lt;/span> :&lt;/Form.Label> {/* Adresse de la rue */}
+							&lt;Form.Control
 								type="text"
 								name="rue"
 								placeholder="Rue/Avenue/Bd" // Placeholder pour indiquer la saisie à l'utilisateur
@@ -162,39 +190,39 @@ const AddAdressePage = () => {
 								onChange={handleChange} // Mettre à jour l'état lorsqu'une saisie est effectuée
 								required // Champ requis pour la soumission du formulaire
 							/>
-						</Form.Group>
-					</Col>
+						&lt;/Form.Group>
+					&lt;/Col>
 					{/* Champ pour le bâtiment (optionnel) */}
-					<Col xs={12} md={6} className="mb-3">
-						<Form.Group controlId="batiment">
-							<Form.Label>Bâtiment :</Form.Label> {/* Information sur le bâtiment, optionnelle */}
-							<Form.Control
+					&lt;Col xs={12} md={6} className="mb-3">
+						&lt;Form.Group controlId="batiment">
+							&lt;Form.Label>Bâtiment :&lt;/Form.Label> {/* Information sur le bâtiment, optionnelle */}
+							&lt;Form.Control
 								type="text"
 								name="batiment"
 								placeholder="Bâtiment" // Placeholder pour indiquer la saisie à l'utilisateur
 								value={adresseData.batiment} // Valeur actuelle de l'état pour le bâtiment (optionnel)
 								onChange={handleChange} // Mettre à jour l'état lorsqu'une saisie est effectuée
 							/>
-						</Form.Group>
-					</Col>
+						&lt;/Form.Group>
+					&lt;/Col>
 					{/* Champ pour l'appartement (optionnel) */}
-					<Col xs={12} md={6} className="mb-3">
-						<Form.Group controlId="appartement">
-							<Form.Label>Appartement :</Form.Label> {/* Information sur l'appartement, optionnelle */}
-							<Form.Control
+					&lt;Col xs={12} md={6} className="mb-3">
+						&lt;Form.Group controlId="appartement">
+							&lt;Form.Label>Appartement :&lt;/Form.Label> {/* Information sur l'appartement, optionnelle */}
+							&lt;Form.Control
 								type="text"
 								name="appartement"
 								placeholder="Appartement" // Placeholder pour indiquer la saisie à l'utilisateur
 								value={adresseData.appartement} // Valeur actuelle de l'état pour l'appartement (optionnel)
 								onChange={handleChange} // Mettre à jour l'état lorsqu'une saisie est effectuée
 							/>
-						</Form.Group>
-					</Col>
+						&lt;/Form.Group>
+					&lt;/Col>
 					{/* Champ pour le code postal */}
-					<Col xs={12} md={6} className="mb-3">
-						<Form.Group controlId="codePostal">
-							<Form.Label>Code Postal <span className="text-danger">*</span> :</Form.Label>
-							<Form.Control
+					&lt;Col xs={12} md={6} className="mb-3">
+						&lt;Form.Group controlId="codePostal">
+							&lt;Form.Label>Code Postal &lt;span className="text-danger">*&lt;/span> :&lt;/Form.Label>
+							&lt;Form.Control
 								type="text"
 								name="code_postal" // Nom du champ pour le code postal
 								placeholder="Code Postal" // Placeholder pour indiquer la saisie à l'utilisateur
@@ -202,13 +230,13 @@ const AddAdressePage = () => {
 								onChange={handleChange} // Mettre à jour l'état lorsqu'une saisie est effectuée
 								required // Champ requis pour la soumission du formulaire
 							/>
-						</Form.Group>
-					</Col>
+						&lt;/Form.Group>
+					&lt;/Col>
 					{/* Champ pour la ville */}
-					<Col xs={12} md={6} className="mb-3">
-						<Form.Group controlId="ville">
-							<Form.Label>Ville <span className="text-danger">*</span> :</Form.Label>
-							<Form.Control
+					&lt;Col xs={12} md={6} className="mb-3">
+						&lt;Form.Group controlId="ville">
+							&lt;Form.Label>Ville &lt;span className="text-danger">*&lt;/span> :&lt;/Form.Label>
+							&lt;Form.Control
 								type="text"
 								name="ville" // Nom du champ pour la ville
 								placeholder="Ville" // Placeholder pour indiquer la saisie à l'utilisateur
@@ -216,13 +244,13 @@ const AddAdressePage = () => {
 								onChange={handleChange} // Mettre à jour l'état lorsqu'une saisie est effectuée
 								required // Champ requis pour la soumission du formulaire
 							/>
-						</Form.Group>
-					</Col>
+						&lt;/Form.Group>
+					&lt;/Col>
 					{/* Champ pour le pays */}
-					<Col xs={12} md={6} className="mb-3">
-						<Form.Group controlId="pays">
-							<Form.Label>Pays <span className="text-danger">*</span> :</Form.Label>
-							<Form.Control
+					&lt;Col xs={12} md={6} className="mb-3">
+						&lt;Form.Group controlId="pays">
+							&lt;Form.Label>Pays &lt;span className="text-danger">*&lt;/span> :&lt;/Form.Label>
+							&lt;Form.Control
 								type="text"
 								name="pays" // Nom du champ pour le pays
 								placeholder="Pays" // Placeholder pour indiquer la saisie à l'utilisateur
@@ -230,13 +258,13 @@ const AddAdressePage = () => {
 								onChange={handleChange} // Mettre à jour l'état lorsqu'une saisie est effectuée
 								required // Champ requis pour la soumission du formulaire
 							/>
-						</Form.Group>
-					</Col>
+						&lt;/Form.Group>
+					&lt;/Col>
 					{/* Champ pour le numéro de téléphone */}
-					<Col xs={12} className="mb-3">
-						<Form.Group controlId="telephone">
-							<Form.Label>Tel <span className="text-danger">*</span> :</Form.Label>
-							<Form.Control
+					&lt;Col xs={12} className="mb-3">
+						&lt;Form.Group controlId="telephone">
+							&lt;Form.Label>Tel &lt;span className="text-danger">*&lt;/span> :&lt;/Form.Label>
+							&lt;Form.Control
 								type="text"
 								name="telephone" // Nom du champ pour le numéro de téléphone
 								placeholder="Numéro de téléphone" // Placeholder pour indiquer la saisie à l'utilisateur
@@ -244,30 +272,53 @@ const AddAdressePage = () => {
 								onChange={handleChange} // Mettre à jour l'état lorsqu'une saisie est effectuée
 								required // Champ requis pour la soumission du formulaire
 							/>
-						</Form.Group>
-					</Col>
+						&lt;/Form.Group>
+					&lt;/Col>
 					{/* Case à cocher pour créer une autre adresse automatiquement */}
-					<Col xs={12} className="mb-3">
-						<Form.Group controlId="similaire">
-							<Form.Check
+					&lt;Col xs={12} className="mb-3">
+						&lt;Form.Group controlId="similaire">
+							&lt;Form.Check
 								type="checkbox"
 								label="Créer l'autre adresse automatiquement" // Texte pour indiquer la fonctionnalité de la case à cocher
 								name="similaire" // Nom du champ pour la case à cocher
 								checked={adresseData.similaire} // Valeur actuelle de l'état pour la case à cocher
 								onChange={handleChange} // Mettre à jour l'état lorsqu'une sélection est effectuée
 							/>
-						</Form.Group>
-					</Col>
-				</Row>
+						&lt;/Form.Group>
+					&lt;/Col>
+				&lt;/Row>
 				{/* Bouton de validation du formulaire */}
-				<div className="text-center mt-4">
-					<Button variant="dark" type="submit">
+				&lt;div className="text-center mt-4">
+					&lt;Button variant="dark" type="submit">
 						Valider
-					</Button>
-				</div>
-			</Form>
-		</Container>
+					&lt;/Button>
+				&lt;/div>
+			&lt;/Form>
+		&lt;/Container>
 	);
 };
 
 export default AddAdressePage; // Exporter le composant AddAdressePage pour l'utiliser dans d'autres fichiers
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Adresses.html">Adresses</a></li><li><a href="module-Adresses_Services.html">Adresses/Services</a></li></ul><h3>Namespaces</h3><ul><li><a href="Adresses_Pages.html">Adresses/Pages</a></li></ul><h3>Classes</h3><ul><li><a href="Adresses_Pages.AddAdressePage.html">AddAdressePage</a></li><li><a href="module-Adresses.AdressesPage.html">AdressesPage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#CardSliderWithArrows">CardSliderWithArrows</a></li><li><a href="global.html#EditAdressePage">EditAdressePage</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#MyCarousel">MyCarousel</a></li><li><a href="global.html#fetchCategory">fetchCategory</a></li><li><a href="global.html#handleChange">handleChange</a></li><li><a href="global.html#handleProductClick">handleProductClick</a></li><li><a href="global.html#handleResize">handleResize</a></li><li><a href="global.html#handleSeeAllClick">handleSeeAllClick</a></li><li><a href="global.html#handleSelect">handleSelect</a></li><li><a href="global.html#handleSubmit">handleSubmit</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Nov 27 2024 14:58:21 GMT+0100 (heure normale d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

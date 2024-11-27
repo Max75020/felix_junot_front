@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Home/components/Carousel/Carousel.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Home/components/Carousel/Carousel.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from 'react'; // Importation de React et du hook useState pour gérer l'état local
+import Carousel from 'react-bootstrap/Carousel'; // Importation du composant Carousel de React Bootstrap pour le carrousel d'images
+
+// Importation des images à utiliser dans le carrousel
+import firstImage from '../../../../assets/images/1/1.jpg';
+import secondImage from '../../../../assets/images/2/2.jpg';
+import thirdImage from '../../../../assets/images/3/3.jpg';
+import fourImage from '../../../../assets/images/4/4.jpg';
+import fiveImage from '../../../../assets/images/5/5.jpg';
+
+// Importation du fichier de styles CSS pour personnaliser l'apparence du carrousel
+import '../../../../assets/styles/components/MyCarousel.css';
+
+/**
+ * Composant MyCarousel pour afficher un carrousel d'images.
+ *
+ * Ce composant utilise React Bootstrap pour afficher un carrousel interactif permettant de parcourir différentes images.
+ * Chaque élément du carrousel contient une image et un lien vers toutes les catégories.
+ *
+ * @component
+ * @example
+ * return (
+ *   &lt;MyCarousel />
+ * )
+ *
+ * @returns {JSX.Element} Un carrousel d'images avec des légendes et des liens.
+ */
+const MyCarousel = () => {
+	// Déclaration de l'état pour suivre l'index de l'élément actif du carrousel
+	const [index, setIndex] = useState(0);
+
+	/**
+	 * Met à jour l'état avec l'index de l'image sélectionnée dans le carrousel.
+	 *
+	 * Cette fonction est appelée lorsqu'une nouvelle image est sélectionnée dans le carrousel.
+	 *
+	 * @function handleSelect
+	 * @param {number} selectedIndex - L'index de l'image sélectionnée.
+	 * @returns {void}
+	 */
+	const handleSelect = (selectedIndex) => {
+		setIndex(selectedIndex); // Mise à jour de l'état avec l'index de l'élément sélectionné
+	};
+
+
+	return (
+		// Composant Carousel de React Bootstrap, avec un événement onSelect pour gérer le changement d'image
+		&lt;Carousel activeIndex={index} onSelect={handleSelect}>
+			{/* Premier élément du carrousel */}
+			&lt;Carousel.Item>
+				&lt;div>
+					&lt;img
+						className="d-block w-100"
+						alt="First slide"
+						srcSet={firstImage} // Utilisation de l'image importée
+					/>
+				&lt;/div>
+				{/* Légende du carrousel avec un bouton pour découvrir toutes les catégories */}
+				&lt;Carousel.Caption className="text-align-left">
+					&lt;a href="/categories" className="btn btn-light text-dark">
+						Découvrir toutes les catégories
+					&lt;/a>
+				&lt;/Carousel.Caption>
+			&lt;/Carousel.Item>
+
+			{/* Deuxième élément du carrousel */}
+			&lt;Carousel.Item>
+				&lt;div>
+					&lt;img
+						className="d-block w-100"
+						alt="Second slide"
+						srcSet={secondImage} // Utilisation de l'image importée
+					/>
+				&lt;/div>
+				&lt;Carousel.Caption className="text-align-left">
+					&lt;a href="/categories" className="btn btn-light text-dark">
+						Découvrir toutes les catégories
+					&lt;/a>
+				&lt;/Carousel.Caption>
+			&lt;/Carousel.Item>
+
+			{/* Troisième élément du carrousel */}
+			&lt;Carousel.Item>
+				&lt;div>
+					&lt;img
+						className="d-block w-100"
+						alt="Third slide"
+						srcSet={thirdImage} // Utilisation de l'image importée
+					/>
+				&lt;/div>
+				&lt;Carousel.Caption className="text-align-left">
+					&lt;a href="/categories" className="btn btn-light text-dark">
+						Découvrir toutes les catégories
+					&lt;/a>
+				&lt;/Carousel.Caption>
+			&lt;/Carousel.Item>
+
+			{/* Quatrième élément du carrousel */}
+			&lt;Carousel.Item>
+				&lt;div>
+					&lt;img
+						className="d-block w-100"
+						alt="Fourth slide"
+						srcSet={fourImage} // Utilisation de l'image importée
+					/>
+				&lt;/div>
+				&lt;Carousel.Caption className="text-align-left">
+					&lt;a href="/categories" className="btn btn-light text-dark">
+						Découvrir toutes les catégories
+					&lt;/a>
+				&lt;/Carousel.Caption>
+			&lt;/Carousel.Item>
+
+			{/* Cinquième élément du carrousel */}
+			&lt;Carousel.Item>
+				&lt;div>
+					&lt;img
+						className="d-block w-100"
+						alt="Fifth slide"
+						srcSet={fiveImage} // Utilisation de l'image importée
+					/>
+				&lt;/div>
+				&lt;Carousel.Caption className="text-align-left">
+					&lt;a href="/categories" className="btn btn-light text-dark">
+						Découvrir toutes les catégories
+					&lt;/a>
+				&lt;/Carousel.Caption>
+			&lt;/Carousel.Item>
+		&lt;/Carousel>
+	);
+};
+
+export default MyCarousel; // Exportation du composant pour qu'il puisse être utilisé ailleurs dans l'application
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Adresses.html">Adresses</a></li><li><a href="module-Adresses_Services.html">Adresses/Services</a></li></ul><h3>Namespaces</h3><ul><li><a href="Adresses_Pages.html">Adresses/Pages</a></li></ul><h3>Classes</h3><ul><li><a href="Adresses_Pages.AddAdressePage.html">AddAdressePage</a></li><li><a href="module-Adresses.AdressesPage.html">AdressesPage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#CardSliderWithArrows">CardSliderWithArrows</a></li><li><a href="global.html#EditAdressePage">EditAdressePage</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#MyCarousel">MyCarousel</a></li><li><a href="global.html#fetchCategory">fetchCategory</a></li><li><a href="global.html#handleChange">handleChange</a></li><li><a href="global.html#handleProductClick">handleProductClick</a></li><li><a href="global.html#handleResize">handleResize</a></li><li><a href="global.html#handleSeeAllClick">handleSeeAllClick</a></li><li><a href="global.html#handleSelect">handleSelect</a></li><li><a href="global.html#handleSubmit">handleSubmit</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Nov 27 2024 14:58:21 GMT+0100 (heure normale d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

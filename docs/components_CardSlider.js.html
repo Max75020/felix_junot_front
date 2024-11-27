@@ -1,4 +1,32 @@
-import React, { useState, useEffect } from "react"; // Importation de React et des hooks useState et useEffect
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/CardSlider.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/CardSlider.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from "react"; // Importation de React et des hooks useState et useEffect
 import { Card, Button, Row, Col, Container, Carousel } from "react-bootstrap"; // Importation des composants de React Bootstrap
 import categoryApi from "../../Category/services/Category.api"; // Importation du service API pour les catégories
 import { NavLink, useNavigate } from "react-router-dom"; // Importation des composants de navigation de React Router
@@ -14,7 +42,7 @@ import "../../../assets/styles/components/CardSlider.css"; // Importation des st
  * @component
  * @example
  * return (
- *   <CardSliderWithArrows />
+ *   &lt;CardSliderWithArrows />
  * )
  *
  * @returns {JSX.Element} Un slider de produits avec des flèches pour la navigation.
@@ -30,7 +58,7 @@ const CardSliderWithArrows = () => {
 	 *
 	 * @async
 	 * @function fetchCategory
-	 * @returns {Promise<void>} Une promesse résolue une fois la catégorie récupérée et l'état mis à jour.
+	 * @returns {Promise&lt;void>} Une promesse résolue une fois la catégorie récupérée et l'état mis à jour.
 	 */
 	const fetchCategory = async () => {
 		try {
@@ -55,7 +83,7 @@ const CardSliderWithArrows = () => {
 	 * @returns {void}
 	 */
 	const handleResize = () => {
-		setIsMobile(window.innerWidth <= 768); // Considérer l'appareil comme mobile si la largeur est inférieure ou égale à 768px
+		setIsMobile(window.innerWidth &lt;= 768); // Considérer l'appareil comme mobile si la largeur est inférieure ou égale à 768px
 	};
 
 	/**
@@ -83,7 +111,7 @@ const CardSliderWithArrows = () => {
 	 * @returns {void}
 	 */
 	const handleSeeAllClick = () => {
-		if (category && category.id_categorie) {
+		if (category &amp;&amp; category.id_categorie) {
 			navigate(`/categories/${category.id_categorie}/all`); // Redirection vers la page de la catégorie
 		}
 	};
@@ -108,77 +136,100 @@ const CardSliderWithArrows = () => {
 	}, []);
 
 	return (
-		<Container className="text-center" style={{ marginTop: "40px" }}>
+		&lt;Container className="text-center" style={{ marginTop: "40px" }}>
 			{category ? (
-				<>
-					<h2 style={{ marginBottom: "40px" }}>{category.nom}</h2> {/* Titre de la catégorie */}
+				&lt;>
+					&lt;h2 style={{ marginBottom: "40px" }}>{category.nom}&lt;/h2> {/* Titre de la catégorie */}
 					{/* Affichage en mode mobile avec un carrousel */}
 					{isMobile ? (
-						<Carousel>
+						&lt;Carousel>
 							{category.produits.slice(0, 3).map((produit, index) => (
-								<Carousel.Item key={index}>
-									<Card className="text-center mx-auto">
-										<NavLink to={`/categories/${category.id_categorie}/all`}>
+								&lt;Carousel.Item key={index}>
+									&lt;Card className="text-center mx-auto">
+										&lt;NavLink to={`/categories/${category.id_categorie}/all`}>
 											{/* Affichage de l'image du produit */}
-											<div
+											&lt;div
 												className="image-container"
 												style={{
 													backgroundImage: `url(${getProductImageUrl(produit)})`,
 												}}
-											></div>
-											<Card.Body>
-												<Card.Title className="text-dark no-underline">{produit.nom}</Card.Title>
-											</Card.Body>
-										</NavLink>
-									</Card>
-								</Carousel.Item>
+											>&lt;/div>
+											&lt;Card.Body>
+												&lt;Card.Title className="text-dark no-underline">{produit.nom}&lt;/Card.Title>
+											&lt;/Card.Body>
+										&lt;/NavLink>
+									&lt;/Card>
+								&lt;/Carousel.Item>
 							))}
-						</Carousel>
+						&lt;/Carousel>
 					) : (
 						// Affichage en mode non-mobile avec une disposition en grille
-						<Row className="justify-content-center">
-							{category.produits && category.produits.length > 0 ? (
+						&lt;Row className="justify-content-center">
+							{category.produits &amp;&amp; category.produits.length > 0 ? (
 								category.produits.slice(0, 3).map((produit, index) => (
-									<Col
+									&lt;Col
 										key={produit["@id"]}
 										md={4}
 										xs={12}
 										sm={6}
 										className="d-flex justify-content-center mb-4"
 									>
-										<Card
+										&lt;Card
 											className="cursor-pointer card-hover text-center"
 											onClick={() => handleProductClick(produit["@id"])} // Redirection au clic sur la carte
 											style={{ width: "300px", height: "300px" }}
 										>
 											{/* Affichage de l'image du produit */}
-											<div
+											&lt;div
 												className="image-container"
 												style={{
 													backgroundImage: `url(${getProductImageUrl(produit)})`,
 												}}
-											></div>
-											<Card.Body>
-												<Card.Title>{produit.nom}</Card.Title>
-											</Card.Body>
-										</Card>
-									</Col>
+											>&lt;/div>
+											&lt;Card.Body>
+												&lt;Card.Title>{produit.nom}&lt;/Card.Title>
+											&lt;/Card.Body>
+										&lt;/Card>
+									&lt;/Col>
 								))
 							) : (
-								<p>Aucun produit disponible</p> // Message affiché si aucun produit n'est disponible
+								&lt;p>Aucun produit disponible&lt;/p> // Message affiché si aucun produit n'est disponible
 							)}
-						</Row>
+						&lt;/Row>
 					)}
 					{/* Bouton pour voir tous les produits de la catégorie */}
-					<Button variant="dark" className="mt-4 mb-4" onClick={handleSeeAllClick}>
+					&lt;Button variant="dark" className="mt-4 mb-4" onClick={handleSeeAllClick}>
 						TOUT VOIR
-					</Button>
-				</>
+					&lt;/Button>
+				&lt;/>
 			) : (
-				<p>Aucune catégorie disponible</p> // Message affiché si aucune catégorie n'est disponible
+				&lt;p>Aucune catégorie disponible&lt;/p> // Message affiché si aucune catégorie n'est disponible
 			)}
-		</Container>
+		&lt;/Container>
 	);
 };
 
 export default CardSliderWithArrows; // Exportation du composant pour l'utiliser dans d'autres parties de l'application
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#CardSliderWithArrows">CardSliderWithArrows</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#MyCarousel">MyCarousel</a></li><li><a href="global.html#fetchCategory">fetchCategory</a></li><li><a href="global.html#handleProductClick">handleProductClick</a></li><li><a href="global.html#handleResize">handleResize</a></li><li><a href="global.html#handleSeeAllClick">handleSeeAllClick</a></li><li><a href="global.html#handleSelect">handleSelect</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Nov 27 2024 13:37:04 GMT+0100 (heure normale d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
