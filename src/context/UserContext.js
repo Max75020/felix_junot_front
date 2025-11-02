@@ -1,6 +1,6 @@
-import React, { createContext, useState, useEffect } from 'react'; // Importation de React et des hooks nécessaires
-import apiService, { clearTokens } from '../services/apiService'; // Importation du service API principal et de la fonction clearTokens pour supprimer les tokens utilisateur
+import { createContext, useEffect, useState } from 'react'; // Importation de React et des hooks nécessaires
 import loginCheckerApi from '../pages/Auth/Login/services/LoginCheck.api'; // Importation de l'API pour vérifier la connexion de l'utilisateur
+import apiService, { clearTokens } from '../services/apiService'; // Importation du service API principal et de la fonction clearTokens pour supprimer les tokens utilisateur
 
 // Création du contexte utilisateur pour gérer les informations de l'utilisateur connecté
 export const UserContext = createContext();
@@ -92,8 +92,13 @@ export const UserProvider = ({ children }) => {
 
 	// Fonction utilitaire pour vérifier si l'utilisateur a un rôle administrateur
 	const isAdmin = () => {
-		return user?.roles_generated?.includes('ROLE_ADMIN'); // Vérifier si les rôles de l'utilisateur contiennent 'ROLE_ADMIN'
+		const roles =
+			user?.roles_generated ||
+			user?.roles || // c’est ce que renvoie ton /utilisateurs/me
+			[];
+		return Array.isArray(roles) && roles.includes('ROLE_ADMIN');
 	};
+
 
 	// Fonction pour supprimer l'utilisateur
 	const deleteUser = async () => {

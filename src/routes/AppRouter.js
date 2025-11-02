@@ -1,5 +1,5 @@
 // Importation des bibliothèques React et React Router pour la gestion de la navigation et des routes
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 // Importation du layout principal qui englobe les pages
 import MainLayout from '../layouts/MainLayout';
@@ -31,6 +31,10 @@ import OrderSummary from '../pages/Order/OrderSummary'; // Récapitulatif de la 
 import OrderSuccess from '../pages/Order/OrderSuccess'; // Succès de la commande
 import OrdersList from '../pages/Order/OrdersList'; // Liste des commandes
 import OrderDetail from '../pages/Order/OrderDetail'; // Détail d'une commande
+import RequireAdmin from '../pages/Auth/RequireAdmin';
+
+// Lazy load de l’admin
+const AdminApp = lazy(() => import('../pages/Admin/AdminApp'));
 
 // Définition des routes sous forme d'objet pour une gestion centralisée
 export const routes = {
@@ -41,6 +45,9 @@ export const routes = {
 		FORGOT_PASSWORD: '/forgot-password',
 		NEW_PASSWORD: '/new-password',
 		UNAUTHORIZED: '/unauthorized',
+	},
+	ADMIN: {
+		INDEX: '/admin',
 	},
 	HOME: {
 		INDEX: '/',
@@ -146,6 +153,18 @@ function AppRouter() {
 					{/* Route pour l'accès non autorisé */}
 					<Route path={routes.AUTH.UNAUTHORIZED} element={<Unauthorized />} />
 				</Route>
+
+				{/* admin en lazy + wildcard pour /admin/#/xxx */}
+				<Route
+					path="/admin/*"
+					element={
+						<RequireAdmin>
+							<Suspense fallback={<div style={{ padding: 20 }}>Chargement de l’admin…</div>}>
+								<AdminApp />
+							</Suspense>
+						</RequireAdmin>
+					}
+				/>
 			</Routes>
 		</Router>
 	);

@@ -38,7 +38,7 @@ const categoryApi = {
 	// Mettre à jour une catégorie existante par son ID
 	updateCategory: async (id, data) => {
 		// Envoi d'une requête PUT pour mettre à jour une catégorie existante avec les nouvelles données
-		return await apiService.put(`${CATEGORY_ENDPOINT}/${id}`, data);
+		return await apiService.patch(`${CATEGORY_ENDPOINT}/${id}`, data);
 	},
 
 	// Supprimer une catégorie par son ID
