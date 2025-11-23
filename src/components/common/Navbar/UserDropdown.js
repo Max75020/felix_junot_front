@@ -1,11 +1,13 @@
 /* Importation des bibliothèques React et React Bootstrap */
-import React from "react";
 /* Importation du composant Dropdown de React Bootstrap pour créer un menu déroulant */
 import { Dropdown } from "react-bootstrap";
-
+/* Importation du contexte utilisateur pour accéder aux informations de l'utilisateur connecté */
+import { UserContext } from "../../../context/UserContext";
+import { useContext } from 'react';
 /* Composant UserDropdown : menu déroulant pour les actions liées à l'utilisateur */
 function UserDropdown({ userInitials, handleLogout }) {
-
+	// 👉 Récupération de isAdmin depuis le contexte
+	const { isAdmin } = useContext(UserContext);
 	return (
 		<Dropdown align="end">
 			<Dropdown.Toggle
@@ -39,10 +41,21 @@ function UserDropdown({ userInitials, handleLogout }) {
 					right: "0px", // Alignement à droite du menu déroulant
 				}}
 			>
+				{/* Si l'utilisateur est administrateur, on affiche le lien vers la page d'administration */}
+				{isAdmin() && (
+					<>
+						{/* Lien vers la page d'administration */}
+						<Dropdown.Item href="/admin">Administration</Dropdown.Item>
+						{/* Ajout d'un séparateur visuel entre les éléments du menu */}
+						<Dropdown.Divider />
+					</>
+				)}
+
 				{/* Lien vers la page du profil utilisateur */}
 				<Dropdown.Item href="/profil">Profil</Dropdown.Item>
 				{/* Bouton de déconnexion qui appelle la fonction handleLogout */}
 				<Dropdown.Item onClick={handleLogout}>Déconnexion</Dropdown.Item>
+
 			</Dropdown.Menu>
 		</Dropdown>
 	);

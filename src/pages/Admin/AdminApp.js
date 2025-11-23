@@ -1,19 +1,24 @@
 // src/pages/Admin/AdminApp.js
 import {
 	Admin,
+	AppBar,
 	Create,
 	Datagrid,
 	Edit,
 	EditButton,
+	Layout,
 	List,
 	NumberInput,
 	Resource,
 	SimpleForm,
 	TextField,
 	TextInput,
+	TitlePortal,
 } from 'react-admin';
 
-import { BsTag, BsBoxSeam, BsReceipt } from 'react-icons/bs';
+import { Button } from '@mui/material';
+import { BsBoxSeam, BsReceipt, BsTag } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
 import apiService from '../../services/apiService';
 import categoryApi from '../Category/services/Category.api';
 import orderApi from '../Order/services/Order.api';
@@ -251,10 +256,28 @@ const OrderEdit = () => (
 	</Edit>
 );
 
+// Layout personnalisé avec bouton "Retour au site"
+const MyAppBar = () => {
+	const navigate = useNavigate();
+
+	return (
+		<AppBar>
+			<TitlePortal />
+			<span style={{ flex: 1 }} />
+			<Button color="inherit" onClick={() => navigate('/')}>
+				Retour au site
+			</Button>
+		</AppBar>
+	);
+};
+
+// Layout personnalisé qui utilise AppBar
+const MyLayout = (props) => <Layout {...props} appBar={MyAppBar} />;
+
 // ADMIN
 export default function AdminApp() {
 	return (
-		<Admin dataProvider={dataProvider}>
+		<Admin dataProvider={dataProvider} layout={MyLayout}>
 			<Resource
 				name="categories"
 				list={CategoryList}
@@ -269,11 +292,11 @@ export default function AdminApp() {
 				icon={BsBoxSeam}
 				create={ProductCreate}
 			/>
-			<Resource 
-			name="commandes" 
-			list={OrderList} 
-			edit={OrderEdit} 
-			icon={BsReceipt}
+			<Resource
+				name="commandes"
+				list={OrderList}
+				edit={OrderEdit}
+				icon={BsReceipt}
 			/>
 		</Admin>
 	);
